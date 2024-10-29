@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body{
+    font-family: "Zain", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+    overflow-x: hidden;
+    
+    user-select: none;
+}
+
+
+
+.font{
+  font-family: "Zain", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+select{
+  @apply p-1.5 outline-none rounded-md bg-white border border-blue-300
+}
+
+
