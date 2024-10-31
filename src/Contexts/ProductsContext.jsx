@@ -10,8 +10,8 @@ const ProductsContext = ({ children }) => {
     const [products, setProducts] = React.useState([])
 
     const fetchProducts = async () => {
+        setLoading(true)
         try {
-            setLoading(true)
             const res = await axios.get('/products/')
             setProducts(res.data)
         } catch (err) {

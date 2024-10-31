@@ -51,6 +51,15 @@ const ProductDetails = () => {
 
   return (
     <div className="flex flex-col h-auto p-5 mb-5">
+
+      {
+        productsContext?.loading && (
+          <div className="fixed z-10 bg-green-50 w-screen flex justify-center items-center h-screen">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          </div>
+        )
+      }
+
       <Navbar />
       <div className="w-full flex mt-10">
         {productDetails && (

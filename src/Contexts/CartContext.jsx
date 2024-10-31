@@ -30,12 +30,23 @@ const CartContext = ({ children }) => {
             setCart(JSON.parse(localStorage.getItem('cart')))
         }
     }
+
+
+    const deleteCart = (cartID) => {
+        const index = cart?.findIndex(item => item.id === cartID)
+        if (index !== -1) {
+            localStorage.setItem('cart', JSON.stringify(cart.filter(item => item.id !== cartID)))
+            setCart(cart.filter(item => item.id !== cartID))
+            getCart()
+        }
+    }
     return (
         <CartContextProvider.Provider value={{
             cart, setCart,
             addToCart,
             updateCart,
-            getCart
+            getCart,
+            deleteCart,
         }}>
             {children}
         </CartContextProvider.Provider>

@@ -6,6 +6,7 @@ import { StatesContextProvider } from '../../Contexts/StatesContext'
 import { Modal, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { CgSpinner } from 'react-icons/cg'
+import { Link } from 'react-router-dom'
 
 const Cart = () => {
 
@@ -110,77 +111,84 @@ const Cart = () => {
                 <th className="py-2 text-start min-w-[40%]">المنتج</th>
                 <th className="py-2 text-start w-[20%]">السعر</th>
                 <th className="py-2 text-start w-[20%]">الكمية</th>
-                <th className="py-2 text-start w-[20%]">المجموع</th>
+                <th className="py-2 text-start w-[15%]">المجموع</th>
+                <th className="py-2 text-start w-[5%]">حذف</th>
               </tr>
             </thead>
             <tbody>
-              {cart?.map((item, index) => (
+              {cart?.length > 0 ? cart?.map((item, index) => (
                 <CartItem key={item?.id} item={item} index={index} />
-              ))}
-              <button className='mt-3 p-1 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</button>
+              )) : (
+                <tr>
+                  <td className="text-green-500 font-bold text-2xl py-2 text-start">لا يوجد منتجات في السلة</td>
+                </tr>
+              )}
+              <Link to='/' className='mt-3 p-1 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
             </tbody>
           </table>
         </div>
 
 
-        <div className='flex gap-5 w-full md:flex-row flex-col'>
-          <div className='md:min-w-[400px] w-full p-5 border border-black flex flex-col h-fit'>
-            <strong className='text-2xl text-gray-500'>ملخص الطلب</strong>
-            <ul className='flex flex-col mt-3'>
-              {cart?.map((item, index) => (
-                <li key={item?.id} className='flex gap-2 justify-between my-2'>
-                  <strong>{item?.name}:</strong>
-                  <p>{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</p>
-                </li>
-              ))}
-              <li className='flex gap-2 justify-between my-2'>
-                <strong>الشحن:</strong>
-                <p>{shippingFees || 0} EGP</p>
-              </li>
-              <li className='flex gap-2 justify-between my-2'>
-                <strong>المجموع:</strong>
-                <p>{total} EGP</p>
-              </li>
-              <li className='flex gap-2 justify-between my-2'>
-                <button onClick={onOpen} className='p-1 py-2 px-4 transition-all duration-500 hover:bg-gray-800 bg-black text-white w-full'>اضف تفاصيل الشحن لطلب المنتج</button>
-              </li>
-            </ul>
-          </div>
-
-
-          <div className='flex flex-col w-full'>
-            <strong className='text-2xl text-gray-500'>ملخص الشحن</strong>
-            {!name ? (
-              <div className='p-3 bg-yellow-100 mt-3 border border-yellow-700 text-yellow-700 flex flex-col justify-center items-center'>
-                <p>يجب ان تضف تفاصيل الشحن</p>
-              </div>
-            ) : (
+        {cart?.length > 0 && (
+          <div className='flex gap-5 w-full md:flex-row flex-col'>
+            <div className='md:min-w-[400px] w-full p-5 border border-black flex flex-col h-fit'>
+              <strong className='text-2xl text-gray-500'>ملخص الطلب</strong>
               <ul className='flex flex-col mt-3'>
-                <li className='flex gap-2 my-2'>
-                  <strong>الاسم:</strong>
-                  <p>{name}</p>
+                {cart?.map((item, index) => (
+                  <li key={item?.id} className='flex gap-2 justify-between my-2'>
+                    <strong>{item?.name}:</strong>
+                    <p>{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</p>
+                  </li>
+                ))}
+                <li className='flex gap-2 justify-between my-2'>
+                  <strong>الشحن:</strong>
+                  <p>{shippingFees || 0} EGP</p>
                 </li>
-                <li className='flex gap-2 my-2'>
-                  <strong>رقم الجوال:</strong>
-                  <p>{phone_number}</p>
+                <li className='flex gap-2 justify-between my-2'>
+                  <strong>المجموع:</strong>
+                  <p>{total} EGP</p>
                 </li>
-                <li className='flex gap-2 my-2'>
-                  <strong>المحافظة:</strong>
-                  <p>{states?.find(s => s?.id == state)?.name}</p>
+                <li className='flex gap-2 justify-between my-2'>
+                  <button onClick={onOpen} className='p-1 py-2 px-4 transition-all duration-500 hover:bg-gray-800 bg-black text-white w-full'>اضف تفاصيل الشحن لطلب المنتج</button>
                 </li>
-                <li className='flex gap-2 my-2'>
-                  <strong>العنوان:</strong>
-                  <p>{address}</p>
-                </li>
-                <li className='flex gap-2 my-2'>
-                  <strong>البريد الالكتروني:</strong>
-                  <p>{email}</p>
-                </li>
-                <button onClick={handleCreateOrder} className='p-1 mt-3 py-2 px-4 transition-all duration-500 hover:bg-green-800 bg-green-500 text-white w-fit'>تاكيد الطلب</button>
               </ul>
-            )}
+            </div>
+
+
+            <div className='flex flex-col w-full'>
+              <strong className='text-2xl text-gray-500'>ملخص الشحن</strong>
+              {!name ? (
+                <div className='p-3 bg-yellow-100 mt-3 border border-yellow-700 text-yellow-700 flex flex-col justify-center items-center'>
+                  <p>يجب ان تضف تفاصيل الشحن</p>
+                </div>
+              ) : (
+                <ul className='flex flex-col mt-3'>
+                  <li className='flex gap-2 my-2'>
+                    <strong>الاسم:</strong>
+                    <p>{name}</p>
+                  </li>
+                  <li className='flex gap-2 my-2'>
+                    <strong>رقم الجوال:</strong>
+                    <p>{phone_number}</p>
+                  </li>
+                  <li className='flex gap-2 my-2'>
+                    <strong>المحافظة:</strong>
+                    <p>{states?.find(s => s?.id == state)?.name}</p>
+                  </li>
+                  <li className='flex gap-2 my-2'>
+                    <strong>العنوان:</strong>
+                    <p>{address}</p>
+                  </li>
+                  <li className='flex gap-2 my-2'>
+                    <strong>البريد الالكتروني:</strong>
+                    <p>{email}</p>
+                  </li>
+                  <button onClick={handleCreateOrder} className='p-1 mt-3 py-2 px-4 transition-all duration-500 hover:bg-green-800 bg-green-500 text-white w-fit'>تاكيد الطلب</button>
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
 
         <Modal size='xl' isCentered isOpen={isOpen} onClose={() => {

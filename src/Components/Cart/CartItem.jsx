@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import NumberInput from '../NumberInput/NumberInput'
+import { BiTrash } from 'react-icons/bi'
 
 const CartItem = ({ item, index }) => {
 
@@ -47,6 +48,9 @@ const CartItem = ({ item, index }) => {
                 <NumberInput value={quantity} setValue={setQuantity} />
             </td>
             <td className="border px-4 py-2 font-bold">{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</td>
+            <td className="border px-4 py-2 font-bold">
+                <BiTrash className='text-2xl text-red-600 cursor-pointer' onClick={() => cartContext?.deleteCart(item?.id)} />
+            </td>
         </tr>
     )
 }
