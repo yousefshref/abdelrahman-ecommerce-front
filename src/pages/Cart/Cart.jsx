@@ -124,7 +124,7 @@ const Cart = () => {
 
 
         <div className='flex gap-5 w-full md:flex-row flex-col'>
-          <div className='min-w-[400px] p-5 border border-black flex flex-col h-fit'>
+          <div className='md:min-w-[400px] w-full p-5 border border-black flex flex-col h-fit'>
             <strong className='text-2xl text-gray-500'>ملخص الطلب</strong>
             <ul className='flex flex-col mt-3'>
               {cart?.map((item, index) => (
