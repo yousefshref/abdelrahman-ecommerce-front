@@ -1,47 +1,126 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  useDisclosure,
+  useColorModeValue,
+  HStack,
+  Button,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerBody,
+  Stack,
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
-
 import { CartContextProvider } from "../../Contexts/CartContext";
-
-import { cartPage, trackOrders } from '../../Variables/pathes'
-import { IoIosHelpCircleOutline } from "react-icons/io";
-
+import { cartPage } from "../../Variables/pathes";
 
 const Navbar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const cartContext = React.useContext(CartContextProvider)
+
+  const cart = cartContext?.cart
 
   useEffect(() => {
     cartContext?.getCart()
   }, [])
 
   return (
-    <nav className='flex font md:flex-row flex-col justify-between md:gap-10 gap-4 p-2 mb-5 items-center md:bg-white bg-gray-100'>
-      <h1 className='text-2xl font-bold'>لوجو</h1>
+    <Box bg={useColorModeValue("white", "black")} px={4} className="mb-10">
+      <Flex h={16} alignItems="center" justifyContent="space-between">
+        <Box fontSize="xl" fontWeight="bold">
+          <img
+            src="/logo.png"
+            alt="logo"
+            width="60"
+            height="60"
+          />
+        </Box>
 
-      <ul className='flex min-w-fit md:flex-row flex-wrap gap-6 justify-center'>
-        <li>طلب منتجات من خارج مصر</li>
-        <li>
-          <Link to={trackOrders()}>
-            تتبع شحنتك
-          </Link>
-        </li>
-        <li>للتدريب الأونلاين</li>
-      </ul>
+        {/* Desktop Menu */}
+        <HStack as="nav" spacing={8} display={{ base: "none", md: "flex" }}>
+          <Button variant="link">
+            <Link to={"/"} onClick={onClose}>
+              المنتجات
+            </Link>
+          </Button>
+          <Button variant="link">
+            <Link to={"/"} onClick={onClose}>
+              طلب المنتجات خارج مصر
+            </Link>
+          </Button>
+          <Button variant="link">
+            <Link to={"/"} onClick={onClose}>
+              تتبع شحنتك
+            </Link>
+          </Button>
+          <Button variant="link">
+            <Link to={"/"} onClick={onClose}>
+              تدريب اونلاين
+            </Link>
+          </Button>
+          <Button variant="link">
+            <Link className="flex gap-2 items-center" to={cartPage()} onClick={onClose}>
+              <p>{cart?.length}</p>
+              <CiShoppingCart size={25} />
+            </Link>
+          </Button>
+        </HStack>
 
-      <div className='flex flex-row gap-2'>
-        <Link to={cartPage()} className='flex gap-1 items-center p-1 px-3 transition-all duration-300 hover:bg-gray-400 rounded-md hover:text-white'>
-          <CiShoppingCart size={30} />
-          <p>{cartContext?.cart?.length}</p>
-        </Link>
+        {/* Mobile Menu Icon */}
+        <IconButton
+          size="md"
+          icon={<HamburgerIcon />}
+          aria-label="Open Menu"
+          display={{ md: "none" }}
+          onClick={onOpen}
+        />
+      </Flex>
 
-        <div className='flex gap-1 items-center p-1 px-3 transition-all duration-300 hover:bg-gray-400 rounded-md hover:text-white'>
-          <IoIosHelpCircleOutline size={27} />
-          <p>الدعم</p>
-        </div>
-      </div>
-    </nav>
+      {/* Right-side Drawer for Mobile Menu */}
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody>
+            <Stack as="nav" spacing={4} mt={8}>
+              <Button variant="link">
+                <Link to={"/"} onClick={onClose}>
+                  المنتجات
+                </Link>
+              </Button>
+              <Button variant="link">
+                <Link to={"/"} onClick={onClose}>
+                  طلب المنتجات خارج مصر
+                </Link>
+              </Button>
+              <Button variant="link">
+                <Link to={"/"} onClick={onClose}>
+                  تتبع شحنتك
+                </Link>
+              </Button>
+              <Button variant="link">
+                <Link to={"/"} onClick={onClose}>
+                  تدريب اونلاين
+                </Link>
+              </Button>
+              <Button variant="link">
+                <Link className="flex gap-2 items-center" to={cartPage()} onClick={onClose}>
+                  <p>{cart?.length}</p>
+                  <CiShoppingCart size={25} />
+                </Link>
+              </Button>
+            </Stack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
   );
 };
 

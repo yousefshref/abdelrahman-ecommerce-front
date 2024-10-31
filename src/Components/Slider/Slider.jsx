@@ -1,53 +1,47 @@
 import React from "react";
-import { FaCircleArrowRight } from "react-icons/fa6";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+
+// Images (replace with your images)
+const images = [
+  "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "https://images.pexels.com/photos/620337/pexels-photo-620337.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+];
 
 const Slider = () => {
-  const slides = [
-    "https://i.pinimg.com/control/564x/cb/3d/39/cb3d3999aa56d7a2ed371c85574f3f98.jpg",
-    "https://i.pinimg.com/control/564x/db/bf/dd/dbbfdd567877c9605419f321997e59f9.jpg",
-  ];
-
-  const [activeSlide, setActiveSlide] = React.useState(0);
-
-  const nextSlide = () => {
-    if (activeSlide === slides.length - 1) {
-      setActiveSlide(0);
-    } else {
-      setActiveSlide(activeSlide + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (activeSlide === 0) {
-      setActiveSlide(slides.length - 1);
-    } else {
-      setActiveSlide(activeSlide - 1);
-    }
-  };
-
   return (
-    <div className="md:h-[40vw] h-[60vw] relative">
-      <div
-        style={{
-          backgroundImage: `url(${slides[activeSlide]})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+    <div className="w-full md:max-w-5xl mx-auto mt-8">
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
         }}
-        className="w-full h-full flex justify-center items-center overflow-hidden" />
-
-      <button onClick={prevSlide} className="absolute transition-all duration-300 hover:bg-black/75 text-white top-1/2 -translate-y-1/2 flex flex-col justify-center items-center right-1 md:w-[45px] w-[25px] md:h-[45px] h-[25px] rounded-full bg-black">
-        <IoIosArrowForward size={25} />
-      </button>
-      <button onClick={nextSlide} className="absolute transition-all duration-300 hover:bg-black/75 text-white top-1/2 -translate-y-1/2 flex flex-col justify-center items-center left-1 md:w-[45px] w-[25px] md:h-[45px] h-[25px] rounded-full bg-black">
-        <IoIosArrowBack size={25} />
-      </button>
-
-      <div className="w-full absolute bottom-0 md:p-2 p-1 bg-black/10 flex justify-center items-center gap-5">
-        {slides?.map((slide, index) => (
-          <span key={index} className={`p-1 rounded-full flex flex-col w-fit h-fit ${index === activeSlide ? "bg-lime-500" : "bg-white"}`} />
+        speed={1700}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={true}
+        modules={[Autoplay, Pagination, Navigation]}
+        className="mySwiper"
+      >
+        {images?.map((image, index) => (
+          <SwiperSlide key={index} className="group">
+            <div className="relative">
+              <img src={image} alt={`Slide ${index + 1}`} className="w-full" />
+              {/* Arrows appear on small screens by default, and on hover for larger screens */}
+              <div className="swiper-button-next opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="swiper-button-prev opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 };

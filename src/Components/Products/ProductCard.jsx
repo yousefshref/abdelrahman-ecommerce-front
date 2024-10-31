@@ -12,8 +12,13 @@ const ProductCard = ({ product }) => {
     }
     return (
         <div
-            className="flex flex-col gap-5 p-2 bg-white"
+            className="flex flex-col gap-5 p-2 bg-white relative"
         >
+            {product?.offer_price && (
+                <p className="absolute top-0 left-0 flex flex-col justify-center items-center bg-red-500 text-white px-2 py-1 text-sm">
+                    خصم {Number(((product?.price - product?.offer_price) / product?.price * 100).toFixed(2))}%
+                </p>
+            )}
             <Link to={productDetails(product?.id)}>
                 <img
                     src={product?.images ? product?.images[0] : ""}

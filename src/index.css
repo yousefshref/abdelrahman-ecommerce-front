@@ -41,3 +41,27 @@ select{
 }
 
 
+
+/* Customizing pagination dots */
+.swiper-pagination-bullet {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.swiper-pagination-bullet-active {
+  background-color: #000; /* Active dot color */
+}
+
+/* Styling navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000; /* Arrow color */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show arrows on hover */
+.mySwiper:hover .swiper-button-next,
+.mySwiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+

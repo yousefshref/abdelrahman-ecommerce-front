@@ -3,8 +3,8 @@ import React, { createContext } from 'react'
 
 const ProductsContext = ({ children }) => {
 
-    // axios.defaults.baseURL = 'http://127.0.0.1:8000'
-    axios.defaults.baseURL = 'https://abdelrahmanecommerce.pythonanywhere.com'
+    axios.defaults.baseURL = 'http://127.0.0.1:8000'
+    // axios.defaults.baseURL = 'https://abdelrahmanecommerce.pythonanywhere.com'
 
     const [loading, setLoading] = React.useState(true)
     const [products, setProducts] = React.useState([])
