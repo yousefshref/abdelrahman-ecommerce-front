@@ -33,20 +33,20 @@ const CartItem = ({ item, index }) => {
         <tr>
             <td className="border px-4 py-2 gap-3">
                 <div className='flex items-center gap-4'>
-                    <img src={item.images[0]} className="w-10" alt="" />
+                    <img src={item?.images[0]} className="w-10" alt="" />
                     <div>
-                        <p>{item.name}</p>
-                        {/* <small className='text-gray-500'>{item.description?.length > 40 ? item.description.slice(0, 40) + "..." : item.description}</small> */}
+                        <p>{item?.name}</p>
+                        {/* <small className='text-gray-500'>{item?.description?.length > 40 ? item?.description.slice(0, 40) + "..." : item?.description}</small> */}
                     </div>
                 </div>
             </td>
             <td className="border px-4 py-2 font-bold">
-                <p>{item.offer_price ? item.offer_price : item.price} EGP</p>
+                <p>{item?.offer_price ? item?.offer_price : item?.price} EGP</p>
             </td>
             <td className="border px-4 py-2">
                 <NumberInput value={quantity} setValue={setQuantity} />
             </td>
-            <td className="border px-4 py-2 font-bold">{item.offer_price ? item.offer_price * item.quantity : item.price * item.quantity} EGP</td>
+            <td className="border px-4 py-2 font-bold">{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</td>
         </tr>
     )
 }
