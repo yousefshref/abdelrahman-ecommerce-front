@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { cartPage } from "../../Variables/pathes";
+import { BiHelpCircle } from "react-icons/bi";
+import { FiShoppingCart } from "react-icons/fi";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,7 +36,20 @@ const Navbar = () => {
   return (
     <Box bg={useColorModeValue("white", "black")} px={4} className="mb-10">
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Box fontSize="xl" fontWeight="bold">
+
+        <Box
+          display={{ md: "none" }}
+          className="w-[33.33%]"
+        >
+          <IconButton
+            size="md"
+            icon={<HamburgerIcon />}
+            aria-label="Open Menu"
+            onClick={onOpen}
+          />
+        </Box>
+
+        <Box fontSize="xl" fontWeight="bold" className="w-[33.33%] flex md:justify-start justify-center">
           <img
             src="/logo.png"
             alt="logo"
@@ -74,13 +89,20 @@ const Navbar = () => {
         </HStack>
 
         {/* Mobile Menu Icon */}
-        <IconButton
-          size="md"
-          icon={<HamburgerIcon />}
-          aria-label="Open Menu"
-          display={{ md: "none" }}
-          onClick={onOpen}
-        />
+        <Flex className="w-[33.33%] flex justify-end" gap={2} display={{ base: "flex", md: "none" }}>
+          <Link to={cartPage()}>
+            <IconButton
+              className="flex justify-center"
+              size="md"
+              icon={<FiShoppingCart />}
+            />
+          </Link>
+          <IconButton
+            className="flex justify-center"
+            size="md"
+            icon={<BiHelpCircle />}
+          />
+        </Flex>
       </Flex>
 
       {/* Right-side Drawer for Mobile Menu */}

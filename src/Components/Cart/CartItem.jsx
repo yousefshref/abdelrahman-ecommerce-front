@@ -32,23 +32,17 @@ const CartItem = ({ item, index }) => {
 
     return (
         <tr>
-            <td className="border px-4 py-2 gap-3">
-                <div className='flex items-center gap-4'>
-                    <img src={item?.images[0]} className="w-10" alt="" />
-                    <div>
-                        <p>{item?.name}</p>
-                        {/* <small className='text-gray-500'>{item?.description?.length > 40 ? item?.description.slice(0, 40) + "..." : item?.description}</small> */}
-                    </div>
-                </div>
+            <td className="border px-4 py-2 gap-3 min-w-[200px]">
+                {item?.name}
             </td>
-            <td className="border px-4 py-2 font-bold">
+            <td className="border px-4 py-2 min-w-[100px] font-bold">
                 <p>{item?.offer_price ? item?.offer_price : item?.price} EGP</p>
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 min-w-[200px]">
                 <NumberInput value={quantity} setValue={setQuantity} />
             </td>
-            <td className="border px-4 py-2 font-bold">{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</td>
-            <td className="border px-4 py-2 font-bold">
+            <td className="border px-4 py-2 min-w-[100px] font-bold">{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</td>
+            <td className="border px-4 py-2 min-w-[100px] font-bold">
                 <BiTrash className='text-2xl text-red-600 cursor-pointer' onClick={() => cartContext?.deleteCart(item?.id)} />
             </td>
         </tr>

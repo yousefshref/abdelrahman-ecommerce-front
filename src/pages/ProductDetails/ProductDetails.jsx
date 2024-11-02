@@ -54,7 +54,7 @@ const ProductDetails = () => {
 
       {
         productsContext?.loading && (
-          <div className="fixed z-10 bg-green-50 w-screen flex justify-center items-center h-screen">
+          <div className="fixed left-0 top-0 z-10 bg-green-50 w-screen flex justify-center items-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
           </div>
         )

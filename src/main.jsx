@@ -11,6 +11,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import OrderContext from "./Contexts/OrderContext.jsx";
 import AuthContext from "./Contexts/AuthContext.jsx";
 import UsersContext from "./Contexts/UsersContext.jsx";
+import AlertContext from "./Contexts/AlertContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -23,7 +24,9 @@ createRoot(document.getElementById("root")).render(
                 <OrderContext>
                   <CategoryContext>
                     <UsersContext>
-                      <App />
+                      <AlertContext>
+                        <App />
+                      </AlertContext>
                     </UsersContext>
                   </CategoryContext>
                 </OrderContext>

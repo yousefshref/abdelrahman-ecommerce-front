@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar/Navbar'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import CartItem from '../../Components/Cart/CartItem'
 import { StatesContextProvider } from '../../Contexts/StatesContext'
-import { Modal, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import { Modal, ModalContent, ModalHeader, ModalOverlay, Spinner, useDisclosure } from '@chakra-ui/react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { CgSpinner } from 'react-icons/cg'
 import { Link } from 'react-router-dom'
@@ -80,7 +80,10 @@ const Cart = () => {
 
   const orderLoading = orderContext?.loading
 
-  const handleCreateOrder = () => {
+  const [loading, setLoading] = React.useState(false)
+
+  const handleCreateOrder = async () => {
+    setLoading(true)
     const data = {
       name,
       phone_number,
@@ -94,7 +97,8 @@ const Cart = () => {
       }))
     }
 
-    orderContext?.createOrder({ data })
+    await orderContext?.createOrder({ data })
+    setLoading(false)
   }
 
 
@@ -104,34 +108,34 @@ const Cart = () => {
       <Navbar />
 
       <div className='flex flex-col gap-10 p-5 mt-10'>
-        <div className='w-[100%] h-fit'>
-          <table className="min-w-full bg-white">
+        <div className='w-[100%] h-fit overflow-x-scroll'>
+          <table className="w-full bg-white">
             <thead>
               <tr>
-                <th className="py-2 text-start min-w-[40%]">المنتج</th>
-                <th className="py-2 text-start w-[20%]">السعر</th>
-                <th className="py-2 text-start w-[20%]">الكمية</th>
-                <th className="py-2 text-start w-[15%]">المجموع</th>
-                <th className="py-2 text-start w-[5%]">حذف</th>
+                <th className="py-2 text-start">المنتج</th>
+                <th className="py-2 text-start">السعر</th>
+                <th className="py-2 text-start">الكمية</th>
+                <th className="py-2 text-start">المجموع</th>
+                <th className="py-2 text-start">حذف</th>
               </tr>
             </thead>
             <tbody>
               {cart?.length > 0 ? cart?.map((item, index) => (
                 <CartItem key={item?.id} item={item} index={index} />
               )) : (
-                <tr>
+                <tr className='mb-4'>
                   <td className="text-green-500 font-bold text-2xl py-2 text-start">لا يوجد منتجات في السلة</td>
                 </tr>
               )}
-              <Link to='/' className='mt-3 p-1 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
             </tbody>
           </table>
         </div>
+        <Link to='/' className='p-1 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
 
 
         {cart?.length > 0 && (
           <div className='flex gap-5 w-full md:flex-row flex-col'>
-            <div className='md:min-w-[400px] w-full p-5 border border-black flex flex-col h-fit'>
+            <div className='md:min-w-[400px] min-w-full p-5 border border-black flex flex-col h-fit'>
               <strong className='text-2xl text-gray-500'>ملخص الطلب</strong>
               <ul className='flex flex-col mt-3'>
                 {cart?.map((item, index) => (
@@ -183,7 +187,17 @@ const Cart = () => {
                     <strong>البريد الالكتروني:</strong>
                     <p>{email}</p>
                   </li>
-                  <button onClick={handleCreateOrder} className='p-1 mt-3 py-2 px-4 transition-all duration-500 hover:bg-green-800 bg-green-500 text-white w-fit'>تاكيد الطلب</button>
+                  <button onClick={orderLoading ? null : handleCreateOrder} className='p-1 mt-3 py-2 px-4 transition-all duration-500 hover:bg-green-800 bg-green-500 text-white w-fit'>
+                    {loading ? (
+                      <Spinner
+                        thickness="4px"
+                        speed="0.65s"
+                        emptyColor="gray.200"
+                        color="teal.500"
+                        size="lg"
+                      />
+                    ) : "تاكيد الطلب"}
+                  </button>
                 </ul>
               )}
             </div>

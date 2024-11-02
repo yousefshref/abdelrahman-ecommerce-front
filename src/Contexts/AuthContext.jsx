@@ -2,11 +2,15 @@ import axios from 'axios'
 import React, { createContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { adminDashboard } from '../Variables/pathes'
+import { useToast } from '@chakra-ui/react'
 
 const AuthContext = ({ children }) => {
     const navigate = useNavigate()
 
     const [loading, setLoading] = React.useState(false)
+
+
+    const toast = useToast()
 
     const login = async (data) => {
         setLoading(true)
@@ -22,7 +26,16 @@ const AuthContext = ({ children }) => {
         } catch (err) {
             // 404 not found
             if (err.response.status === 404) {
-                alert("تأكد من صحة اسم الحساب وكلمة المرور")
+                // alert("تأكد من صحة اسم الحساب وكلمة المرور")
+                toast({
+                    title: "تأكد من صحة اسم الحساب وكلمة المرور",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
             console.log(err);
         } finally {
@@ -45,7 +58,16 @@ const AuthContext = ({ children }) => {
             return res.data
         } catch (err) {
             if (err.response.status == 400) {
-                alert("اسم الحساب موجود بالفعل")
+                // alert("اسم الحساب موجود بالفعل")
+                toast({
+                    title: "اسم الحساب موجود بالفعل",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
             console.log(err);
         } finally {

@@ -19,25 +19,21 @@ const Slider = () => {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
+          delay: 1000,
+          // disableOnInteraction: false,
         }}
-        speed={1700}
+        speed={1000}
         loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
+        // pagination={{
+        //   clickable: true,
+        // }}
+        // navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={index} className="group">
+          <SwiperSlide key={index}>
             <div className="relative">
               <img src={image} alt={`Slide ${index + 1}`} className="w-full" />
-              {/* Arrows appear on small screens by default, and on hover for larger screens */}
-              <div className="swiper-button-next opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="swiper-button-prev opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </SwiperSlide>
         ))}

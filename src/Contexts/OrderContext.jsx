@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { trackOrders } from '../Variables/pathes'
 import { CartContextProvider } from './CartContext'
 import axios from 'axios'
+import { useToast } from '@chakra-ui/react'
 
 const OrderContext = ({ children }) => {
     const cartContext = React.useContext(CartContextProvider)
 
 
     const navigate = useNavigate()
+
+    const toast = useToast()
 
 
     const [loading, setLoading] = React.useState(false)
@@ -31,7 +34,16 @@ const OrderContext = ({ children }) => {
         catch (err) {
             // 500
             if (err.response.status === 500) {
-                alert(err.response.data)
+                // alert(err.response.data)
+                toast({
+                    title: err.response.data,
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
 
             console.log(err);
@@ -68,11 +80,29 @@ const OrderContext = ({ children }) => {
         catch (err) {
             // 400
             if (err.response.status === 400) {
-                alert(err.response.data)
+                // alert(err.response.data)
+                toast({
+                    title: err.response.data,
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
             // 500
             if (err.response.status === 500) {
-                alert(err.response.data)
+                // alert(err.response.data)
+                toast({
+                    title: err.response.data,
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
 
             console.log(err);
@@ -104,11 +134,29 @@ const OrderContext = ({ children }) => {
         catch (err) {
             // 400
             if (err.response.status === 400) {
-                alert("تأكد من صحة البيانات")
+                // alert("تأكد من صحة البيانات")
+                toast({
+                    title: "تأكد من صحة البيانات",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
             // 500
             if (err.response.status === 500) {
-                alert("حدث خطأ ما")
+                // alert("حدث خطأ ما")
+                toast({
+                    title: "حدث خطأ ما",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
 
             console.log(err);
@@ -133,11 +181,29 @@ const OrderContext = ({ children }) => {
         catch (err) {
             // 400
             if (err.response.status === 400) {
-                alert("تأكد من صحة البيانات")
+                // alert("تأكد من صحة البيانات")
+                toast({
+                    title: "تأكد من صحة البيانات",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
             // 500
             if (err.response.status === 500) {
-                alert("حدث خطأ ما")
+                // alert("حدث خطأ ما")
+                toast({
+                    title: "حدث خطأ ما",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
             }
 
             console.log(err);

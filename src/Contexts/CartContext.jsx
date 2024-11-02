@@ -1,20 +1,56 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
+import { AlertContextProvider } from './AlertContext'
+import { useToast } from '@chakra-ui/react'
+
 
 const CartContext = ({ children }) => {
-
     const [cart, setCart] = React.useState([])
 
+    const alertContext = useContext(AlertContextProvider)
+
+    const toast = useToast();
+
+
     const addToCart = (product, quantity = 1) => {
-        const index = cart?.findIndex(item => item.id === product.id)
+        const { id, name, price, offer_price } = product;  // Keep only essential fields
+        const newProduct = { id, name, price, offer_price, quantity };
+
+        const index = cart?.findIndex(item => item.id === product.id);
         if (index !== -1) {
-            alert('المنتج موجود بالفعل فى السلة')
+            toast({
+                title: "المنتج موجود بالفعل",
+                // description: "Your item has been successfully added to the cart.",
+                status: "error",
+                duration: 3000, // 3 seconds
+                isClosable: true,
+                position: "bottom-left",
+                variant: "subtle", // Optional: You can use subtle for a softer effect
+            });
         } else {
-            localStorage.setItem('cart', JSON.stringify([...cart, { ...product, quantity }]))
-            setCart([...cart, product])
-            alert('تم اضافة المنتج الى السلة')
-            getCart()
+            try {
+                const newCart = cart.concat(newProduct);
+                if (window.localStorage) {
+                    localStorage.setItem('cart', JSON.stringify(newCart));
+                }
+                setCart(newCart);
+
+                toast({
+                    title: "تم اضافة المنتج للسلة",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "success",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    // variant: "subtle", // Optional: You can use subtle for a softer effect
+                });
+            } catch (error) {
+                console.error('Error saving to localStorage:', error);
+                alert(error);
+            }
         }
-    }
+    };
+
+
 
     const updateCart = (id, quantity) => {
         const index = cart?.findIndex(item => item.id === id)
@@ -40,6 +76,8 @@ const CartContext = ({ children }) => {
             getCart()
         }
     }
+
+
     return (
         <CartContextProvider.Provider value={{
             cart, setCart,

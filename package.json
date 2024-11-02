@@ -20,7 +20,7 @@
     "axios": "^1.7.7",
     "flowbite": "^2.5.2",
     "flowbite-react": "^0.10.2",
-    "framer-motion": "^11.11.10",
+    "framer-motion": "^11.11.11",
     "gsap": "^3.12.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
