@@ -21,7 +21,6 @@ const AuthContext = ({ children }) => {
             if (res.data.user.is_superuser || res.data.user.is_shipping_employee) {
                 navigate(adminDashboard())
             }
-            console.log(res.data);
 
         } catch (err) {
             // 404 not found

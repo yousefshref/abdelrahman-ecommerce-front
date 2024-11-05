@@ -2,7 +2,10 @@ import React, { useEffect } from 'react'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import NumberInput from '../NumberInput/NumberInput'
 import { BiTrash } from 'react-icons/bi'
+import { Box, Flex, Text } from '@chakra-ui/react'
+import { CgClose } from 'react-icons/cg'
 
+import { server } from '../../Variables/pathes'
 const CartItem = ({ item, index }) => {
 
     const cartContext = React.useContext(CartContextProvider)
@@ -10,9 +13,9 @@ const CartItem = ({ item, index }) => {
     const [quantity, setQuantity] = React.useState(item?.quantity)
 
 
-    const [price, setPrice] = React.useState(item?.offe_price ? item?.offe_price : item?.price)
+    const [price, setPrice] = React.useState(item?.offer_price ? item?.offer_price : item?.price)
     useEffect(() => {
-        setPrice(item?.offe_price ? item?.offe_price : item?.price)
+        setPrice(item?.offer_price ? item?.offer_price : item?.price)
     }, [])
 
     const [total, setTotal] = React.useState(item?.quantity * price)
@@ -31,21 +34,41 @@ const CartItem = ({ item, index }) => {
     }, [quantity])
 
     return (
-        <tr>
-            <td className="border px-4 py-2 gap-3 min-w-[200px]">
-                {item?.name}
-            </td>
-            <td className="border px-4 py-2 min-w-[100px] font-bold">
-                <p>{item?.offer_price ? item?.offer_price : item?.price} EGP</p>
-            </td>
-            <td className="border px-4 py-2 min-w-[200px]">
-                <NumberInput value={quantity} setValue={setQuantity} />
-            </td>
-            <td className="border px-4 py-2 min-w-[100px] font-bold">{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</td>
-            <td className="border px-4 py-2 min-w-[100px] font-bold">
-                <BiTrash className='text-2xl text-red-600 cursor-pointer' onClick={() => cartContext?.deleteCart(item?.id)} />
-            </td>
-        </tr>
+        <Box shadow={"md"} p={"3"} className='relative p-2'>
+            {/* delete button */}
+            <CgClose onClick={() => cartContext?.deleteCart(item?.id)} className='absolute top-2 left-2 text-red-500 text-2xl cursor-pointer' />
+            <Flex direction={window.innerWidth < 768 ? "column" : "row"} gap={"5"}>
+                {/* image */}
+                <img
+                    src={server + item?.image1}
+                    alt={item?.name}
+                    className='md:w-[120px] w-full shadow-lg'
+                />
+                {/* title and quanity and price */}
+                <Flex direction={"column"} gap="3" className='w-full'>
+                    <Flex direction={"column"} gap="1">
+                        <strong className='lg:text-2xl text-base'>{item?.name}</strong>
+                        <p className='text-gray-500'>الكمية: {quantity}</p>
+                    </Flex>
+                    <Box className='w-full'>
+                        <Flex className='w-full' direction={window.innerWidth < 768 ? "column" : "row"} gap="5" justifyContent={"space-between"} alignItems={window.innerWidth < 768 ? "start" : "center"}>
+                            <Text className='text-2xl font-bold text-nowrap'>
+                                {price} EGP
+                            </Text>
+                            <div className='scale-90'>
+                                <NumberInput value={quantity} setValue={setQuantity} />
+                            </div>
+                        </Flex>
+                    </Box>
+                </Flex>
+                {/* quantity */}
+                {/* <Flex className='ms-auto' direction={"column"} justifyContent={"end"}>
+                    <div className='scale-90'>
+                        <NumberInput value={quantity} setValue={setQuantity} />
+                    </div>
+                </Flex> */}
+            </Flex>
+        </Box>
     )
 }
 

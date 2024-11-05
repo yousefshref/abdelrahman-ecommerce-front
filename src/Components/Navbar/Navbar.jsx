@@ -18,8 +18,10 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CartContextProvider } from "../../Contexts/CartContext";
-import { cartPage } from "../../Variables/pathes";
+import { AuthContextProvider } from "../../Contexts/AuthContext";
+import { adminOrders, cartPage } from "../../Variables/pathes";
 import { BiHelpCircle } from "react-icons/bi";
+import { RxDashboard } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
 
 const Navbar = () => {
@@ -32,6 +34,15 @@ const Navbar = () => {
   useEffect(() => {
     cartContext?.getCart()
   }, [])
+
+
+  const userContext = React.useContext(AuthContextProvider)
+  const user = userContext?.user
+  useEffect(() => {
+    userContext?.getUser()
+  }, [])
+    ;
+
 
   return (
     <Box bg={useColorModeValue("white", "black")} px={4} className="mb-10">
@@ -80,6 +91,13 @@ const Navbar = () => {
               تدريب اونلاين
             </Link>
           </Button>
+          {user?.is_shipping_employee && (
+            <Button variant="link">
+              <Link to={adminOrders()} onClick={onClose}>
+                الداشبورد
+              </Link>
+            </Button>
+          )}
           <Button variant="link">
             <Link className="flex gap-2 items-center" to={cartPage()} onClick={onClose}>
               <p>{cart?.length}</p>
@@ -97,11 +115,23 @@ const Navbar = () => {
               icon={<FiShoppingCart />}
             />
           </Link>
-          <IconButton
-            className="flex justify-center"
-            size="md"
-            icon={<BiHelpCircle />}
-          />
+          {user?.is_shipping_employee ? (
+            <Button variant="link">
+              <Link to={adminOrders()} onClick={onClose}>
+                <IconButton
+                  className="flex justify-center"
+                  size="md"
+                  icon={<RxDashboard />}
+                />
+              </Link>
+            </Button>
+          ) :
+            <IconButton
+              className="flex justify-center"
+              size="md"
+              icon={<BiHelpCircle />}
+            />
+          }
         </Flex>
       </Flex>
 

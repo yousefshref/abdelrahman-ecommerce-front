@@ -4,6 +4,7 @@ import { ProductsContextProvider } from '../../Contexts/ProductsContext'
 import { CgSpinner } from 'react-icons/cg'
 
 import UpdateOrCreateProduct from './UpdateOrCreateProduct'
+import { server } from '../../Variables/pathes'
 
 const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => {
     const [name, setName] = React.useState(product?.name)
@@ -51,7 +52,7 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
                 <td className='border p-2'>{product.user_details?.username}</td>
                 <td className='border p-2'>
                     <div className='flex gap-2 items-center'>
-                        <img className='w-full max-w-[40px]' src={product?.images ? product?.images[0] : ""} alt="" />
+                        <img className='w-full max-w-[40px]' src={server + product?.image1} alt="" />
                         <Input
                             type="text"
                             value={name}

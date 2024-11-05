@@ -1,7 +1,7 @@
 import React from 'react'
 import { CiShoppingCart } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
-import { productDetails } from '../../Variables/pathes'
+import { productDetails, server } from '../../Variables/pathes'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import { Flex } from '@chakra-ui/react'
 import { BsWhatsapp } from 'react-icons/bs'
@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
             ) : null}
             <Link to={productDetails(product?.id)}>
                 <img
-                    src={product?.images ? product?.images[0] : ""}
+                    src={server + product?.image1}
                     alt={product?.name}
                     className="w-full"
                 />

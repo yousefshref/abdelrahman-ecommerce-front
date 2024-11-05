@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import { CiShoppingCart } from "react-icons/ci";
 import { ProductsContextProvider } from "../../Contexts/ProductsContext";
 import ProductCard from "../../Components/Products/ProductCard";
 import { CartContextProvider } from "../../Contexts/CartContext";
+import { server } from "../../Variables/pathes";
 
 const ProductDetails = () => {
 
@@ -23,15 +24,7 @@ const ProductDetails = () => {
   }, [id]);
 
 
-  const products = productsContext?.products;
-
-  const handleGetProducts = async () => {
-    await productsContext?.fetchProducts();
-  };
-
-  useEffect(() => {
-    handleGetProducts();
-  }, []);
+  console.log(productDetails);
 
 
   useEffect(() => {
@@ -48,6 +41,14 @@ const ProductDetails = () => {
   const handleAddToCart = (product) => {
     cartsContext?.addToCart(product);
   };
+
+
+
+  const [activeImage, setActiveImage] = useState(productDetails?.image1)
+
+  useEffect(() => {
+    setActiveImage(productDetails?.image1)
+  }, [productDetails])
 
   return (
     <div className="flex flex-col h-auto p-5 mb-5">
@@ -94,18 +95,53 @@ const ProductDetails = () => {
                 {productDetails?.description}
               </p>
             </div>
-            <div className="md:w-1/2 w-full">
+            <div className="md:w-1/2 w-full flex flex-col gap-2">
               <img
-                src={productDetails?.images ? productDetails?.images[0] : ""}
+                src={server + activeImage}
                 alt={productDetails?.name}
                 className="w-full max-w-[400px] mx-auto bg-gray-100/30 p-5"
-              /></div>
+              />
+              <div className="flex gap-5 flex-wrap justify-center">
+                {productDetails?.image1 && (
+                  <img
+                    src={server + productDetails?.image1}
+                    alt={productDetails?.name}
+                    className="w-[50px] h-[50px]"
+                    onClick={() => setActiveImage(productDetails?.image1)}
+                  />
+                )}
+                {productDetails?.image2 && (
+                  <img
+                    src={server + productDetails?.image2}
+                    alt={productDetails?.name}
+                    className="w-[50px] h-[50px]"
+                    onClick={() => setActiveImage(productDetails?.image2)}
+                  />
+                )}
+                {productDetails?.image3 && (
+                  <img
+                    src={server + productDetails?.image3}
+                    alt={productDetails?.name}
+                    className="w-[50px] h-[50px]"
+                    onClick={() => setActiveImage(productDetails?.image3)}
+                  />
+                )}
+                {productDetails?.image4 && (
+                  <img
+                    src={server + productDetails?.image4}
+                    alt={productDetails?.name}
+                    className="w-[50px] h-[50px]"
+                    onClick={() => setActiveImage(productDetails?.image4)}
+                  />
+                )}
+              </div>
+            </div>
           </div>
         )}
       </div>
       <h1 className="md:text-5xl text-3xl text-lime-700 font-bold mt-20 text-center">منتجات مشابهة</h1>
       <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-10 mt-10">
-        {products?.map((product) => (
+        {productDetails?.related_products_details?.map((product) => (
           <ProductCard key={product?.id} product={product} />
         ))}
       </div>

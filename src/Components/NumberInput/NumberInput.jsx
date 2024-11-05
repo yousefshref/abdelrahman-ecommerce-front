@@ -9,7 +9,7 @@ const NumberInput = ({ value, setValue }) => {
             }} className='p-3 border rounded-full border-black cursor-pointer transition-all hover:bg-black/10 hover:border-black/10'>
                 <FaPlus size={10} />
             </span>
-            <input type="number" value={value} placeholder='1' className='w-[100px] text-center p-2 bg-white outline-none text-3xl' />
+            <input type="number" value={value} placeholder='1' className='w-[100px] text-center p-2 bg-white outline-none text-xl' />
             <span onClick={() => {
                 value > 1 && setValue(value - 1)
             }} className='p-3 border rounded-full border-black cursor-pointer transition-all hover:bg-black/10 hover:border-black/10'>

@@ -3,10 +3,10 @@ import Navbar from '../../Components/Navbar/Navbar'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import CartItem from '../../Components/Cart/CartItem'
 import { StatesContextProvider } from '../../Contexts/StatesContext'
-import { Modal, ModalContent, ModalHeader, ModalOverlay, Spinner, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Select, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
-import { CgSpinner } from 'react-icons/cg'
-import { Link } from 'react-router-dom'
+import { Form, Link } from 'react-router-dom'
+import { initDB } from '../../Utlis/initDB'
 
 const Cart = () => {
 
@@ -97,7 +97,10 @@ const Cart = () => {
       }))
     }
 
-    await orderContext?.createOrder({ data })
+    await orderContext?.createOrder({ data }).then(async () => {
+      const db = await initDB();
+      await db.clear('cart');
+    })
     setLoading(false)
   }
 
@@ -107,197 +110,162 @@ const Cart = () => {
     <div className='font p-5'>
       <Navbar />
 
-      <div className='flex flex-col gap-10 p-5 mt-10'>
-        <div className='w-[100%] h-fit overflow-x-scroll'>
-          <table className="w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2 text-start">المنتج</th>
-                <th className="py-2 text-start">السعر</th>
-                <th className="py-2 text-start">الكمية</th>
-                <th className="py-2 text-start">المجموع</th>
-                <th className="py-2 text-start">حذف</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart?.length > 0 ? cart?.map((item, index) => (
-                <CartItem key={item?.id} item={item} index={index} />
-              )) : (
-                <tr className='mb-4'>
-                  <td className="text-green-500 font-bold text-2xl py-2 text-start">لا يوجد منتجات في السلة</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        <Link to='/' className='p-1 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
-
-
-        {cart?.length > 0 && (
-          <div className='flex gap-5 w-full md:flex-row flex-col'>
-            <div className='md:min-w-[400px] min-w-full p-5 border border-black flex flex-col h-fit'>
-              <strong className='text-2xl text-gray-500'>ملخص الطلب</strong>
-              <ul className='flex flex-col mt-3'>
-                {cart?.map((item, index) => (
-                  <li key={item?.id} className='flex gap-2 justify-between my-2'>
-                    <strong>{item?.name}:</strong>
-                    <p>{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</p>
-                  </li>
-                ))}
-                <li className='flex gap-2 justify-between my-2'>
-                  <strong>الشحن:</strong>
-                  <p>{shippingFees || 0} EGP</p>
-                </li>
-                <li className='flex gap-2 justify-between my-2'>
-                  <strong>المجموع:</strong>
-                  <p>{total} EGP</p>
-                </li>
-                <li className='flex gap-2 justify-between my-2'>
-                  <button onClick={onOpen} className='p-1 py-2 px-4 transition-all duration-500 hover:bg-gray-800 bg-black text-white w-full'>اضف تفاصيل الشحن لطلب المنتج</button>
-                </li>
-              </ul>
-            </div>
-
-
-            <div className='flex flex-col w-full'>
-              <strong className='text-2xl text-gray-500'>ملخص الشحن</strong>
-              {!name ? (
-                <div className='p-3 bg-yellow-100 mt-3 border border-yellow-700 text-yellow-700 flex flex-col justify-center items-center'>
-                  <p>يجب ان تضف تفاصيل الشحن</p>
-                </div>
-              ) : (
-                <ul className='flex flex-col mt-3'>
-                  <li className='flex gap-2 my-2'>
-                    <strong>الاسم:</strong>
-                    <p>{name}</p>
-                  </li>
-                  <li className='flex gap-2 my-2'>
-                    <strong>رقم الجوال:</strong>
-                    <p>{phone_number}</p>
-                  </li>
-                  <li className='flex gap-2 my-2'>
-                    <strong>المحافظة:</strong>
-                    <p>{states?.find(s => s?.id == state)?.name}</p>
-                  </li>
-                  <li className='flex gap-2 my-2'>
-                    <strong>العنوان:</strong>
-                    <p>{address}</p>
-                  </li>
-                  <li className='flex gap-2 my-2'>
-                    <strong>البريد الالكتروني:</strong>
-                    <p>{email}</p>
-                  </li>
-                  <button onClick={orderLoading ? null : handleCreateOrder} className='p-1 mt-3 py-2 px-4 transition-all duration-500 hover:bg-green-800 bg-green-500 text-white w-fit'>
-                    {loading ? (
-                      <Spinner
-                        thickness="4px"
-                        speed="0.65s"
-                        emptyColor="gray.200"
-                        color="teal.500"
-                        size="lg"
-                      />
-                    ) : "تاكيد الطلب"}
-                  </button>
-                </ul>
-              )}
+      {cart?.length > 0 ? (
+        <div className='flex md:flex-row flex-col-reverse gap-10 md:p-5 p-2 mt-10'>
+          <div className='lg:w-[calc(100%-500px)] md:w-[calc(100%-300px)] w-full flex flex-col'>
+            <Link to='/' className='p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
+            <div className='flex flex-col gap-2'>
+              {
+                cart?.map((item, index) => (
+                  <CartItem
+                    key={item?.id}
+                    item={item}
+                  />
+                ))
+              }
             </div>
           </div>
-        )}
 
+          {/* products total and details */}
+          <Box className='lg:w-[500px] md:w-[300px] w-full border p-5 border-gray-500'>
+            <Flex direction={'column'} gap={'2'}>
+              <strong className='text-green-500'>تفاصيل المنتجات</strong>
+              <hr />
+              {cart?.map((item, index) => (
+                <Flex gap={'2'} key={item?.id} justifyContent={'space-between'} alignItems={'center'} className='py-2'>
+                  <Text>{item?.name}: </Text>
+                  <strong>{item?.offer_price ? item?.offer_price * item?.quantity : item?.price * item?.quantity} EGP</strong>
+                </Flex>
+              ))}
+              <div className='mt-2' />
+              <strong className='text-green-500'>الاجمالي</strong>
+              <hr />
+              <div className='flex gap-3 items-center'>
+                <p>اجمالي السعر:</p>
+                <strong>{total} EGP</strong>
+              </div>
+              <div className='flex gap-3 items-center'>
+                <p>سعر الشحن:</p>
+                <strong>{shippingFees ? shippingFees : 0} EGP</strong>
+              </div>
+              <div className='mt-2' />
+              <Button
+                onClick={!name || !phone_number || !state || !address ? onOpen : handleCreateOrder}
+                className='w-full'
+                colorScheme='green'
+                isLoading={loading}
+                variant={!name || !phone_number || !state || !address ? 'outline' : "solid"}
+              >
+                {
+                  !name || !phone_number || !state || !address ? "تأكيد الطلب" : "اطلب المنتجات الأن"
+                }
+              </Button>
+            </Flex>
+          </Box>
+        </div>
+      ) : (
+        <div className='flex flex-col gap-2 justify-center items-center'>
+          <img src="/no_tound.jpg" alt="" className='' />
+          <Link to='/' className='p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
+        </div>
+      )}
 
-        <Modal size='xl' isCentered isOpen={isOpen} onClose={() => {
-          if (!name || !phone_number || !state || !address) {
-            alert('يجب اضافة جميع الخانات (ماعدا البريد الالكتروني هو اختياري)')
-          } else {
-            onClose()
-          }
-        }}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader className='font'>اضف تفاصيل الشحن</ModalHeader>
-            <div className='flex flex-col p-3 font'>
-              <div className='flex flex-col'>
-                <label htmlFor="name">الاسم</label>
-                <input
-                  type="text"
-                  id="name"
+      {/* Drawer */}
+      <Drawer
+        size='md'
+        isOpen={isOpen}
+        placement='right'
+        onClose={onClose}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader className='font'>تفاصيل الشحن</DrawerHeader>
+
+          <DrawerBody>
+            <div className='flex flex-col gap-4 font'>
+              <div className='flex flex-col gap-2'>
+                <div className='flex gap-2 items-center'>
+                  <p>الاسم</p>
+                  <p className='text-red-500'>*</p>
+                </div>
+                <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="border border-gray-400 outline-none rounded-md p-2"
-                  placeholder='مثال: يوسف شريف'
+                  placeholder='مثال: يوسف شريف محمد'
+                  aria-label='name'
                 />
               </div>
-              <div className='flex flex-col mt-3'>
-                <label htmlFor="phone_number">رقم الجوال</label>
-                <input
-                  type="text"
-                  id="phone_number"
+
+              <div className='flex flex-col gap-2'>
+                <div className='flex gap-2 items-center'>
+                  <p>رقم الهاتف</p>
+                  <p className='text-red-500'>*</p>
+                </div>
+                <Input
                   value={phone_number}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="border border-gray-400 outline-none rounded-md p-2"
-                  placeholder='مثال: 01234567890'
+                  placeholder='مثال: 01012345678'
+                  aria-label='phone_number'
                 />
               </div>
-              <div className='flex flex-col mt-3'>
-                <label htmlFor="state">المحافظة</label>
+
+              <div className='flex flex-col gap-2'>
+                <div className='flex gap-2 items-center'>
+                  <p>المدينة</p>
+                  <p className='text-red-500'>*</p>
+                </div>
                 <select
-                  id="state"
+                  placeholder='مثال: القاهرة'
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="border border-gray-400 outline-none rounded-md p-2"
                 >
-                  <option value="">اختر المحافظة</option>
-                  {states?.map(state => (
+                  <option value={""}>{"اختر المدينة"}</option>
+                  {states?.map((state) => (
                     <option key={state?.id} value={state?.id}>{state?.name}</option>
                   ))}
                 </select>
               </div>
-              <div className='flex flex-col mt-3'>
-                <label htmlFor="address">العنوان</label>
-                <textarea
-                  id="address"
+
+              <div className='flex flex-col gap-2'>
+                <div className='flex gap-2 items-center'>
+                  <p>العنوان</p>
+                  <p className='text-red-500'>*</p>
+                </div>
+                <Textarea
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="border border-gray-400 outline-none rounded-md p-2"
-                  placeholder='مثال: مدينة الشروق, اسكان مبارك الشباب 100 متر, عمارة 123'
+                  placeholder='مثال: الرياض الجديدة'
+                  aria-label='address'
                 />
               </div>
-              <div className='flex flex-col mt-3'>
-                <label htmlFor="email">البريد الالكترونى <span className='text-gray-500 text-sm'>(في حالة لو تريد تتبع شحنتك مباشرة)</span></label>
-                <input
-                  type="email"
-                  id="email"
+
+
+              <div className='flex flex-col gap-2'>
+                <div className='flex gap-2 items-center'>
+                  <p>البريد الالكتروني</p>
+                </div>
+                <Input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="border border-gray-400 outline-none rounded-md p-2"
-                  placeholder='مثال: example@example.com'
+                  placeholder='اكتب الايميل لو تريد تتبع الشحنه'
+                  aria-label='email'
                 />
               </div>
-              <button onClick={() => {
-                if (orderLoading) {
-
-                } else {
-                  if (!name || !phone_number || !state || !address) {
-                    alert('يجب اضافة جميع الخانات (ماعدا البريد الالكتروني هو اختياري)')
-                  } else {
-                    onClose()
-                  }
-                }
-              }} className='p-1 py-2 px-4 transition-all duration-500 hover:bg-gray-800 bg-black text-white w-fit mt-3'>
-                {
-                  orderLoading ? (
-                    <span className='flex items-center gap-2 animate-spin'>
-                      <CgSpinner />
-                    </span>
-                  ) : "تم"
-                }
-              </button>
             </div>
-          </ModalContent>
-        </Modal>
+          </DrawerBody>
 
-      </div>
-
+          <DrawerFooter className='flex gap-3'>
+            <Button
+              isLoading={orderLoading || loading}
+              loadingText='جاري اضافة الطلب'
+              colorScheme='green'
+              onClick={onClose}
+            >
+              تــــم
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </div>
   )
 }

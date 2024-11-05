@@ -64,7 +64,6 @@ const OrderContext = ({ children }) => {
             })
             // 201
             if (res.status === 201) {
-                localStorage.removeItem('cart')
                 cartContext.setCart([])
                 setOrders([...orders, res.data])
                 if (!nav) {
@@ -72,6 +71,16 @@ const OrderContext = ({ children }) => {
                 } else {
                     navigate(trackOrders())
                 }
+                toast({
+                    title: "تم طلب منتجاتك بنجاح",
+                    // description: "Your item has been successfully added to the cart.",
+                    status: "success",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                })
+                // localStorage.removeItem('cart')                
                 return res.data
             } else {
                 console.log(res);
