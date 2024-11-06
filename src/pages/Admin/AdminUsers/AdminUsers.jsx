@@ -4,14 +4,29 @@ import { UsersContextProvider } from '../../../Contexts/UsersContext'
 import UserTableRow from '../../../Components/Users/UserTableRow'
 import { Box, Button, Flex, Input } from '@chakra-ui/react'
 
+import Loading from '../../../Components/Loading/Loading'
+
 const AdminUsers = () => {
     const usersContext = useContext(UsersContextProvider)
 
     const users = usersContext?.users
 
+    const [usersLoading, setUsersLoading] = React.useState(true)
+
+    const handleGetUsers = async () => {
+        setUsersLoading(true)
+        await usersContext?.getUsers()
+        setUsersLoading(false)
+    }
+
     useEffect(() => {
-        usersContext?.getUsers()
+        handleGetUsers()
     }, [])
+
+
+    if (usersLoading) {
+        return <Loading />
+    }
     return (
         <AdminLayout>
 

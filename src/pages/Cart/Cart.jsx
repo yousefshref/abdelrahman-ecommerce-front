@@ -8,6 +8,8 @@ import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { Form, Link } from 'react-router-dom'
 import { initDB } from '../../Utlis/initDB'
 
+import Loading from '../../Components/Loading/Loading'
+
 const Cart = () => {
 
   // modal
@@ -17,8 +19,16 @@ const Cart = () => {
   // cart
   const cartContext = React.useContext(CartContextProvider)
   const cart = cartContext?.cart
+
+  const [cartLoading, setCartLoading] = React.useState(true)
+
+  const handleGetCart = async () => {
+    setCartLoading(true)
+    await cartContext?.getCart()
+    setCartLoading(false)
+  }
   useEffect(() => {
-    cartContext?.getCart()
+    handleGetCart()
   }, [])
 
   // states
@@ -105,6 +115,12 @@ const Cart = () => {
   }
 
 
+
+
+  // loading
+  if (cartLoading) {
+    return <Loading />
+  }
 
   return (
     <div className='font p-5'>

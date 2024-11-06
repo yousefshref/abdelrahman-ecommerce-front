@@ -16,7 +16,7 @@ const PrivateRoute = () => {
                     navigate('/')
                 }
                 if (res.is_superuser || res.is_shipping_employee) {
-                    navigate(adminDashboard())
+                    // navigate(adminDashboard())
                 } else {
                     navigate('/')
                 }

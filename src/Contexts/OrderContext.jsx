@@ -59,7 +59,7 @@ const OrderContext = ({ children }) => {
         try {
             const res = await axios.post('orders/create/', data, {
                 headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}`
+                    ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
                 }
             })
             // 201

@@ -4,27 +4,27 @@ const CustomReviews = () => {
   const reviews = [
     {
       id: 1,
-      name: "اسم المستخدم",
+      name: "أمجد",
       image: "https://picsum.photos/200/300",
       comment:
-        "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "أنت عارف في الشهرين اللي فاتو زادني 1.8 سنت n\ عشان كدة حواصل عليه",
       color: "gray-300",
     },
     {
       id: 2,
-      name: "اسم المستخدم",
+      name: "عائشة محمد",
       image: "https://picsum.photos/200/300",
       comment:
-        "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "حبيبي انا استخدمتو 3 اشهر طولت عليه ما يقارب ال6 سنتي وعمري 16, وتحياتي الك",
       margin: "50px",
       color: "indigo-500",
     },
     {
       id: 3,
-      name: "اسم المستخدم",
+      name: "عبدالله",
       image: "https://picsum.photos/200/300",
       comment:
-        "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "انا استخدمته عمري 14 كان طولي 145 الحين 152 في 3 شهور ويس",
       color: "gray-300",
     },
   ];

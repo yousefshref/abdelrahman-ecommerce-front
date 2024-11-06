@@ -6,6 +6,7 @@ import { ProductsContextProvider } from "../../Contexts/ProductsContext";
 import ProductCard from "../../Components/Products/ProductCard";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { server } from "../../Variables/pathes";
+import Loading from "../../Components/Loading/Loading";
 
 const ProductDetails = () => {
 
@@ -23,8 +24,6 @@ const ProductDetails = () => {
     handleFetchProduct(id);
   }, [id]);
 
-
-  console.log(productDetails);
 
 
   useEffect(() => {
@@ -50,16 +49,13 @@ const ProductDetails = () => {
     setActiveImage(productDetails?.image1)
   }, [productDetails])
 
+
+  if (productsContext?.loading) {
+    return <Loading />
+  }
+
   return (
     <div className="flex flex-col h-auto p-5 mb-5">
-
-      {
-        productsContext?.loading && (
-          <div className="fixed left-0 top-0 z-10 bg-green-50 w-screen flex justify-center items-center h-screen">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-          </div>
-        )
-      }
 
       <Navbar />
       <div className="w-full flex mt-10">

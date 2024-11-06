@@ -8,6 +8,8 @@ import UpdateOrCreateOrder from '../../../Components/Orders/UpdateOrCreateOrder'
 import { UsersContextProvider } from '../../../Contexts/UsersContext';
 import { AuthContextProvider } from '../../../Contexts/AuthContext';
 
+import Loading from '../../../Components/Loading/Loading';
+
 const AdminOrders = () => {
     const ordersContext = React.useContext(OrderContextProvider)
 
@@ -93,6 +95,12 @@ const AdminOrders = () => {
     useEffect(() => {
         calculateCommission();
     }, [totalOrders]);
+
+
+
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <AdminLayout>

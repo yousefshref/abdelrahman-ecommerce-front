@@ -79,19 +79,24 @@ const AuthContext = ({ children }) => {
     const [user, setUser] = React.useState({})
 
     const getUser = async () => {
-        setLoading(true)
-        try {
-            const res = await axios.get('/user/', {
-                headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}`
-                }
-            })
-            setUser(res.data)
-            return res.data
-        } catch (err) {
-            console.log(err)
-        } finally {
-            setLoading(false)
+        if (localStorage.getItem('token')) {
+            setLoading(true)
+            try {
+                const res = await axios.get('/user/', {
+                    // headers: {
+                    //     Authorization: `Token ${localStorage.getItem('token')}`
+                    // }
+                    headers: {
+                        ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                    }
+                })
+                setUser(res.data)
+                return res.data
+            } catch (err) {
+                console.log(err)
+            } finally {
+                setLoading(false)
+            }
         }
     }
 

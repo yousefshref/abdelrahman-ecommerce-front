@@ -6,13 +6,14 @@ const UsersContext = ({ children }) => {
     const [users, setUsers] = React.useState([])
 
     const getUsers = async () => {
-        const res = await axios.get('/users/', {
-            headers: {
-                Authorization: `Token ${localStorage.getItem('token')}`
-            }
-        });
-
-        setUsers(res.data)
+        if (localStorage.getItem('token')) {
+            const res = await axios.get('/users/', {
+                headers: {
+                    ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                }
+            });
+            setUsers(res.data)
+        }
     }
 
 

@@ -168,7 +168,11 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
         <Modal size={"xl"} isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent className='font h-full max-h-[500px] overflow-y-scroll'>
-                <ModalHeader className='text-lime-700'>أضافة منتج جديد</ModalHeader>
+                <ModalHeader className='text-lime-700'>
+                    {
+                        create ? 'أضافة منتج جديد' : 'تعديل منتج'
+                    }
+                </ModalHeader>
                 <ModalBody className='flex flex-col gap-7'>
                     <div className='flex flex-col gap-3'>
                         <strong>تفاصيل اساسية</strong>
@@ -385,6 +389,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                         className='w-fit'
                         colorScheme='green'
                         isLoading={loading}
+                        disabled={loading}
                     >
                         حفظ
                     </Button>

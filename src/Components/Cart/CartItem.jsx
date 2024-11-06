@@ -45,7 +45,7 @@ const CartItem = ({ item, index }) => {
                     className='md:w-[120px] w-full shadow-lg'
                 />
                 {/* title and quanity and price */}
-                <Flex direction={"column"} gap="3" className='w-full'>
+                <Flex direction={"column"} gap="3" className='w-full flex md:flex-row flex-col'>
                     <Flex direction={"column"} gap="1">
                         <strong className='lg:text-2xl text-base'>{item?.name}</strong>
                         <p className='text-gray-500'>الكمية: {quantity}</p>

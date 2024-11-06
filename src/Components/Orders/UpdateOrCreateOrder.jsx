@@ -76,7 +76,12 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     }, [state, order_items])
 
 
+
+    const [loading, setLoading] = useState(false)
+
+
     const handleCreateOrder = async () => {
+        setLoading(true)
         const data = {
             name,
             phone_number,
@@ -89,11 +94,12 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             order_items
         }
 
-        ordersContext?.createOrder({ data, nav: false }).then(e => {
+        await ordersContext?.createOrder({ data, nav: false }).then(e => {
             if (e) {
                 onClose()
             }
         })
+        setLoading(false)
     }
 
 
@@ -111,7 +117,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     }, [order])
 
 
-    const handleUpdateOrder = () => {
+    const handleUpdateOrder = async () => {
+        setLoading(true)
         const data = {
             name,
             phone_number,
@@ -124,11 +131,12 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             order_items
         }
 
-        ordersContext?.updateOrder(order?.id, data).then(e => {
+        await ordersContext?.updateOrder(order?.id, data).then(e => {
             if (e) {
                 onClose()
             }
         })
+        setLoading(false)
     }
 
 
@@ -151,8 +159,14 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             <ModalContent className='font'>
                 <ModalHeader>
                     <Flex justifyContent={"space-between"}>
-                        <p>انشاء طلب جديد</p>
-                        <Button colorScheme='green' size={"sm"} onClick={order?.id ? handleUpdateOrder : handleCreateOrder} className='px-5'>انشاء</Button>
+                        <p>
+                            {
+                                order?.id ? "تعديل الطلب" : "انشاء طلب جديد"
+                            }
+                        </p>
+                        <Button isLoading={loading} isDisabled={loading} colorScheme='green' size={"sm"} onClick={order?.id ? handleUpdateOrder : handleCreateOrder} className='px-5'>
+                            {order?.id ? "تعديل" : "انشاء"}
+                        </Button>
                     </Flex>
                 </ModalHeader>
                 <ModalBody className='h-full max-h-[500px] overflow-y-scroll'>
