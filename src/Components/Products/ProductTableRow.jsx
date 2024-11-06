@@ -46,9 +46,6 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
     const [open, setOpen] = React.useState(false)
 
 
-    console.log(server);
-
-
     return (
         <>
             <tr className='bg-white transition-all'>

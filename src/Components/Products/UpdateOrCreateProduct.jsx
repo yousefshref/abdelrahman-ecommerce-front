@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { Modal, ModalBody, ModalContent, Input, Button, Select, ModalHeader, ModalOverlay, Textarea, Flex, Box } from '@chakra-ui/react'
+import { Modal, ModalBody, ModalContent, Input, Button, Select, ModalHeader, ModalOverlay, Textarea, Flex, Box, IconButton, useDisclosure } from '@chakra-ui/react'
 
 import { PiPlus } from 'react-icons/pi'
 import { CategoryContextProvider } from '../../Contexts/CategoryContext'
@@ -8,6 +8,8 @@ import { ProductsContextProvider } from '../../Contexts/ProductsContext'
 import { CiTrash } from 'react-icons/ci'
 
 import { server } from '../../Variables/pathes'
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
+import UpdateOrCreateCategory from '../Categories/UpdateOrCreateCategory'
 
 const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
 
@@ -164,6 +166,13 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
     }, [])
 
 
+
+
+
+    // category
+    const categoryDisclosure = useDisclosure()
+
+
     return (
         <Modal size={"xl"} isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -253,7 +262,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                 ) : null}
                             </div>
                             {/* name - category */}
-                            <div className='flex gap-5 items-center flex-row'>
+                            <div className='flex gap-5 flex-row'>
                                 <Input
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
@@ -264,25 +273,35 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                         backgroundColor: "white"
                                     }}
                                 />
-                                <Select
-                                    value={category}
-                                    onChange={(e) => setCategory(e.target.value)}
-                                    style={{
-                                        appearance: 'none', // Hides the default arrow
-                                    }}
-                                    sx={{
-                                        '&::-ms-expand': {
-                                            display: 'none', // Hides the arrow for Internet Explorer
-                                        },
-                                        backgroundColor: "white"
-                                    }}
-                                    className='dropdown-container' placeholder='أختر النوع *'>
-                                    {
-                                        categories?.map((category, index) => (
-                                            <option key={index} value={category?.id}>{category?.name}</option>
-                                        ))
-                                    }
-                                </Select>
+                                <Flex className='w-full' gap={1} direction={"column"}>
+                                    <Select
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                        style={{
+                                            appearance: 'none', // Hides the default arrow
+                                        }}
+                                        sx={{
+                                            '&::-ms-expand': {
+                                                display: 'none', // Hides the arrow for Internet Explorer
+                                            },
+                                            backgroundColor: "white"
+                                        }}
+                                        className='dropdown-container' placeholder='أختر النوع *'>
+                                        {
+                                            categories?.map((category, index) => (
+                                                <option key={index} value={category?.id}>{category?.name}</option>
+                                            ))
+                                        }
+                                    </Select>
+                                    <Flex gap={3}>
+                                        <IconButton onClick={categoryDisclosure?.onOpen} size={"xs"} colorScheme={category ? "blue" : 'green'} icon={category ? <EditIcon /> : <PiPlus />} />
+                                        <IconButton onClick={() => {
+                                            categoryContext?.deleteCategory(category)
+                                        }} isDisabled={!category} size={"xs"} colorScheme='red' icon={<DeleteIcon />} />
+
+                                        <UpdateOrCreateCategory category={category ? categories?.find((c) => c?.id == category) : ''} isOpen={categoryDisclosure?.isOpen} onClose={categoryDisclosure?.onClose} />
+                                    </Flex>
+                                </Flex>
                             </div>
                             {/* description */}
                             <Textarea
@@ -356,7 +375,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                         <strong>منتجات متعلقة بالمنتج</strong>
                         <Flex className='h-[150px] p-3 overflow-y-scroll bg-gray-200 rounded-md' gap="3" direction={"column"}>
                             {products?.map((product, index) => (
-                                <Box shadow={"md"} p={"3"} className='relative p-2 bg-white'>
+                                <Box key={index} shadow={"md"} p={"3"} className='relative p-2 bg-white'>
                                     <Flex gap={"3"} alignItems={"center"}>
                                         <input
                                             onChange={() => {
