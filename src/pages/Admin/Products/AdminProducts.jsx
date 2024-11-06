@@ -1,18 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AdminLayout from '../../../Layouts/AdminLayout'
-import { Button, Input, Select, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, Icon, Input, Select, Text, useDisclosure } from '@chakra-ui/react'
 import { ProductsContextProvider } from '../../../Contexts/ProductsContext'
 import ProductTableRow from '../../../Components/Products/ProductTableRow'
 import { CategoryContextProvider } from '../../../Contexts/CategoryContext'
 import UpdateOrCreateProduct from '../../../Components/Products/UpdateOrCreateProduct'
+import AdminBox from '../../../Components/AdminBox/AdminBox'
+import { CiSearch } from 'react-icons/ci'
+import { BiSearch } from 'react-icons/bi'
+import Loading from '../../../Components/Loading/Loading'
+import { CgAdd } from 'react-icons/cg'
 
 const AdminProducts = () => {
     const productsContext = useContext(ProductsContextProvider)
 
     const products = productsContext?.products
 
+    const [loading, setLoading] = useState(true)
+
+    const getProducts = async () => {
+        setLoading(true)
+        await productsContext?.fetchProducts()
+        setLoading(false)
+    }
+
     useEffect(() => {
-        productsContext?.fetchProducts()
+        getProducts()
     }, [])
 
 
@@ -32,12 +45,137 @@ const AdminProducts = () => {
     }
 
 
+
+    if (loading) return <Loading />
+
     return (
         <AdminLayout>
+
+            {/* summary */}
+            <Box>
+                <Flex direction={"column"} gap={2}>
+                    <Flex gap={window.innerWidth > 768 ? 10 : 5} className='md:flex-row flex-col'>
+                        <div className='md:w-[50%] w-full'>
+                            <AdminBox
+                                img={"https://cdn-icons-png.freepik.com/256/7078/7078310.png?semt=ais_hybrid"}
+                                text={"جميع المنتجات"}
+                                number={products?.length}
+                            />
+                        </div>
+                        <div className='md:w-[50%] w-full'>
+                            <AdminBox
+                                img={"https://cdn-icons-png.freepik.com/256/8625/8625327.png?semt=ais_hybrid"}
+                                text={"منتجات على وشك الانتهاء"}
+                                number={products?.length}
+                            />
+                        </div>
+                    </Flex>
+                    <Box onClick={onOpen} className="p-2 transition-all border-green-400 border mt-5 rounded-md text-green-500 flex gap-5 justify-center flex-col items-center 
+                shadow-[0_0_10px_rgba(72,187,120,0.5)] hover:shadow-[0_0_20px_rgba(72,187,120,0.8)] 
+                duration-300 ease-in-out bg-white h-[80px] cursor-pointer text-xl">
+                        <div className="flex gap-2 items-center">
+                            <CgAdd className="text-green-500 hover:text-green-300 transition-colors duration-300" />
+                            <strong className="hover:text-green-300 transition-colors duration-300">اضافة منتج جديد</strong>
+                        </div>
+                    </Box>
+                </Flex>
+            </Box>
+
+
+            {/* search */}
+            <Box className='mt-10 w-full'>
+                <Flex direction={"column"} gap={2}>
+                    <Flex gap={window.innerWidth > 768 ? 10 : 5} className='md:flex-row flex-col w-full'>
+                        <div className='w-[100%]'>
+                            <Input
+                                type='text'
+                                placeholder='ابحث بالID او الاسم'
+                                sx={{
+                                    backgroundColor: "white"
+                                }}
+                            />
+                        </div>
+                        <div className='w-[calc(100%-200px)]'>
+                            <Select
+                                className='dropdown-container w-[200px]'
+                                placeholder='أختر الفئة'
+                                sx={{
+                                    backgroundColor: "white"
+                                }}
+                            >
+                                <option value='option1'>Option 1</option>
+                                <option value='option2'>Option 2</option>
+                                <option value='option3'>Option 3</option>
+                            </Select>
+                        </div>
+                    </Flex>
+                    <Button colorScheme='green' className='w-full max-w-[100px] flex gap-2 items-center'>
+                        <Icon as={BiSearch} />
+                        <p>بحث</p>
+                    </Button>
+                </Flex>
+            </Box>
+
+
+            {/* actions */}
+            <Box className='mt-10 w-full'>
+                <Flex gap={2} alignItems={"center"}>
+                    <div className='w-[400px]'>
+                        <Select
+                            onChange={(e) => setActionType(e.target.value)}
+                            className='dropdown-container'
+                            placeholder='اختر العملية التي تريدها'
+                            sx={{
+                                backgroundColor: "white"
+                            }}
+                            disabled={selectedProducts.length == 0}
+                        >
+                            <option value='delete'>حذف المنتجات</option>
+                        </Select>
+                    </div>
+                    <Button
+                        colorScheme='blackAlpha'
+                        className='w-full max-w-[100px]'
+                        onClick={handleActions}
+                        disabled={selectedProducts.length == 0 || actionType == ''}
+                    >
+                        اتمام العملية
+                    </Button>
+                </Flex>
+            </Box>
+
+
+
+            {/* products */}
+            <div className="w-full max-w-full overflow-x-auto">
+                <table className="mt-10 w-full min-w-[800px] bg-white table-fixed">
+                    <thead>
+                        <tr>
+                            <th className="border p-2 text-nowrap text-start w-[50px]"></th>
+                            <th className="border p-2 text-nowrap text-start w-[50px]">#</th>
+                            {/* <th className="border p-2 text-nowrap text-start w-[100px]">المستخدم</th> */}
+                            <th className="border p-2 text-nowrap text-start w-[300px]">المنتج</th>
+                            <th className="border p-2 text-nowrap text-start w-[100px]">السعر</th>
+                            <th className="border p-2 text-nowrap text-start w-[100px]">العروض</th>
+                            <th className="border p-2 text-nowrap text-start w-[130px]">النوع</th>
+                            <th className="border p-2 text-nowrap text-start w-[100px]">الكمية</th>
+                            <th className="border p-2 text-nowrap text-start w-[100px]">اقل كمية</th>
+                            <th className="border p-2 text-nowrap text-start w-[100px]"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products?.map((product, index) => (
+                            <ProductTableRow selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} key={product?.id} product={product} index={index} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+
+
             {/* search and filter */}
-            <div className='flex gap-7 items-center'>
+            {/* <div className='flex gap-7 items-center'>
                 <div className='flex md:flex-row flex-col gap-3 w-full'>
-                    {/* name */}
                     <Input
                         type='text'
                         placeholder='ابحث بالID او الاسم'
@@ -46,7 +184,6 @@ const AdminProducts = () => {
                             backgroundColor: "white"
                         }}
                     />
-                    {/* categories */}
                     <select
                         className='dropdown-container w-full' placeholder='Select option'>
                         <option value='option2'>Option 2</option>
@@ -60,10 +197,10 @@ const AdminProducts = () => {
                         بحث
                     </Button>
                 </div>
-            </div>
+            </div> */}
 
             {/* actions */}
-            <div className='flex md:flex-row flex-col-reverse md:items-center justify-between gap-2 mt-10'>
+            {/* <div className='flex md:flex-row flex-col-reverse md:items-center justify-between gap-2 mt-10'>
                 <Button
                     colorScheme='green'
                     className='w-full max-w-[100px]'
@@ -90,10 +227,10 @@ const AdminProducts = () => {
                         اتمام العملية
                     </Button>
                 </div>
-            </div>
+            </div> */}
 
             {/* products */}
-            <div className="w-full max-w-full overflow-x-auto">
+            {/* <div className="w-full max-w-full overflow-x-auto">
                 <table className="mt-10 w-full min-w-[800px] bg-white table-fixed">
                     <thead>
                         <tr>
@@ -115,7 +252,7 @@ const AdminProducts = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div> */}
 
 
             {/* create modeal */}

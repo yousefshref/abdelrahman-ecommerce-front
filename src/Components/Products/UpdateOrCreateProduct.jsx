@@ -75,7 +75,10 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
     }, [product, create])
 
 
-    const handleSaveProduct = () => {
+    const [loading, setLoading] = useState(false)
+
+    const handleSaveProduct = async () => {
+        setLoading(true)
         const data = {
             image1,
             image2,
@@ -93,15 +96,16 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
         if (!name || !description || !category || !price || !stock) {
             alert('املى الخانات المعلمة بالنجوم')
         } else {
-            productsContext?.createProduct(data).then((e) => {
+            await productsContext?.createProduct(data).then((e) => {
                 onClose()
             })
         }
+        setLoading(false)
     }
 
 
-    const handleUpdateProduct = () => {
-
+    const handleUpdateProduct = async () => {
+        setLoading(true)
         const data = {
             name,
             description,
@@ -129,7 +133,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
         if (!name || !description || !category || !price || !stock) {
             alert('املى الخانات المعلمة بالنجوم')
         } else {
-            productsContext?.updateProduct(product?.id, data, onClose).then((e) => {
+            await productsContext?.updateProduct(product?.id, data, onClose).then((e) => {
                 if (e?.id) {
                     // setImages(e?.images)
                     setImage1(e?.image1)
@@ -147,6 +151,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                 }
             })
         }
+        setLoading(false)
     }
 
 
@@ -379,6 +384,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                         }}
                         className='w-fit'
                         colorScheme='green'
+                        isLoading={loading}
                     >
                         حفظ
                     </Button>

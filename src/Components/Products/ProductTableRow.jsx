@@ -45,11 +45,28 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
 
     const [open, setOpen] = React.useState(false)
 
+
+    console.log(server);
+
+
     return (
         <>
             <tr className='bg-white transition-all'>
+                <td className='border p-2'>
+                    <Checkbox
+                        onChange={(e) => {
+                            if (e.target.checked) {
+                                setSelectedProducts([...selectedProducts, product?.id])
+                            } else {
+                                setSelectedProducts(selectedProducts.filter((id) => id !== product?.id))
+                            }
+                        }
+                        }
+                        checked={selectedProducts.includes(product?.id)}
+                    />
+                </td>
                 <td onClick={() => setOpen(!open)} className='border p-2 cursor-pointer hover:bg-blue-200 transition-all'>{product?.id}</td>
-                <td className='border p-2'>{product.user_details?.username}</td>
+                {/* <td className='border p-2'>{product.user_details?.username}</td> */}
                 <td className='border p-2'>
                     <div className='flex gap-2 items-center'>
                         <img className='w-full max-w-[40px]' src={server + product?.image1} alt="" />
@@ -135,19 +152,6 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
                             ) : "حفظ"
                         }
                     </Button>
-                </td>
-                <td className='border p-2'>
-                    <Checkbox
-                        onChange={(e) => {
-                            if (e.target.checked) {
-                                setSelectedProducts([...selectedProducts, product?.id])
-                            } else {
-                                setSelectedProducts(selectedProducts.filter((id) => id !== product?.id))
-                            }
-                        }
-                        }
-                        checked={selectedProducts.includes(product?.id)}
-                    />
                 </td>
             </tr>
 

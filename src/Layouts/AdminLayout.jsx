@@ -42,7 +42,7 @@ const AdminLayout = ({ children }) => {
 
 
     return (
-        <div className="flex min-h-screen bg-gray-100">
+        <div className="flex min-h-screen bg-gray-100/70">
             {/* Sidebar */}
             <Box
                 as="aside"
@@ -127,7 +127,7 @@ const AdminLayout = ({ children }) => {
             </button>
 
             {/* Main Content */}
-            <div className={`flex-1 p-4 transition-all duration-300 ${isSidebarOpen ? 'ms-[250px]' : 'ms-16'} md:ms-0 max-h-screen overflow-y-scroll`}>
+            <div className={`flex-1 md:p-4 p-2 transition-all duration-300 ${isSidebarOpen ? 'ms-[250px]' : 'ms-16'} md:ms-0 max-h-screen overflow-y-scroll`}>
                 <div className='flex gap-10 justify-between items-center'>
                     <div className='flex gap-2 items-center'>
                         <img
@@ -167,7 +167,7 @@ const AdminLayout = ({ children }) => {
                         </li>
                     </ul>
                 </div>
-                <hr className='my-10' />
+                <hr className='my-5' />
                 <div>
                     {children}
                 </div>
