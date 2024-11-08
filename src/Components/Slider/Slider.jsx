@@ -14,7 +14,7 @@ const images = [
 
 const Slider = () => {
   return (
-    <div className="w-full md:max-w-5xl mx-auto mt-8">
+    <div className="w-full md:max-w-5xl mx-auto md:mt-8 mt-4">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

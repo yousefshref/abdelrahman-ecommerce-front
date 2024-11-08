@@ -7,6 +7,7 @@ import ProductCard from "../../Components/Products/ProductCard";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { server } from "../../Variables/pathes";
 import Loading from "../../Components/Loading/Loading";
+import { BsWhatsapp } from "react-icons/bs";
 
 const ProductDetails = () => {
 
@@ -83,9 +84,15 @@ const ProductDetails = () => {
                   <CiShoppingCart size={25} />
                   اضف الى السلة
                 </button>
-                <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[100px] px-3 py-2 flex items-center gap-2 mt-5 text-center justify-center">
+                {/* <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[100px] px-3 py-2 flex items-center gap-2 mt-5 text-center justify-center">
                   شراء
-                </button>
+                </button> */}
+                <Link to={"https://wa.me/201093952937"}>
+                  <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[200px] px-3 py-2 flex flex-row items-center gap-2 mt-5 text-center justify-center">
+                    <BsWhatsapp size={20} />
+                    <p>طلب عبر واتساب</p>
+                  </button>
+                </Link>
               </div>
               <p className="mt-5 text-right text-gray-500">
                 {productDetails?.description}
@@ -135,12 +142,16 @@ const ProductDetails = () => {
           </div>
         )}
       </div>
-      <h1 className="md:text-5xl text-3xl text-lime-700 font-bold mt-20 text-center">منتجات مشابهة</h1>
-      <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-10 mt-10">
-        {productDetails?.related_products_details?.map((product) => (
-          <ProductCard key={product?.id} product={product} />
-        ))}
-      </div>
+      {productDetails?.related_products_details?.length > 0 ? (
+        <>
+          <h1 className="md:text-5xl text-3xl text-lime-700 font-bold mt-20 text-center">منتجات مشابهة</h1>
+          <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-10 mt-10">
+            {productDetails?.related_products_details?.map((product) => (
+              <ProductCard key={product?.id} product={product} />
+            ))}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };

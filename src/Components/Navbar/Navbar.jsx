@@ -45,7 +45,7 @@ const Navbar = () => {
 
 
   return (
-    <Box bg={useColorModeValue("white", "black")} px={4} className="mb-10">
+    <Box bg={useColorModeValue("white", "black")} px={window.innerWidth < 768 ? 1 : 4} className="bg-amber-200 w-full">
       <Flex h={16} alignItems="center" justifyContent="space-between">
 
         <Box

@@ -95,7 +95,7 @@ const AdminProducts = () => {
                                 }}
                             />
                         </div>
-                        <div className='w-[calc(100%-200px)]'>
+                        <div className='md:w-[calc(100%-200px)] w-full'>
                             <Select
                                 className='dropdown-container w-[200px]'
                                 placeholder='أختر الفئة'
