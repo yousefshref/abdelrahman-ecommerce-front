@@ -28,6 +28,11 @@ const ProductCard = ({ product }) => {
                     alt={product?.name}
                     className="w-full"
                 />
+                <img
+                    src={server + product?.image2}
+                    alt={product?.name}
+                    className="w-full absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
+                />
             </Link>
             <div>
                 <p className="font-bold text-right text-xl">

@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ChakraProvider, Box, Button, VStack, Text } from '@chakra-ui/react';
+import { Box, VStack, Text } from '@chakra-ui/react';
 import { FiHome, FiUser, FiSettings, FiLogOut, FiMenu } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { CiShoppingCart } from 'react-icons/ci';
 import { IoCartOutline } from 'react-icons/io5';
-import { BiNotification, BiPurchaseTagAlt } from 'react-icons/bi';
+import { BiPurchaseTagAlt } from 'react-icons/bi';
 import { adminDashboard, adminOrders, adminProducts, adminUsers } from '../Variables/pathes';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { AuthContextProvider } from '../Contexts/AuthContext';
@@ -108,7 +107,7 @@ const AdminLayout = ({ children }) => {
                                 <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>الاعدادات</p>
                             </Link>
                         </li>
-                        <li>
+                        <li onClick={() => authContext?.logout()}>
                             <Link className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2`}>
                                 <FiLogOut size={20} />
                                 <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>تسجيل الخروج</p>

@@ -180,9 +180,9 @@ const Cart = () => {
           </Box>
         </div>
       ) : (
-        <div className='flex flex-col gap-2 justify-center items-center'>
-          <img src="/no_tound.jpg" alt="" className='' />
-          <Link to='/' className='p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
+        <div className='flex flex-col gap-2 relative justify-center items-center'>
+          <img src="/empty_cart.png" alt="" className='' />
+          <Link to='/' className='absolute right-[4vw] top-[34vw] p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
         </div>
       )}
 

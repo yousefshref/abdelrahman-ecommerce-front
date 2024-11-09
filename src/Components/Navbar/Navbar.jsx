@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { AuthContextProvider } from "../../Contexts/AuthContext";
-import { adminOrders, cartPage } from "../../Variables/pathes";
+import { adminOrders, cartPage, trackOrders } from "../../Variables/pathes";
 import { BiHelpCircle } from "react-icons/bi";
 import { RxDashboard } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
@@ -82,7 +82,7 @@ const Navbar = () => {
             </Link>
           </Button>
           <Button variant="link">
-            <Link to={"/"} onClick={onClose}>
+            <Link to={trackOrders()} onClick={onClose}>
               تتبع شحنتك
             </Link>
           </Button>
@@ -99,9 +99,9 @@ const Navbar = () => {
             </Button>
           )}
           <Button variant="link">
-            <Link className="flex gap-2 items-center" to={cartPage()} onClick={onClose}>
-              <p>{cart?.length}</p>
-              <CiShoppingCart size={25} />
+            <Link className="relative flex gap-2 items-center" to={cartPage()} onClick={onClose}>
+              <p className="bg-green-500 text-xs -top-1 -right-3 text-white p-2 absolute rounded-full flex flex-col justify-center items-center w-[20px] h-[20px]">{cart?.length}</p>
+              <CiShoppingCart size={30} />
             </Link>
           </Button>
         </HStack>

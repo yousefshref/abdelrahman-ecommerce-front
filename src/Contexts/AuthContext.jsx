@@ -102,6 +102,14 @@ const AuthContext = ({ children }) => {
 
 
 
+    const logout = () => {
+        localStorage.removeItem('token')
+        setUser({})
+        navigate('/')
+    }
+
+
+
     return (
         <AuthContextProvider.Provider value={{
             loading,
@@ -110,7 +118,8 @@ const AuthContext = ({ children }) => {
             getUser,
             user,
 
-            register
+            register,
+            logout
         }}>
             {children}
         </AuthContextProvider.Provider>
