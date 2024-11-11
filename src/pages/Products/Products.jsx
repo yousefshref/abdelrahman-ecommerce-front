@@ -94,7 +94,6 @@ const Products = () => {
                         <div className="p-4">
                             {/* Add your content here (e.g., product list, filters, categories) */}
                             {/* search */}
-                            <input type="text" placeholder='اسم المنتج' />
                             {/* category */}
                         </div>
                     )}
