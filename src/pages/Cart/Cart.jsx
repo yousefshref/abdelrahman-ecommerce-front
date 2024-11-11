@@ -205,8 +205,9 @@ const Cart = () => {
         </div>
       ) : (
         <div className='flex flex-col gap-2 relative justify-center items-center'>
-          <img src="/empty_cart.png" alt="" className='' />
-          <Link to='/' className='absolute right-[4vw] top-[34vw] p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
+          <img src="/empty_cart.png" alt="" className='md:block hidden' />
+          <img src="/empty_cart_mobile.png" alt="" className='md:hidden block' />
+          <Link to='/' className='absolute md:right-[4vw] right-[50%] md:-translate-x-[0%] -translate-x-[-50%] md:top-[34vw] md:bottom-[0vw] h-fit bottom-[25vw] p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
         </div>
       )}
 

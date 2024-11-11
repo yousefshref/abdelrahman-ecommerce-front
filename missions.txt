@@ -6,4 +6,9 @@
 - fast delivery to cairo                        done
 - categorieze products                          done
 - cities adding                                 done
-- images in the home page
+
+- images in the home page                       done
+- empty cart design                             done
+- nav bar cart numbers                          done
+- navbar linktree                               done
+- login page

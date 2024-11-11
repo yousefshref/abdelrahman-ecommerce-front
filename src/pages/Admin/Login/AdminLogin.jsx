@@ -19,21 +19,19 @@ const AdminLogin = () => {
         authContext?.login(data)
     }
     return (
-        <div className="flex items-center p-2 justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black">
+        <div className="flex items-center p-2 justify-center min-h-screen bg-gradient-to-br from-black/40 to-black">
             <Box
-                className="w-full max-w-md p-8 bg-opacity-70 bg-gray-800 rounded-lg shadow-lg"
+                className="w-full max-w-md p-8 bg-opacity-70 bg-green-800/40 backdrop-blur-sm rounded-lg shadow-lg z-20"
                 boxShadow="lg"
             >
                 <VStack spacing={4} align="stretch">
                     <Heading
-                        className="text-center text-3xl text-white font-bold"
+                        className="text-center text-3xl text-white font-bold flex gap-2 items-center justify-center"
                         size="lg"
                     >
-                        اسم الشركة
+                        <p>Safe Zone</p>
+                        <img src="/logo.png" className='w-[70px]' alt="" />
                     </Heading>
-                    <Text className="text-center text-gray-400">
-                        الكلام التوضيحي للشركة او ما يسمى بالslug
-                    </Text>
                     <FormControl id="username">
                         <FormLabel className="text-gray-300">اسم الحساب</FormLabel>
                         <Input

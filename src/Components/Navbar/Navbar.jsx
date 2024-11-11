@@ -79,7 +79,7 @@ const Navbar = () => {
             </Link>
           </Button>
           <Button variant="link">
-            <Link to={"/"} onClick={onClose}>
+            <Link to={"https://linktr.ee/abdelrahamn"} onClick={onClose}>
               طلب المنتجات خارج مصر
             </Link>
           </Button>
@@ -89,7 +89,7 @@ const Navbar = () => {
             </Link>
           </Button>
           <Button variant="link">
-            <Link to={"/"} onClick={onClose}>
+            <Link to={"https://wa.me/201550158044"} onClick={onClose}>
               تدريب اونلاين
             </Link>
           </Button>
@@ -150,17 +150,17 @@ const Navbar = () => {
                 </Link>
               </Button>
               <Button variant="link">
-                <Link to={"/"} onClick={onClose}>
+                <Link to={"https://linktr.ee/abdelrahamn"} onClick={onClose}>
                   طلب المنتجات خارج مصر
                 </Link>
               </Button>
               <Button variant="link">
-                <Link to={"/"} onClick={onClose}>
+                <Link to={trackOrders()} onClick={onClose}>
                   تتبع شحنتك
                 </Link>
               </Button>
               <Button variant="link">
-                <Link to={"/"} onClick={onClose}>
+                <Link to={"https://wa.me/201550158044"} onClick={onClose}>
                   تدريب اونلاين
                 </Link>
               </Button>

@@ -134,6 +134,18 @@ const CategoryContext = ({ children }) => {
             console.log(err)
         }
     }
+
+
+    const [homePageImages, setHomePageImages] = React.useState([])
+
+    const getHomePageImages = async () => {
+        try {
+            const res = await axios.get('/home_page_images/')
+            setHomePageImages(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <CategoryContextProvider.Provider value={{
             loading,
@@ -141,7 +153,10 @@ const CategoryContext = ({ children }) => {
             fetchCategories,
             createCategory,
             updateCategory,
-            deleteCategory
+            deleteCategory,
+
+            homePageImages,
+            getHomePageImages
         }}>
             {children}
         </CategoryContextProvider.Provider>
