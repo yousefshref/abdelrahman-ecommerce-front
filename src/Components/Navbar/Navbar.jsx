@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { AuthContextProvider } from "../../Contexts/AuthContext";
-import { adminOrders, cartPage, trackOrders } from "../../Variables/pathes";
+import { adminOrders, cartPage, productsPage, trackOrders } from "../../Variables/pathes";
 import { BiHelpCircle } from "react-icons/bi";
 import { RxDashboard } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
@@ -61,18 +61,20 @@ const Navbar = () => {
         </Box>
 
         <Box fontSize="xl" fontWeight="bold" className="w-[33.33%] flex md:justify-start justify-center">
-          <img
-            src="/logo.png"
-            alt="logo"
-            width="60"
-            height="60"
-          />
+          <Link to={'/'}>
+            <img
+              src="/logo.png"
+              alt="logo"
+              width="60"
+              height="60"
+            />
+          </Link>
         </Box>
 
         {/* Desktop Menu */}
         <HStack as="nav" spacing={8} display={{ base: "none", md: "flex" }}>
           <Button variant="link">
-            <Link to={"/"} onClick={onClose}>
+            <Link to={productsPage()} onClick={onClose}>
               المنتجات
             </Link>
           </Button>
@@ -143,7 +145,7 @@ const Navbar = () => {
           <DrawerBody>
             <Stack as="nav" spacing={4} mt={8}>
               <Button variant="link">
-                <Link to={"/"} onClick={onClose}>
+                <Link to={productsPage()} onClick={onClose}>
                   المنتجات
                 </Link>
               </Button>

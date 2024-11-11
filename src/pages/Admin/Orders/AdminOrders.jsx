@@ -25,6 +25,8 @@ const AdminOrders = () => {
     const [from, setFrom] = React.useState('')
     const [to, setTo] = React.useState('')
 
+    const [see_your_orders, setSeeYourOrders] = useState(false)
+
     const orders = ordersContext?.orders
 
     const [loading, setLoading] = useState(true)
@@ -32,7 +34,7 @@ const AdminOrders = () => {
     const handleGetOrders = async () => {
         setLoading(true)
         const params = {
-            sales_id: user?.is_shipping_employee ? user?.id : sales_id,
+            sales_id: user?.is_shipping_employee ? see_your_orders ? user?.id : "" : sales_id,
             search,
             status,
             from,
@@ -46,7 +48,7 @@ const AdminOrders = () => {
 
     useEffect(() => {
         handleGetOrders()
-    }, [user?.is_shipping_employee])
+    }, [user?.is_shipping_employee, user?.id, see_your_orders])
 
 
     const usersContext = useContext(UsersContextProvider)
@@ -73,6 +75,9 @@ const AdminOrders = () => {
             order?.order_items.forEach(item => {
                 totalPrice += Number(item.product_details.offer_price ? item.product_details.offer_price * item.quantity : item.product_details.price * item.quantity) + Number(order.state_details.shipping_price);
             });
+            if (order?.is_fast_shipping) {
+                totalPrice += Number(order?.state_details.fast_shipping_price);
+            }
         });
 
         // Update the totalOrdersPrice state
@@ -85,16 +90,35 @@ const AdminOrders = () => {
 
 
 
+    const salesUser = usersContext?.user
+
+    const handleGetSalesUser = () => {
+        if (user?.is_superuser) {
+            if (sales_id) {
+                usersContext?.getUser(sales_id)
+            }
+        } else {
+            if (user?.id) {
+                usersContext?.getUser(user?.id)
+            }
+        }
+    }
+
+    useEffect(() => {
+        handleGetSalesUser()
+    }, [user, sales_id])
+
+
     // calculate the commission
     const [commission, setCommission] = useState(0)
     const calculateCommission = () => {
-        // the commission is 5% from the total price
-        const commission = totalOrders * 0.05;
+        // calculate the commission of the sales user
+        const commission = totalOrders * (salesUser?.commission / 100);
         setCommission(commission);
     }
     useEffect(() => {
         calculateCommission();
-    }, [totalOrders]);
+    }, [totalOrders, salesUser?.commission, user]);
 
 
 
@@ -139,6 +163,14 @@ const AdminOrders = () => {
                             )
                         }
                     </Flex>
+                    {user?.is_shipping_employee ? (
+                        <div className='flex items-center gap-3'>
+                            <input type="checkbox" checked={see_your_orders} onChange={(e) => setSeeYourOrders(e.target.checked)} />
+                            <p>عرض الطلبات الخاصة بك</p>
+                        </div>
+                    ) : (
+                        null
+                    )}
                     <Select
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
@@ -233,7 +265,8 @@ const AdminOrders = () => {
                                 <th className="border p-2 text-nowrap text-start w-[100px]">رقم الهاتف</th>
                                 <th className="border p-2 text-nowrap text-start w-[100px]">المحافظة</th>
                                 <th className="border p-2 text-nowrap text-start w-[200px]">العنوان</th>
-                                <th className="border p-2 text-nowrap text-start w-[100px]">الحالة</th>
+                                <th className="border p-2 text-nowrap text-start w-[150px]">هل شحن سريع</th>
+                                <th className="border p-2 text-nowrap text-start w-[200px]">الحالة</th>
                                 <th className="border p-2 text-nowrap text-start w-[150px]">الاجمالي</th>
                                 <th className="border p-2 text-nowrap text-start w-[60px]"></th>
                             </tr>

@@ -119,40 +119,36 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
             "related_products_data": String(related_products),
         }
 
-        if (typeof image1 === 'object') {
+        if (typeof image1 === 'object' || image1 == "") {
             data.image1 = image1
         }
-        if (typeof image2 === 'object') {
+        if (typeof image2 === 'object' || image2 == "") {
             data.image2 = image2
         }
-        if (typeof image3 === 'object') {
+        if (typeof image3 === 'object' || image3 == "") {
             data.image3 = image3
         }
-        if (typeof image4 === 'object') {
+        if (typeof image4 === 'object' || image4 == "") {
             data.image4 = image4
         }
 
-        if (!name || !description || !category || !price || !stock) {
-            alert('املى الخانات المعلمة بالنجوم')
-        } else {
-            await productsContext?.updateProduct(product?.id, data, onClose).then((e) => {
-                if (e?.id) {
-                    // setImages(e?.images)
-                    setImage1(e?.image1)
-                    setImage2(e?.image2)
-                    setImage3(e?.image3)
-                    setImage4(e?.image4)
-                    setName(e?.name)
-                    setDescription(e?.description)
-                    setCategory(e?.category)
-                    setPrice(e?.price)
-                    setOfferPrice(e?.offer_price)
-                    setStock(e?.stock)
-                    setMinStock(e?.min_stock)
-                    setRelatedProducts(e?.related_products)
-                }
-            })
-        }
+        await productsContext?.updateProduct(product?.id, data, onClose).then((e) => {
+            if (e?.id) {
+                // setImages(e?.images)
+                setImage1(e?.image1)
+                setImage2(e?.image2)
+                setImage3(e?.image3)
+                setImage4(e?.image4)
+                setName(e?.name)
+                setDescription(e?.description)
+                setCategory(e?.category)
+                setPrice(e?.price)
+                setOfferPrice(e?.offer_price)
+                setStock(e?.stock)
+                setMinStock(e?.min_stock)
+                setRelatedProducts(e?.related_products)
+            }
+        })
         setLoading(false)
     }
 
@@ -225,39 +221,39 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                 {typeof image2 == 'string' && image2 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={server + image2} alt="" />
-                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
+                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage2("")} />
                                     </div>
                                 ) : null}
                                 {typeof image2 == 'object' && image2 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={URL.createObjectURL(image2)} alt="" />
-                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
+                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage2("")} />
                                     </div>
                                 ) : null}
 
                                 {typeof image3 == 'string' && image3 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={server + image3} alt="" />
-                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
+                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage3("")} />
                                     </div>
                                 ) : null}
                                 {typeof image3 == 'object' && image3 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={URL.createObjectURL(image3)} alt="" />
-                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
+                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage3("")} />
                                     </div>
                                 ) : null}
 
                                 {typeof image4 == 'string' && image4 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={server + image4} alt="" />
-                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
+                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage4("")} />
                                     </div>
                                 ) : null}
                                 {typeof image4 == 'object' && image4 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={URL.createObjectURL(image4)} alt="" />
-                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
+                                        <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage4("")} />
                                     </div>
                                 ) : null}
                             </div>

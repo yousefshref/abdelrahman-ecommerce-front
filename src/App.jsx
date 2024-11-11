@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
-import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminUsers, cartPage, productDetails, trackOrders } from "./Variables/pathes";
+import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cartPage, productDetails, productsPage, trackOrders } from "./Variables/pathes";
 import TrackOrders from "./pages/TrackOrders/TrackOrders";
 import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import AdminPage from "./pages/Admin/AdminPage/AdminPage";
@@ -12,6 +12,8 @@ import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 import AdminUsers from "./pages/Admin/AdminUsers/AdminUsers";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import AdminRegister from "./pages/Admin/AdminRegister/AdminRegister";
+import AdminSettings from "./pages/Admin/AdminSettings/AdminSettings";
+import Products from "./pages/Products/Products";
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <Route path={cartPage()} element={<Cart />} />
 
         <Route path={trackOrders()} element={<TrackOrders />} />
+        <Route path={productsPage()} element={<Products />} />
 
         {/* admin */}
         <Route path={adminLoginPage()} element={<AdminLogin />} />
@@ -35,6 +38,7 @@ function App() {
           <Route path={adminProducts()} element={<AdminProducts />} />
           <Route path={adminOrders()} element={<AdminOrders />} />
           <Route path={adminUsers()} element={<AdminUsers />} />
+          <Route path={adminSettings()} element={<AdminSettings />} />
         </Route>
       </Routes>
     </div>

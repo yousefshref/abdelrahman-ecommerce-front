@@ -39,8 +39,8 @@ input[type=number] {
 }
 
 
-select{
-  @apply p-1.5 outline-none rounded-md bg-white border border-blue-300
+select, input{
+  @apply p-1.5 outline-none rounded-md bg-white border border-green-300
 }
 
 

@@ -4,7 +4,7 @@ import { FiHome, FiUser, FiSettings, FiLogOut, FiMenu } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { IoCartOutline } from 'react-icons/io5';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
-import { adminDashboard, adminOrders, adminProducts, adminUsers } from '../Variables/pathes';
+import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers } from '../Variables/pathes';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { AuthContextProvider } from '../Contexts/AuthContext';
 import { UsersContextProvider } from '../Contexts/UsersContext';
@@ -102,7 +102,7 @@ const AdminLayout = ({ children }) => {
                     </ul>
                     <ul>
                         <li>
-                            <Link className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2`}>
+                            <Link to={adminSettings()} className={`${`${window.location.pathname === adminSettings() ? "bg-gray-700" : "bg-transparent"}`} flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2`}>
                                 <FiSettings size={20} />
                                 <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>الاعدادات</p>
                             </Link>

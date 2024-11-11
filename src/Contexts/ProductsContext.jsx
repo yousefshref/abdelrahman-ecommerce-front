@@ -1,21 +1,22 @@
 import axios from 'axios'
 import React, { createContext } from 'react'
+import { api } from '../Variables/server'
 
 const ProductsContext = ({ children }) => {
 
-    // axios.defaults.baseURL = 'http://127.0.0.1:8000'
+    axios.defaults.baseURL = api
     // axios.defaults.baseURL = 'http://172.20.10.4:8000'
     // axios.defaults.baseURL = 'http://172.20.10.2:8000'
     // axios.defaults.baseURL = 'http://192.168.56.1:8000'
-    axios.defaults.baseURL = 'https://abdelrahmanecommerce.pythonanywhere.com'
+    // axios.defaults.baseURL = 'https://abdelrahmanecommerce.pythonanywhere.com'
 
     const [loading, setLoading] = React.useState(true)
     const [products, setProducts] = React.useState([])
 
-    const fetchProducts = async () => {
+    const fetchProducts = async (params = {}) => {
         setLoading(true)
         try {
-            const res = await axios.get('/products/')
+            const res = await axios.get('/products/', { params })
             setProducts(res.data)
         } catch (err) {
             console.log(err)

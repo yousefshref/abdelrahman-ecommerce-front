@@ -22,10 +22,62 @@ const StatesContext = ({ children }) => {
         }
     }
 
+
+    const createState = async (data, setOpenCreate) => {
+        try {
+            setLoading(true)
+            const res = await axios.post('/states/', data)
+            setStates([...states, res.data])
+            if (setOpenCreate) {
+                setOpenCreate(false)
+            }
+            return res.data
+        }
+        catch (err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
+    const updateState = async (id, data, setOpenUpdate) => {
+        try {
+            setLoading(true)
+            const res = await axios.put(`/states/${id}/`, data)
+            setStates(states.map(state => state.id === id ? res.data : state))
+            if (setOpenUpdate) {
+                setOpenUpdate(false)
+            }
+            return res.data
+        }
+        catch (err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
+    const deleteState = async (id) => {
+        try {
+            setLoading(true)
+            const res = await axios.delete(`/states/${id}/`)
+            setStates(states.filter(state => state.id !== id))
+            return res.data
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <StatesContextProvider.Provider value={{
             loading,
-            states, getStates
+            states, getStates,
+
+            createState,
+            updateState,
+            deleteState
         }}>
             {children}
         </StatesContextProvider.Provider>

@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { createContext } from 'react'
 
@@ -17,6 +18,18 @@ const UsersContext = ({ children }) => {
     }
 
 
+    const [user, setUser] = React.useState({})
+
+    const getUser = async (id) => {
+        const res = await axios.get(`/users/${id}/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem('token')}`
+            }
+        });
+        setUser(res.data)
+        return res.data
+    }
+
     const updateUser = async (id, data) => {
         try {
             const res = await axios.put(`/users/${id}/update/`, data, {
@@ -33,7 +46,6 @@ const UsersContext = ({ children }) => {
                 }
             })
             setUsers(newUsers)
-
             return res.data
         } catch (err) {
             console.log(err)
@@ -54,6 +66,43 @@ const UsersContext = ({ children }) => {
         setSalesUsers(res.data)
     }
 
+
+
+    const updateUserPassword = async (id, data) => {
+        try {
+            const res = await axios.put(`/users/${id}/update-password/`, data, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`
+                }
+            })
+            return res.data
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    const taost = useToast()
+
+    const sendReportToSales = async (data, onClose) => {
+        try {
+            const res = await axios.post('/users/sales/send-report/', data, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`
+                }
+            })
+            taost({
+                title: 'تم ارسال التقرير بنجاح',
+                status: 'success',
+                duration: 3000,
+                isClosable: true
+            })
+            onClose()
+            return res.data
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <UsersContextProvider.Provider value={{
             users,
@@ -63,6 +112,12 @@ const UsersContext = ({ children }) => {
 
             salesUsers,
             getSalesUsers,
+            updateUserPassword,
+
+            sendReportToSales,
+
+            user,
+            getUser,
         }}>
             {children}
         </UsersContextProvider.Provider>

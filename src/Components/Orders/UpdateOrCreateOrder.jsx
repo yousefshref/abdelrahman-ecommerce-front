@@ -14,6 +14,7 @@ import {
     Button,
     FormControl,
     FormLabel,
+    Switch,
 } from '@chakra-ui/react'
 import { ProductsContextProvider } from '../../Contexts/ProductsContext'
 import { CategoryContextProvider } from '../../Contexts/CategoryContext'
@@ -35,6 +36,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     const [sales_who_added, setSalesWhoAdded] = useState("")
 
     const [order_items, setOrderItems] = useState([])
+
+    const [is_fast_shipping, setIsFastShipping] = useState(false)
 
 
 
@@ -66,14 +69,22 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
 
 
     const [total, setTotal] = useState(0)
+
+    const calculateTotal = () => {
+        let total = 0;
+        order?.order_items?.forEach((item) => {
+            const product = products?.find((p) => p?.id == item?.product);
+            total += (product?.offer_price ? product?.offer_price : product?.price) * item?.quantity;
+        });
+        total += Number(order?.state_details?.shipping_price);
+        if (is_fast_shipping) {
+            total += Number(order?.state_details?.fast_shipping_price);
+        }
+        setTotal(total);
+    }
     useEffect(() => {
-        setTotal(
-            order_items?.reduce((acc, item) => {
-                return acc + (products?.find((p) => p.id == item?.product)?.offer_price ? products?.find((p) => p.id == item?.product)?.offer_price * item.quantity : products?.find((p) => p.id == item?.product)?.price * item.quantity)
-            }, 0)
-            + Number(states?.find((s) => s.id == state)?.shipping_price)
-        )
-    }, [state, order_items])
+        calculateTotal();
+    }, [order, products, is_fast_shipping]);
 
 
 
@@ -91,6 +102,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             tracking_code,
             status,
             sales_who_added,
+            is_fast_shipping,
             order_items
         }
 
@@ -112,6 +124,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             set_tracking_code(order?.tracking_code)
             setStatus(order?.status)
             setEmail(order?.email)
+            setIsFastShipping(order?.is_fast_shipping)
             setOrderItems(order?.order_items)
         }
     }, [order])
@@ -128,6 +141,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             tracking_code,
             status,
             sales_who_added,
+            is_fast_shipping,
             order_items
         }
 
@@ -257,12 +271,26 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                                 />
                             </FormControl>
                         )}
+                        {!isClient && (
+                            <div className='flex gap-2 items-center p-2 bg-gray-200 rounded-md'>
+                                <Switch
+                                    isChecked={is_fast_shipping}
+                                    onChange={(e) => setIsFastShipping(e.target.checked)}
+                                />
+                                <p>شحن سريع</p>
+                            </div>
+                        )}
                     </Box>
 
 
-                    <div className='my-5 flex justify-between items-center'>
+                    <div className='my-5 flex md:flex-row flex-col justify-between items-center'>
                         <p>المجموع الكلي: {total} EGP</p>
                         <p>سعر الشحن: {states?.find((s) => s.id == state)?.shipping_price} EGP</p>
+                        {
+                            order?.is_fast_shipping ? (
+                                <p>سعر الشحن السريع: {states?.find((s) => s.id == state)?.fast_shipping_price} EGP</p>
+                            ) : null
+                        }
                     </div>
 
                     <Box className='rounded-md'>

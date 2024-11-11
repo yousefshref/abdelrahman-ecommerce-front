@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar/Navbar'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import CartItem from '../../Components/Cart/CartItem'
 import { StatesContextProvider } from '../../Contexts/StatesContext'
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Select, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Select, Switch, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { Form, Link } from 'react-router-dom'
 import { initDB } from '../../Utlis/initDB'
@@ -48,6 +48,8 @@ const Cart = () => {
   const [address, setAddress] = React.useState('')
   const [email, setEmail] = React.useState('')
 
+  const [is_fast_shipping, setIsFastShipping] = React.useState(false)
+
 
 
   // shipping fees
@@ -55,11 +57,32 @@ const Cart = () => {
 
   const calculateShippingFees = () => {
     setShippingFees(states?.find(s => s?.id == state)?.shipping_price)
+    if (is_fast_shipping) {
+      setShippingFees(Number(states?.find(s => s?.id == state)?.shipping_price) + Number(states?.find(s => s?.id == state)?.fast_shipping_price))
+    }
   }
 
   useEffect(() => {
     calculateShippingFees()
+  }, [state, is_fast_shipping])
+
+
+  const [stateDetails, setStateDetails] = React.useState(null)
+
+  const getState = () => {
+    setStateDetails(states?.find(s => s?.id == state))
+  }
+
+  useEffect(() => {
+    getState()
   }, [state])
+
+
+  useEffect(() => {
+    if (!stateDetails?.is_fast_shipping) {
+      setIsFastShipping(false)
+    }
+  }, [stateDetails])
 
 
   const [total, setTotal] = React.useState(0)
@@ -100,6 +123,7 @@ const Cart = () => {
       state,
       address,
       email,
+      is_fast_shipping,
 
       order_items: cart?.map(item => ({
         product: item?.id,
@@ -240,6 +264,21 @@ const Cart = () => {
                     <option key={state?.id} value={state?.id}>{state?.name}</option>
                   ))}
                 </select>
+              </div>
+
+
+              <div className='flex flex-col gap-2 p-1 px-2 bg-gray-100 rounded-xl'>
+                <div className='flex gap-2 items-center'>
+                  <p>هل تريد شحن سريع ؟</p>
+                </div>
+                <Switch
+                  isChecked={is_fast_shipping}
+                  onChange={() => setIsFastShipping(!is_fast_shipping)}
+                  isDisabled={!stateDetails?.fast_shipping_price}
+                />
+                <small className='text-gray-500'>
+                  {stateDetails?.fast_shipping_price ? `سعر الشحن: ${stateDetails?.fast_shipping_price} EGP إضافية` : "لا يوجد شحن سريع"}
+                </small>
               </div>
 
               <div className='flex flex-col gap-2'>

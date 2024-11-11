@@ -1,7 +1,10 @@
 import { Button, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import UpdateOrCreateOrder from './UpdateOrCreateOrder'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
+
+
+import { LiaShippingFastSolid } from 'react-icons/lia'
 
 
 const OrderTableRow = ({ order, index }) => {
@@ -9,6 +12,41 @@ const OrderTableRow = ({ order, index }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const ordersContext = React.useContext(OrderContextProvider)
+
+
+    const [status, setStatus] = React.useState(order?.status)
+    useEffect(() => {
+        setStatus(order?.status)
+    }, [order])
+
+
+    const handleUpdateOrder = (newStatus) => {
+        ordersContext?.updateOrder(order?.id, { status: newStatus }).then(e => {
+            if (e) {
+                onClose()
+                setStatus(e?.status)
+            }
+        })
+    }
+
+
+    const [total, setTotal] = React.useState(0)
+
+    const calculateTotal = () => {
+        let total = 0
+        order?.order_items?.forEach(item => {
+            total += item?.product_details?.offer_price ? item?.product_details?.offer_price * item.quantity : item?.product_details?.price * item.quantity
+        })
+        total += Number(order?.state_details?.shipping_price)
+        if (order?.is_fast_shipping) {
+            total += Number(order?.state_details?.fast_shipping_price)
+        }
+        setTotal(total)
+    }
+
+    useEffect(() => {
+        calculateTotal()
+    }, [order, order?.order_items])
     return (
         <>
             <tr>
@@ -19,8 +57,30 @@ const OrderTableRow = ({ order, index }) => {
                 <td className="border p-2 text-start">{order.phone_number}</td>
                 <td className="border p-2 text-start">{order.state_details?.name}</td>
                 <td className="border p-2 text-wrap text-start w-[200px]">{order.address}</td>
-                <td className="border p-2 text-start">{order.status}</td>
-                <td className="border p-2 text-start">{order?.order_items?.reduce((acc, item) => item?.product_details?.offer_price ? item?.product_details?.offer_price * item.quantity : item?.product_details?.price * item.quantity, 0) + Number(order?.state_details?.shipping_price)} EGP</td>
+                <td className="border p-2 text-wrap text-start w-[200px]">{
+                    order.is_fast_shipping
+                        ?
+                        <div className='text-green-600 flex gap-2 items-center'>
+                            <LiaShippingFastSolid />
+                            <span>توصيل سريع</span>
+                        </div>
+                        :
+                        <p>توصيل عادي</p>
+                }</td>
+                <td className="border p-2 text-start">
+                    <select onChange={(e) => {
+                        handleUpdateOrder(e.target.value)
+                    }} value={status} className='p-1 w-full px-3 border border-green-500'>
+                        <option value="">اختر الحالة</option>
+                        <option value="pending">في الانتظار</option>
+                        <option value="processing">قيد التنفيذ</option>
+                        <option value="shipped">تم الشخن</option>
+                        <option value="delivered">تم التسليم</option>
+                        <option value="cancelled">ملغي</option>
+                    </select>
+                </td>
+                {/* <td className="border p-2 text-start">{order?.order_items?.reduce((acc, item) => item?.product_details?.offer_price ? item?.product_details?.offer_price * item.quantity : item?.product_details?.price * item.quantity, 0) + Number(order?.state_details?.shipping_price)} EGP</td> */}
+                <td className="border p-2 text-start">{total} EGP</td>
                 <td className="border p-2 text-nowrap text-start">
                     <Button
                         colorScheme="red"
