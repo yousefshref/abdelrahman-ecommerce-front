@@ -21,7 +21,7 @@ const StatesSettings = () => {
                     اضافة محافظة
                 </Button>
             </div>
-            <div className='p-2 bg-gray-200 mt-5 rounded-md grid md:grid-cols-6 grid-cols-3 gap-4'>
+            <div className='p-2 bg-gray-200 mt-5 rounded-md grid md:grid-cols-6 sm:grid-cols-3 grid-cols-2 gap-4'>
                 {states?.map((state) => (
                     <AdminStateComponent key={state?.id} state={state} />
                 ))}
