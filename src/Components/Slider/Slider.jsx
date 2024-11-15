@@ -24,9 +24,8 @@ const Slider = () => {
     categoryContext?.getHomePageImages()
   }, [])
 
-  console.log(images);
   return (
-    <div className="w-full md:max-w-5xl mx-auto md:mt-8 mt-4">
+    <div className="w-full mx-auto md:mt-8 mt-4">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -43,9 +42,9 @@ const Slider = () => {
         modules={[Autoplay, Pagination, Navigation]}
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} className="w-full flex justify-center">
             <div className="relative">
-              <img src={api + image?.image} alt={`Slide ${index + 1}`} className="w-full" />
+              <img src={api + image?.image} alt={`Slide ${index + 1}`} />
             </div>
           </SwiperSlide>
         ))}

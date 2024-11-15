@@ -44,6 +44,15 @@ select, input{
 }
 
 
+.hiddenScrollBar {
+  scrollbar-width: none; /* For Firefox */
+}
+
+.hiddenScrollBar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
+}
+
+
 
 @keyframes spin {
   0% {

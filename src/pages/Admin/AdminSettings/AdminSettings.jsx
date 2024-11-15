@@ -4,6 +4,7 @@ import { AuthContextProvider } from '../../../Contexts/AuthContext'
 import { UsersContextProvider } from '../../../Contexts/UsersContext'
 import { useToast } from '@chakra-ui/react'
 import StatesSettings from '../../../Components/AdminSettings/StatesSettings/StatesSettings'
+import HomePageImage from '../../../Components/HomePageImage'
 
 const AdminSettings = () => {
     const userContext = useContext(UsersContextProvider)
@@ -64,6 +65,7 @@ const AdminSettings = () => {
             </div>
 
             <StatesSettings />
+            <HomePageImage />
         </AdminLayout>
     )
 }

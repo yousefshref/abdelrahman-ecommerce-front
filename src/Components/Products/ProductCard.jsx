@@ -15,23 +15,25 @@ const ProductCard = ({ product }) => {
     }
     return (
         <div
-            className="flex shadow-md h-fit flex-col gap-5 p-2 bg-white relative"
+            className="flex shadow-md flex-col gap-5 p-2 bg-white relative"
         >
             {product?.offer_price ? (
-                <p className="absolute top-0 left-0 flex flex-col justify-center items-center bg-red-500 text-white px-2 py-1 text-sm">
+                <p className="z-10 absolute top-0 left-0 flex flex-col justify-center items-center bg-red-500 text-white px-2 py-1 text-sm">
                     خصم {Number(((product?.price - product?.offer_price) / product?.price * 100).toFixed(2))}%
                 </p>
             ) : null}
-            <Link to={productDetails(product?.id)}>
+            <Link to={productDetails(product?.id)} className='overflow-hidden relative'>
                 <img
                     src={server + product?.image1}
                     alt={product?.name}
-                    className="w-full"
+                    // className="w-full"
+                    className="w-[500px] h-[300px]"
                 />
                 <img
                     src={server + product?.image2}
                     alt={product?.name}
-                    className="w-full absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
+                    // className="w-full absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
+                    className="w-[500px] h-[300px] absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
                 />
             </Link>
             <div>

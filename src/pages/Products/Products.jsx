@@ -9,6 +9,10 @@ import ProductCard from '../../Components/Products/ProductCard';
 import Navbar from '../../Components/Navbar/Navbar';
 
 import { useLocation } from 'react-router-dom';
+import ProductCardSkeleton from '../../Components/ProductCardSkeleton';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import "swiper/css";
 
 
 const Products = () => {
@@ -62,68 +66,44 @@ const Products = () => {
 
     return (
         <div className='flex flex-col gap-4'>
-            <div className='p-5'>
+            <div className='md:p-5 p-2'>
                 <Navbar />
             </div>
-            <div className="flex gap-5">
-                {/* Right Sidebar */}
-                <Box
-                    w={sidebarWidth}
-                    bg={sidebarBg}
-                    className="transition-all duration-300 ease-in-out p-5 flex flex-col items-center"
-                >
-                    {/* Sidebar Toggle Button (only visible on small screens) */}
-                    {useBreakpointValue({ base: true, md: false }) && (
-                        <Button onClick={() => setSidebarOpen(!isSidebarOpen)} mt={4}>
-                            {isSidebarOpen ? 'Close' : 'Open'}
-                        </Button>
-                    )}
-
-                    {/* search */}
-                    <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='اسم المنتج' className='w-full rounded-md mt-5' />
-                    {/* category */}
-                    <select className='w-full rounded-md mt-5' onChange={(e) => setCategory(e.target.value)} value={category}>
-                        <option value={""}>الفئة</option>
-                        {categories?.map((category, index) => (
-                            <option value={category?.id} key={index}>{category?.name}</option>
+            <div className="flex flex-col gap-5">
+                <div className='grid md:grid-cols-2 gap-4 md:p-5 p-2 bg-gray-300'>
+                    <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" className='p-2 outline-none border border-green-500 w-full rounded-xl' placeholder='أبحث عن المنتج...' />
+                    <Swiper
+                        slidesPerView={"auto"}
+                        spaceBetween={20}
+                        loop={false}
+                        className="p-2 bg-white rounded-xl w-full"
+                    >
+                        {categories?.map((_, index) => (
+                            <SwiperSlide
+                                key={index}
+                                onClick={() => {
+                                    if (category == _.id) {
+                                        setCategory('')
+                                    } else {
+                                        setCategory(_.id)
+                                    }
+                                }}
+                                className={`
+                                    cursor-pointer flex justify-center p-2 px-5 bg-gray-200 rounded-full min-w-fit max-w-fit w-fit transition-all hover:bg-gray-400 hover:text-white
+                                    ${category == _.id ? 'bg-gray-400 text-white' : ''}
+                                    `}
+                            >
+                                {_?.name}
+                            </SwiperSlide>
                         ))}
-                    </select>
+                    </Swiper>
+                </div>
 
-                    {/* Sidebar Content */}
-                    {isSidebarOpen && (
-                        <div className="p-4">
-                            {/* Add your content here (e.g., product list, filters, categories) */}
-                            {/* search */}
-                            {/* category */}
-                        </div>
-                    )}
-                </Box>
-
-
-                {/* Left side (Empty space) */}
-                <div className="bg-white grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 w-full p-5 h-full">
+                <div className="bg-white grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 w-full p-5 h-full">
                     {
                         loading ? (
                             Array.from({ length: 6 }).map((_, index) => (
-                                <div className="border border-gray-200 rounded-lg p-4 max-w-xs w-full mx-auto shadow-md">
-                                    {/* Image Skeleton */}
-                                    <div className="bg-gray-200 h-40 rounded-md mb-4"></div>
-
-                                    {/* Title Skeleton */}
-                                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
-
-                                    {/* Subtitle Skeleton */}
-                                    <div className="h-4 bg-gray-200 rounded w-1/3 mb-4"></div>
-
-                                    {/* Button Skeletons */}
-                                    <div className="flex justify-between items-center space-x-4">
-                                        <div className="h-10 w-1/2 bg-gray-200 rounded-md"></div>
-                                        <div className="h-10 w-1/2 bg-gray-200 rounded-md"></div>
-                                    </div>
-
-                                    {/* Price Skeleton */}
-                                    <div className="h-6 bg-gray-200 rounded w-1/4 mt-4"></div>
-                                </div>
+                                <ProductCardSkeleton />
                             ))
                         )
                             :

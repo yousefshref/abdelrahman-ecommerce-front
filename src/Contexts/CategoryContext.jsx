@@ -146,6 +146,31 @@ const CategoryContext = ({ children }) => {
             console.log(err)
         }
     }
+
+
+    const createHomePageImage = async (data, onClose) => {
+        try {
+            const res = await axios.post('/home_page_images/create/', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            setHomePageImages([...homePageImages, res.data])
+            onClose()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const deleteHomePageImage = async (id) => {
+        try {
+            const res = await axios.delete(`/home_page_images/delete/${id}/`)
+            setHomePageImages(homePageImages.filter((image) => image.id !== id))
+            return res.data
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <CategoryContextProvider.Provider value={{
             loading,
@@ -156,7 +181,9 @@ const CategoryContext = ({ children }) => {
             deleteCategory,
 
             homePageImages,
-            getHomePageImages
+            getHomePageImages,
+            deleteHomePageImage,
+            createHomePageImage,
         }}>
             {children}
         </CategoryContextProvider.Provider>

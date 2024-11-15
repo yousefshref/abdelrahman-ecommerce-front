@@ -1,14 +1,4 @@
-- change username and password                  done
-- send email to sales with his target           done
-- delete images                                 done
-- order status changeable                       done
-- description on product card                   done
-- fast delivery to cairo                        done
-- categorieze products                          done
-- cities adding                                 done
-
-- images in the home page                       done
-- empty cart design                             done
-- nav bar cart numbers                          done
-- navbar linktree                               done
-- login page
+- products page change                                      DONE
+- crop image in products adding
+- Cancel order
+- Email System to be sent

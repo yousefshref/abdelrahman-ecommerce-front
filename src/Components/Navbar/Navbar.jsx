@@ -21,6 +21,7 @@ import { CartContextProvider } from "../../Contexts/CartContext";
 import { AuthContextProvider } from "../../Contexts/AuthContext";
 import { adminOrders, cartPage, productsPage, trackOrders } from "../../Variables/pathes";
 import { BiHelpCircle } from "react-icons/bi";
+import { MdOutlineSupportAgent } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -93,6 +94,11 @@ const Navbar = () => {
               تدريب اونلاين
             </Link>
           </Button>
+          <Button variant="link">
+            <Link to={"https://wa.me/201093952937"} onClick={onClose}>
+              الدعم
+            </Link>
+          </Button>
           {user?.is_shipping_employee && (
             <Button variant="link">
               <Link to={adminOrders()} onClick={onClose}>
@@ -110,7 +116,8 @@ const Navbar = () => {
 
         {/* Mobile Menu Icon */}
         <Flex className="w-[33.33%] flex justify-end" gap={2} display={{ base: "flex", md: "none" }}>
-          <Link to={cartPage()}>
+          <Link to={cartPage()} className="relative">
+            <p className="bg-green-500 z-20 text-xs -top-1 -right-3 text-white p-2 absolute rounded-full flex flex-col justify-center items-center w-[20px] h-[20px]">{cart?.length}</p>
             <IconButton
               className="flex justify-center"
               size="md"
@@ -128,11 +135,13 @@ const Navbar = () => {
               </Link>
             </Button>
           ) :
-            <IconButton
-              className="flex justify-center"
-              size="md"
-              icon={<BiHelpCircle />}
-            />
+            <Link to={"https://wa.me/201093952937"}>
+              <IconButton
+                className="flex justify-center"
+                size="md"
+                icon={<MdOutlineSupportAgent />}
+              />
+            </Link>
           }
         </Flex>
       </Flex>
@@ -162,6 +171,11 @@ const Navbar = () => {
               <Button variant="link">
                 <Link to={"https://wa.me/201550158044"} onClick={onClose}>
                   تدريب اونلاين
+                </Link>
+              </Button>
+              <Button variant="link">
+                <Link to={"https://wa.me/201093952937"} onClick={onClose}>
+                  الدعم
                 </Link>
               </Button>
               <Button variant="link">
