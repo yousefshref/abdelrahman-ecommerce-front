@@ -109,7 +109,7 @@ const CropImage = ({ image, onCropComplete, setImageSrc }) => {
             </div>
 
             <button
-                className="bg-blue-500 p-1 px-4 text-white absolute bottom-5 left-1/2 transform -translate-x-1/2"
+                className="bg-blue-500 p-1 px-4 text-white absolute bottom-5 left-1/2 transform -translate-x-1/2 z-[1000000]"
                 onClick={onCropConfirm}
             >
                 Crop
