@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
     }
     return (
         <div
-            className="flex shadow-md flex-col gap-5 p-2 bg-white relative"
+            className="flex shadow-md flex-col gap-5 p-2 bg-white relative h-[100%]"
         >
             {product?.offer_price ? (
                 <p className="z-10 absolute top-0 left-0 flex flex-col justify-center items-center bg-red-500 text-white px-2 py-1 text-sm">
@@ -26,24 +26,25 @@ const ProductCard = ({ product }) => {
                 <img
                     src={server + product?.image1}
                     alt={product?.name}
-                    // className="w-full"
-                    className="w-[500px] h-[300px]"
+                    className="w-full"
+                // className="w-[500px] h-[300px]"
                 />
                 <img
                     src={server + product?.image2}
                     alt={product?.name}
-                    // className="w-full absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
-                    className="w-[500px] h-[300px] absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
+                    className="w-full absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
+                // className="w-[500px] h-[300px] absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"
                 />
             </Link>
-            <div>
+            <div className='mt-auto'>
                 <p className="font-bold text-right text-xl">
                     {product?.name}
                 </p>
                 <p className="text-right text-xs mt-1 text-gray-500">
                     {product?.description?.length > 50 ? product?.description.slice(0, 50) + '...' : product?.description}
                 </p>
-                <div className="flex flex-col items-center gap-2 justify-between mt-2">
+                <div className='my-2'></div>
+                <div className="flex flex-col items-center gap-2">
                     <Flex gap={3} className='flex md:flex-row flex-col w-full'>
                         <button onClick={handleAddToCart} className="w-full md:w-[50%] bg-lime-500 transition-all justify-center duration-300 text-nowrap hover:bg-lime-600 active:bg-lime-700 text-white font-bold px-3 py-2 text-sm flex items-center gap-2">
                             <CgShoppingCart size={20} /> اضف للسلة

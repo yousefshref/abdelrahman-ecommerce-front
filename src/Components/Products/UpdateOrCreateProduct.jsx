@@ -11,6 +11,8 @@ import { server } from '../../Variables/pathes'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import UpdateOrCreateCategory from '../Categories/UpdateOrCreateCategory'
 
+import CropImage from '../CropImage'
+
 const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
 
     const [image1, setImage1] = useState("")
@@ -24,8 +26,10 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
     const [offer_price, setOfferPrice] = useState(0)
     const [stock, setStock] = useState(0)
     const [min_stock, setMinStock] = useState(0)
-    // related products
     const [related_products, setRelatedProducts] = useState([])
+
+    const [cropImageSrc, setCropImageSrc] = useState(null);
+    const [imageSlot, setImageSlot] = useState(null);
 
 
 
@@ -169,6 +173,20 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
     const categoryDisclosure = useDisclosure()
 
 
+    const base64ToFile = (base64, filename) => {
+        const arr = base64.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, { type: mime });
+    };
+
     return (
         <Modal size={"xl"} isCentered isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -187,24 +205,48 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                 <button
                                     className='p-2 relative min-w-[100px] h-[100px] bg-gray-300 transition-all hover:bg-gray-200 active:bg-gray-300 flex flex-col items-center justify-center'
                                 >
-                                    <input type="file" className='w-full opacity-0 absolute h-full left-0 top-0'
+                                    <input
+                                        type="file"
+                                        className="w-full opacity-0 absolute h-full left-0 top-0"
                                         onChange={(e) => {
-                                            if (!image1) {
-                                                setImage1(e.target.files[0])
-                                            }
-                                            else if (!image2) {
-                                                setImage2(e.target.files[0])
-                                            }
-                                            else if (!image3) {
-                                                setImage3(e.target.files[0])
-                                            }
-                                            else if (!image4) {
-                                                setImage4(e.target.files[0])
+                                            const file = e.target.files[0];
+                                            if (file) {
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    setCropImageSrc(reader.result); // Open the crop modal with the uploaded image
+                                                };
+                                                reader.readAsDataURL(file);
+
+                                                // Determine which slot is being updated
+                                                if (!image1) setImageSlot("image1");
+                                                else if (!image2) setImageSlot("image2");
+                                                else if (!image3) setImageSlot("image3");
+                                                else if (!image4) setImageSlot("image4");
                                             }
                                         }}
                                     />
                                     <PiPlus />
                                 </button>
+                                {cropImageSrc && (
+                                    <CropImage
+                                        image={cropImageSrc}
+                                        onCropComplete={(croppedImage) => {
+                                            // Convert the croppedImage (base64) to a File object
+                                            const croppedFile = base64ToFile(croppedImage, `cropped-image-${Date.now()}.jpeg`);
+
+                                            // Update the correct image slot with the File object
+                                            if (imageSlot === "image1") setImage1(croppedFile);
+                                            else if (imageSlot === "image2") setImage2(croppedFile);
+                                            else if (imageSlot === "image3") setImage3(croppedFile);
+                                            else if (imageSlot === "image4") setImage4(croppedFile);
+
+                                            // Clear the cropping state
+                                            setCropImageSrc(null);
+                                            setImageSlot(null);
+                                        }}
+                                        setImageSrc={setCropImageSrc} // To close the crop modal
+                                    />
+                                )}
                                 {typeof image1 == 'string' && image1 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img src={server + image1} alt="" />
