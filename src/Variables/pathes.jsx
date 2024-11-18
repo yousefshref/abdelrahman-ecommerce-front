@@ -8,9 +8,10 @@ export const productDetails = (id) => `/products/${id}/`
 
 export const cartPage = () => `/cart/`
 
-
 export const trackOrders = () => `/orders/track/`
 export const productsPage = () => `/products/`
+
+export const cancelOrder = () => `/orders/cancel/`
 
 // admin
 export const adminLoginPage = () => `/admin/login/`

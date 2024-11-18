@@ -124,6 +124,7 @@ const Cart = () => {
       address,
       email,
       is_fast_shipping,
+      total,
 
       order_items: cart?.map(item => ({
         product: item?.id,

@@ -1,4 +1,3 @@
 - products page change                                      DONE
 - crop image in products adding                             DONE
-- Cancel order
-- Email System to be sent in orders
+- Cancel order in the email                                 DONE

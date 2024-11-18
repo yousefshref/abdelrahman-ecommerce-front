@@ -103,7 +103,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             status,
             sales_who_added,
             is_fast_shipping,
-            order_items
+            order_items,
+            total
         }
 
         await ordersContext?.createOrder({ data, nav: false }).then(e => {
@@ -125,6 +126,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             setStatus(order?.status)
             setEmail(order?.email)
             setIsFastShipping(order?.is_fast_shipping)
+            setTotal(order?.total)
             setOrderItems(order?.order_items)
         }
     }, [order])
@@ -142,7 +144,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             status,
             sales_who_added,
             is_fast_shipping,
-            order_items
+            order_items,
+            total
         }
 
         await ordersContext?.updateOrder(order?.id, data).then(e => {

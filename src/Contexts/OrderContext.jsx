@@ -220,6 +220,51 @@ const OrderContext = ({ children }) => {
             setLoading(true)
         }
     }
+
+
+
+    const [order, setOrder] = React.useState({})
+
+    const getOrder = async (id) => {
+        try {
+            const res = await axios.get(`/orders/${id}/`)
+            setOrder(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    const handleCancelOrder = async (params = {}) => {
+        try {
+            const res = await axios.get(`/orders/cancel/`, {
+                params,
+            })
+            toast({
+                title: "Order Canceled",
+                description: res?.data?.message,
+                status: "success",
+                duration: 3000, // 3 seconds
+                isClosable: true,
+                position: "bottom-left",
+                variant: "subtle", // Optional: You can use subtle for a softer effect
+            })
+            navigate(trackOrders())
+        } catch (err) {
+            console.log(err)
+            if (err.response.status === 400) {
+                toast({
+                    title: "Something went wrong",
+                    description: err?.response?.data?.message,
+                    status: "error",
+                    duration: 3000, // 3 seconds
+                    isClosable: true,
+                    position: "bottom-left",
+                    variant: "subtle", // Optional: You can use subtle for a softer effect
+                })
+            }
+        }
+    }
     return (
         <OrderContextProvider.Provider value={{
             loading,
@@ -227,10 +272,11 @@ const OrderContext = ({ children }) => {
 
             orders,
             getOrders,
-
+            order,
+            getOrder,
             updateOrder,
-
-            deleteOrder
+            deleteOrder,
+            handleCancelOrder
         }}>
             {children}
         </OrderContextProvider.Provider>

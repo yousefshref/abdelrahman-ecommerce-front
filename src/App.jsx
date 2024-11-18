@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
-import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cartPage, productDetails, productsPage, trackOrders } from "./Variables/pathes";
+import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cancelOrder, cartPage, productDetails, productsPage, trackOrders } from "./Variables/pathes";
 import TrackOrders from "./pages/TrackOrders/TrackOrders";
 import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import AdminPage from "./pages/Admin/AdminPage/AdminPage";
@@ -14,6 +14,7 @@ import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import AdminRegister from "./pages/Admin/AdminRegister/AdminRegister";
 import AdminSettings from "./pages/Admin/AdminSettings/AdminSettings";
 import Products from "./pages/Products/Products";
+import CancelOrder from "./pages/CancelOrder/CancelOrder";
 
 
 function App() {
@@ -21,13 +22,11 @@ function App() {
     <div className="font">
       <Routes>
         <Route path="/" element={<Home />} />
-
         <Route path={productDetails(":id")} element={<ProductDetails />} />
-
         <Route path={cartPage()} element={<Cart />} />
-
         <Route path={trackOrders()} element={<TrackOrders />} />
         <Route path={productsPage()} element={<Products />} />
+        <Route path={cancelOrder()} element={<CancelOrder />} />
 
         {/* admin */}
         <Route path={adminLoginPage()} element={<AdminLogin />} />
