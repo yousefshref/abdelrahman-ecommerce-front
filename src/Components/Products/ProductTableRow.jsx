@@ -15,6 +15,8 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
     const [stock, setStock] = React.useState(product?.stock)
     const [min_stock, setMinStock] = React.useState(product?.min_stock)
 
+    const [rank, setRank] = React.useState(product?.rank)
+
 
     useEffect(() => {
         setName(product?.name)
@@ -22,6 +24,7 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
         setOfferPrice(product?.offer_price)
         setStock(product?.stock)
         setMinStock(product?.min_stock)
+        setRank(product?.rank)
     }, [product])
 
     const [isUpdated, setUpdated] = React.useState(false)
@@ -38,7 +41,8 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
             price,
             offer_price,
             stock,
-            min_stock
+            min_stock,
+            rank
         }, setUpdated)
     }
 
@@ -63,7 +67,18 @@ const ProductTableRow = ({ product, selectedProducts, setSelectedProducts }) => 
                     />
                 </td>
                 <td onClick={() => setOpen(!open)} className='border p-2 cursor-pointer hover:bg-blue-200 transition-all'>{product?.id}</td>
-                {/* <td className='border p-2'>{product.user_details?.username}</td> */}
+                <td className='border p-2'>
+                    <input
+                        type="number"
+                        value={rank}
+                        onChange={(e) => {
+                            setRank(e.target.value)
+                            setUpdated(true)
+                        }}
+                        placeholder='الترتيب'
+                        className='w-full'
+                    />
+                </td>
                 <td className='border p-2'>
                     <div className='flex gap-2 items-center'>
                         <img loading="lazy" className='w-full max-w-[40px]' src={server + product?.image1} alt="" />

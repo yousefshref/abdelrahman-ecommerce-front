@@ -153,7 +153,7 @@ const AdminProducts = () => {
                         <tr>
                             <th className="border p-2 text-nowrap text-start w-[50px]"></th>
                             <th className="border p-2 text-nowrap text-start w-[50px]">#</th>
-                            {/* <th className="border p-2 text-nowrap text-start w-[100px]">المستخدم</th> */}
+                            <th className="border p-2 text-nowrap text-start w-[50px]">الترتيب</th>
                             <th className="border p-2 text-nowrap text-start w-[300px]">المنتج</th>
                             <th className="border p-2 text-nowrap text-start w-[100px]">السعر</th>
                             <th className="border p-2 text-nowrap text-start w-[100px]">العروض</th>

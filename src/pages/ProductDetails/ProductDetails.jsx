@@ -51,6 +51,7 @@ const ProductDetails = () => {
   }, [productDetails])
 
 
+
   if (productsContext?.loading) {
     return <Loading />
   }
@@ -95,7 +96,12 @@ const ProductDetails = () => {
                 </Link>
               </div>
               <p className="mt-5 text-right text-gray-500">
-                {productDetails?.description}
+                {productDetails?.description?.split("\n").map((i, key) => {
+                  return <React.Fragment key={key}>
+                    {i}
+                    <br />
+                  </React.Fragment>
+                })}
               </p>
             </div>
             <div className="md:w-1/2 w-full flex flex-col gap-2">
