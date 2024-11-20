@@ -9,6 +9,7 @@ import { Form, Link } from 'react-router-dom'
 import { initDB } from '../../Utlis/initDB'
 
 import Loading from '../../Components/Loading/Loading'
+import { CgClose } from 'react-icons/cg'
 
 const Cart = () => {
 
@@ -206,8 +207,8 @@ const Cart = () => {
         </div>
       ) : (
         <div className='flex flex-col gap-2 relative justify-center items-center'>
-          <img src="/empty_cart.png" alt="" className='md:block hidden' />
-          <img src="/empty_cart_mobile.png" alt="" className='md:hidden block' />
+          <img loading="lazy" src="/empty_cart.png" alt="" className='md:block hidden' />
+          <img loading="lazy" src="/empty_cart_mobile.png" alt="" className='md:hidden block' />
           <Link to='/' className='absolute md:right-[4vw] right-[50%] md:-translate-x-[0%] -translate-x-[-50%] md:top-[34vw] md:bottom-[0vw] h-fit bottom-[25vw] p-1 mb-2 hover:bg-black/10 hover:border-black/10 px-4 transition-all duration-500 border-black border w-fit'>اكمل التسوق</Link>
         </div>
       )}
@@ -220,7 +221,9 @@ const Cart = () => {
         onClose={onClose}
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent className='relative'>
+          <CgClose className='absolute top-3 left-3 text-2xl cursor-pointer text-red-500' onClick={onClose} />
+
           <DrawerHeader className='font'>تفاصيل الشحن</DrawerHeader>
 
           <DrawerBody>
@@ -316,6 +319,7 @@ const Cart = () => {
               isLoading={orderLoading || loading}
               loadingText='جاري اضافة الطلب'
               colorScheme='green'
+              disabled={!name || !phone_number || !state || !address}
               onClick={onClose}
             >
               تــــم

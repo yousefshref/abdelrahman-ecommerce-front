@@ -39,7 +39,7 @@ const CartItem = ({ item, index }) => {
             <CgClose onClick={() => cartContext?.deleteCart(item?.id)} className='absolute top-2 left-2 text-red-500 text-2xl cursor-pointer' />
             <Flex direction={window.innerWidth < 768 ? "column" : "row"} gap={"5"}>
                 {/* image */}
-                <img
+                <img loading="lazy"
                     src={server + item?.image1}
                     alt={item?.name}
                     className='md:w-[120px] w-full shadow-lg'

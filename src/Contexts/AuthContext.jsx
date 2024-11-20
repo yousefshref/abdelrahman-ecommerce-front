@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { createContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { adminDashboard } from '../Variables/pathes'
+import { adminDashboard, adminOrders, adminProducts } from '../Variables/pathes'
 import { useToast } from '@chakra-ui/react'
 
 const AuthContext = ({ children }) => {
@@ -18,10 +18,12 @@ const AuthContext = ({ children }) => {
             // 200
             const res = await axios.post('/login/', data)
             localStorage.setItem('token', res.data.token)
-            if (res.data.user.is_superuser || res.data.user.is_shipping_employee) {
-                navigate(adminDashboard())
+            if (res.data.user.is_superuser) {
+                navigate(adminProducts())
             }
-
+            if (res.data.user.res.data.user.is_shipping_employee) {
+                navigate(adminOrders())
+            }
         } catch (err) {
             // 404 not found
             if (err.response.status === 404) {

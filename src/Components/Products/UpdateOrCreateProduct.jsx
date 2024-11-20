@@ -249,52 +249,52 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                 )}
                                 {typeof image1 == 'string' && image1 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={server + image1} alt="" />
+                                        <img loading="lazy" src={server + image1} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
                                     </div>
                                 ) : null}
                                 {typeof image1 == 'object' && image1 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={URL.createObjectURL(image1)} alt="" />
+                                        <img loading="lazy" src={URL.createObjectURL(image1)} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage1("")} />
                                     </div>
                                 ) : null}
 
                                 {typeof image2 == 'string' && image2 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={server + image2} alt="" />
+                                        <img loading="lazy" src={server + image2} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage2("")} />
                                     </div>
                                 ) : null}
                                 {typeof image2 == 'object' && image2 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={URL.createObjectURL(image2)} alt="" />
+                                        <img loading="lazy" src={URL.createObjectURL(image2)} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage2("")} />
                                     </div>
                                 ) : null}
 
                                 {typeof image3 == 'string' && image3 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={server + image3} alt="" />
+                                        <img loading="lazy" src={server + image3} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage3("")} />
                                     </div>
                                 ) : null}
                                 {typeof image3 == 'object' && image3 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={URL.createObjectURL(image3)} alt="" />
+                                        <img loading="lazy" src={URL.createObjectURL(image3)} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage3("")} />
                                     </div>
                                 ) : null}
 
                                 {typeof image4 == 'string' && image4 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={server + image4} alt="" />
+                                        <img loading="lazy" src={server + image4} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage4("")} />
                                     </div>
                                 ) : null}
                                 {typeof image4 == 'object' && image4 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
-                                        <img src={URL.createObjectURL(image4)} alt="" />
+                                        <img loading="lazy" src={URL.createObjectURL(image4)} alt="" />
                                         <CiTrash className='absolute left-1 top-1 text-red-500 cursor-pointer' onClick={() => setImage4("")} />
                                     </div>
                                 ) : null}
@@ -425,7 +425,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                             }}
                                             checked={related_products?.includes(product?.id)}
                                             type="checkbox" />
-                                        <img className='w-[50px]' src={server + product?.image1} alt={product?.name} />
+                                        <img loading="lazy" className='w-[50px]' src={server + product?.image1} alt={product?.name} />
                                         <strong>{product?.name}</strong>
                                     </Flex>
                                 </Box>

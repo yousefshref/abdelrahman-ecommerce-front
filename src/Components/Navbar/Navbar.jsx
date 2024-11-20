@@ -63,7 +63,7 @@ const Navbar = () => {
 
         <Box fontSize="xl" fontWeight="bold" className="w-[33.33%] flex md:justify-start justify-center">
           <Link to={'/'}>
-            <img
+            <img loading="lazy"
               src="/logo.png"
               alt="logo"
               width="60"

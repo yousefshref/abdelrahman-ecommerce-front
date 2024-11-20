@@ -43,7 +43,7 @@ const CancelOrder = () => {
             {loading && (
                 <div className='flex flex-col gap-10'>
                     <p>يتم تحضير طلبك...</p>
-                    <img src="/logo.png" alt="" className='w-[140px] mx-auto mt-5 animate-bounce' />
+                    <img loading="lazy" src="/logo.png" alt="" className='w-[140px] mx-auto mt-5 animate-bounce' />
                 </div>
             )}
 

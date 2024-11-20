@@ -4,14 +4,13 @@ import { getCroppedImg } from '../utlies/cropUtils';
 
 const CropImage = ({ image, onCropComplete, setImageSrc }) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
+    const [zoom, setZoom] = useState(1); // Default zoom level
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [cropBoxSize, setCropBoxSize] = useState({ width: 150, height: 150 });
 
     const cropBoxRef = useRef(null);
 
     const onCropChange = setCrop;
-    const onZoomChange = setZoom;
 
     const onCropCompleteInternal = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
@@ -27,7 +26,15 @@ const CropImage = ({ image, onCropComplete, setImageSrc }) => {
         }
     };
 
-    // Handle resizing by mouse movement
+    const handleFullSize = () => {
+        const img = new Image();
+        img.src = image;
+
+        img.onload = () => {
+            setCropBoxSize({ width: img.width, height: img.height });
+        };
+    };
+
     const handleResize = (e, direction) => {
         e.preventDefault();
 
@@ -79,7 +86,7 @@ const CropImage = ({ image, onCropComplete, setImageSrc }) => {
                 aspect={null} // Set to null for freeform cropping
                 cropSize={cropBoxSize}
                 onCropChange={onCropChange}
-                onZoomChange={onZoomChange}
+                onZoomChange={setZoom}
                 onCropComplete={onCropCompleteInternal}
             />
 
@@ -109,11 +116,33 @@ const CropImage = ({ image, onCropComplete, setImageSrc }) => {
             </div>
 
             <button
-                className="bg-blue-500 p-1 px-4 text-white absolute bottom-5 left-1/2 transform -translate-x-1/2 z-[1000000]"
+                className="bg-blue-500 p-1 px-4 text-white absolute bottom-20 left-1/4 transform -translate-x-1/2 z-[1000000]"
+                onClick={handleFullSize}
+            >
+                Full Size
+            </button>
+
+            <button
+                className="bg-green-500 p-1 px-4 text-white absolute bottom-20 left-3/4 transform -translate-x-1/2 z-[1000000]"
                 onClick={onCropConfirm}
             >
                 Crop
             </button>
+
+            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-[1000000]">
+                <input
+                    type="range"
+                    min="0.5" // Allows zooming out to 50% size
+                    max="3"   // Allows zooming in to 300% size
+                    step="0.01"
+                    value={zoom}
+                    onChange={(e) => setZoom(Number(e.target.value))}
+                    className="zoom-slider"
+                />
+                <div className="text-center mt-2 text-white">
+                    Zoom: {Math.round(zoom * 100)}%
+                </div>
+            </div>
 
             <style jsx>{`
                 .crop-container {
@@ -141,6 +170,9 @@ const CropImage = ({ image, onCropComplete, setImageSrc }) => {
                     right: 0;
                     bottom: 0;
                     cursor: nwse-resize;
+                }
+                .zoom-slider {
+                    width: 200px;
                 }
             `}</style>
         </div>

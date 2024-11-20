@@ -58,16 +58,6 @@ const AdminLayout = ({ children }) => {
                         ) : (
                             <>
                                 <li>
-                                    <Link to={adminDashboard()} className={`
-                                flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
-                                ${window.location.pathname === adminDashboard() ? "bg-gray-700" : "bg-transparent"}
-                                `}
-                                    >
-                                        <FiHome size={20} />
-                                        <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>الرئيسية</p>
-                                    </Link>
-                                </li>
-                                <li>
                                     <Link to={adminUsers()} className={`
                                 flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
                                 ${window.location.pathname === adminUsers() ? "bg-gray-700" : "bg-transparent"}
@@ -100,7 +90,7 @@ const AdminLayout = ({ children }) => {
                             </Link>
                         </li>
                     </ul>
-                    <ul>
+                    <ul className='md:mb-0 mb-20'>
                         <li>
                             <Link to={adminSettings()} className={`${`${window.location.pathname === adminSettings() ? "bg-gray-700" : "bg-transparent"}`} flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2`}>
                                 <FiSettings size={20} />
@@ -129,7 +119,7 @@ const AdminLayout = ({ children }) => {
             <div className={`flex-1 md:p-4 p-2 transition-all duration-300 ${isSidebarOpen ? 'ms-[250px]' : 'ms-16'} md:ms-0 max-h-screen overflow-y-scroll`}>
                 <div className='flex gap-10 justify-between items-center'>
                     <div className='flex gap-2 items-center'>
-                        <img
+                        <img loading="lazy"
                             onClick={(e) => {
                                 e.preventDefault();
                                 const input = document.createElement("input");

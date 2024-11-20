@@ -8,11 +8,6 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { CategoryContextProvider } from "../../Contexts/CategoryContext";
 import { api } from "../../Variables/server";
 
-// Images (replace with your images)
-// const images = [
-//   "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-//   "https://images.pexels.com/photos/620337/pexels-photo-620337.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-// ];
 
 const Slider = () => {
 
@@ -31,20 +26,25 @@ const Slider = () => {
         centeredSlides={true}
         autoplay={{
           delay: 1000,
-          // disableOnInteraction: false,
         }}
         speed={1000}
         loop={true}
-        // pagination={{
-        //   clickable: true,
-        // }}
-        // navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
+        pagination={{
+          clickable: true,
+          type: "bullets",
+        }}
+        className="relative"
       >
         {images?.map((image, index) => (
           <SwiperSlide key={index} className="w-full flex justify-center">
             <div className="relative">
-              <img src={api + image?.image} alt={`Slide ${index + 1}`} />
+              <img
+                loading="lazy"
+                src={api + image?.image}
+                alt={`Slide ${index + 1}`}
+                className="w-full h-auto"
+              />
             </div>
           </SwiperSlide>
         ))}

@@ -99,14 +99,14 @@ const ProductDetails = () => {
               </p>
             </div>
             <div className="md:w-1/2 w-full flex flex-col gap-2">
-              <img
+              <img loading="lazy"
                 src={server + activeImage}
                 alt={productDetails?.name}
                 className="w-full max-w-[400px] mx-auto bg-gray-100/30 p-5"
               />
               <div className="flex gap-5 flex-wrap justify-center">
                 {productDetails?.image1 && (
-                  <img
+                  <img loading="lazy"
                     src={server + productDetails?.image1}
                     alt={productDetails?.name}
                     className="w-[50px] h-[50px]"
@@ -114,7 +114,7 @@ const ProductDetails = () => {
                   />
                 )}
                 {productDetails?.image2 && (
-                  <img
+                  <img loading="lazy"
                     src={server + productDetails?.image2}
                     alt={productDetails?.name}
                     className="w-[50px] h-[50px]"
@@ -122,7 +122,7 @@ const ProductDetails = () => {
                   />
                 )}
                 {productDetails?.image3 && (
-                  <img
+                  <img loading="lazy"
                     src={server + productDetails?.image3}
                     alt={productDetails?.name}
                     className="w-[50px] h-[50px]"
@@ -130,7 +130,7 @@ const ProductDetails = () => {
                   />
                 )}
                 {productDetails?.image4 && (
-                  <img
+                  <img loading="lazy"
                     src={server + productDetails?.image4}
                     alt={productDetails?.name}
                     className="w-[50px] h-[50px]"

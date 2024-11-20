@@ -33,7 +33,6 @@ function App() {
         <Route path={adminRegisterPage()} element={<AdminRegister />} />
 
         <Route element={<PrivateRoute />}>
-          <Route path={adminDashboard()} element={<AdminPage />} />
           <Route path={adminProducts()} element={<AdminProducts />} />
           <Route path={adminOrders()} element={<AdminOrders />} />
           <Route path={adminUsers()} element={<AdminUsers />} />

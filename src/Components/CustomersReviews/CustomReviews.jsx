@@ -60,7 +60,7 @@ const CustomReviews = () => {
                 {review.comment}
               </p>
             </div>
-            <img
+            <img loading="lazy"
               src={review.image}
               alt={review.name}
               className="w-14 h-14 md:w-16 md:h-16 rounded-full mt-3 md:mt-0"

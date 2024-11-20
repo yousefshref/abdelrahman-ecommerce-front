@@ -30,7 +30,7 @@ const AdminLogin = () => {
                         size="lg"
                     >
                         <p>Safe Zone</p>
-                        <img src="/logo.png" className='w-[70px]' alt="" />
+                        <img loading="lazy" src="/logo.png" className='w-[70px]' alt="" />
                     </Heading>
                     <FormControl id="username">
                         <FormLabel className="text-gray-300">اسم الحساب</FormLabel>

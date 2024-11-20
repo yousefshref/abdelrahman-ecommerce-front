@@ -23,13 +23,13 @@ const ProductCard = ({ product }) => {
                 </p>
             ) : null}
             <Link to={productDetails(product?.id)} className='overflow-hidden relative'>
-                <img
+                <img loading="lazy"
                     src={server + product?.image1}
                     alt={product?.name}
                     className="w-full"
                 // className="w-[500px] h-[300px]"
                 />
-                <img
+                <img loading="lazy"
                     src={server + product?.image2}
                     alt={product?.name}
                     className="w-full absolute top-0 left-0 opacity-0 hover:opacity-100 transition-all duration-300"

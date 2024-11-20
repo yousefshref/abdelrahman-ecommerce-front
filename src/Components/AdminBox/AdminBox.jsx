@@ -4,7 +4,7 @@ import React from 'react'
 const AdminBox = ({ img, text, number }) => {
     return (
         <Box className='p-2 bg-white rounded-xl overflow-hidden shadow-lg h-[230px] relative'>
-            <img
+            <img loading="lazy"
                 style={{
                     filter: "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))"
                 }}

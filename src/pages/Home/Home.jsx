@@ -15,7 +15,7 @@ const Home = () => {
 
 
       <Link to={"https://wa.me/201093952937"}>
-        <img src="/whatsapp.png" className="wp-icon transition-all hover:scale-110 cursor-pointer fixed bg-white p-3 rounded-full bottom-5 w-[70px] shadow-xl right-5 z-50" alt="" />
+        <img loading="lazy" src="/whatsapp.png" className="wp-icon transition-all hover:scale-110 cursor-pointer fixed bg-white p-3 rounded-full bottom-5 w-[70px] shadow-xl right-5 z-50" alt="" />
       </Link>
     </div>
   );

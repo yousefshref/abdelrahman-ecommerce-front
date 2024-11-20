@@ -73,7 +73,7 @@ const HomePageImage = () => {
                 </div>
                 {images?.map(image => (
                     <div className='relative w-[140px]'>
-                        <img className='w-full h-[140px] rounded-xl' src={api + image?.image} alt="" />
+                        <img loading="lazy" className='w-full h-[140px] rounded-xl' src={api + image?.image} alt="" />
 
                         <BiTrash onClick={() => categoryContext?.deleteHomePageImage(image?.id)} className='absolute top-2 right-2 w-[30px] h-[30px] p-1 rounded-md text-white bg-red-500 cursor-pointer cursor-pointer' />
                     </div>
