@@ -50,7 +50,7 @@ const OrderTableRow = ({ order, index }) => {
     return (
         <>
             <tr>
-                <td onClick={onOpen} className="border p-2 cursor-pointer text-start transition-all hover:bg-blue-200">{index + 1}</td>
+                <td onClick={onOpen} className="border p-2 cursor-pointer text-start transition-all hover:bg-green-400 bg-green-100">{index + 1}</td>
                 <td className="border p-2 text-start">{order.tracking_code ? order.tracking_code : 'لا يوجد'}</td>
                 <td className="border p-2 text-start">{order.user_details?.username}</td>
                 <td className="border p-2 text-start">{order.name}</td>

@@ -64,8 +64,12 @@ const AdminSettings = () => {
                 </div>
             </div>
 
-            <StatesSettings />
-            <HomePageImage />
+            {user?.is_superuser ? (
+                <>
+                    <StatesSettings />
+                    <HomePageImage />
+                </>
+            ) : null}
         </AdminLayout>
     )
 }

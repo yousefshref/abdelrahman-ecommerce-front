@@ -147,14 +147,14 @@ const AdminLayout = ({ children }) => {
                         </div>
                     </div>
 
-                    <ul className='flex gap-4 items-center'>
+                    {/* <ul className='flex gap-4 items-center'>
                         <li>
                             <Link className='flex gap-0.5 items-center text-lime-700 p-2 bg-lime-200/60'>
                                 <IoIosNotificationsOutline size={30} />
                                 <p className='text-xl'>5</p>
                             </Link>
                         </li>
-                    </ul>
+                    </ul> */}
                 </div>
                 <hr className='my-5' />
                 <div>

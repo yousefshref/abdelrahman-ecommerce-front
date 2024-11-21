@@ -14,6 +14,7 @@ const UsersContext = ({ children }) => {
                 }
             });
             setUsers(res.data)
+            return res.data
         }
     }
 
