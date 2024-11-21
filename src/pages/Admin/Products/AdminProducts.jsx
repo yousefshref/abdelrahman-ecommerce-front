@@ -18,15 +18,19 @@ const AdminProducts = () => {
 
     const [loading, setLoading] = useState(true)
 
+    const [about_to_end, setAboutToEnd] = useState("")
     const getProducts = async () => {
-        setLoading(true)
-        await productsContext?.fetchProducts()
-        setLoading(false)
-    }
+        setLoading(true);
+        const params = {
+            about_to_end
+        }
+        await productsContext?.fetchProducts(params);
+        setLoading(false);
+    };
 
     useEffect(() => {
-        getProducts()
-    }, [])
+        getProducts();
+    }, [about_to_end]);
 
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -46,10 +50,14 @@ const AdminProducts = () => {
 
 
 
-    if (loading) return <Loading />
+    // if (loading) return <Loading />
 
     return (
         <AdminLayout>
+
+            {loading ? (
+                <Loading />
+            ) : null}
 
             {/* summary */}
             <Box>
@@ -62,9 +70,20 @@ const AdminProducts = () => {
                                 number={products?.length}
                             />
                         </div>
-                        <div className='md:w-[50%] w-full'>
+                        <div
+                            onClick={() => {
+                                if (about_to_end) {
+                                    setAboutToEnd("")
+                                } else {
+                                    setAboutToEnd(true)
+                                }
+                            }}
+                            className={`md:w-[50%] w-full ${about_to_end ? "border-4 border-green-500 rounded-xl" : ""}`}
+                        >
                             <AdminBox
-                                img={"https://cdn-icons-png.freepik.com/256/8625/8625327.png?semt=ais_hybrid"}
+                                img={
+                                    "https://cdn-icons-png.freepik.com/256/8625/8625327.png?semt=ais_hybrid"
+                                }
                                 text={"منتجات على وشك الانتهاء"}
                                 number={products?.length}
                             />

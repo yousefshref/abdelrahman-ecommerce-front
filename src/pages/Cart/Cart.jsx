@@ -51,7 +51,12 @@ const Cart = () => {
 
   const [is_fast_shipping, setIsFastShipping] = React.useState(false)
 
-
+  const checkValidation =
+    !name ||
+    !phone_number ||
+    !state ||
+    !address ||
+    phone_number.length !== 11;
 
   // shipping fees
   const [shippingFees, setShippingFees] = React.useState(0)
@@ -192,14 +197,14 @@ const Cart = () => {
               </div>
               <div className='mt-2' />
               <Button
-                onClick={!name || !phone_number || !state || !address ? onOpen : handleCreateOrder}
+                onClick={checkValidation ? onOpen : handleCreateOrder}
                 className='w-full'
                 colorScheme='green'
                 isLoading={loading}
-                variant={!name || !phone_number || !state || !address ? 'outline' : "solid"}
+                variant={checkValidation ? 'outline' : "solid"}
               >
                 {
-                  !name || !phone_number || !state || !address ? "تأكيد الطلب" : "اطلب المنتجات الأن"
+                  checkValidation ? "تأكيد الطلب" : "اطلب المنتجات الأن"
                 }
               </Button>
             </Flex>
@@ -319,7 +324,7 @@ const Cart = () => {
               isLoading={orderLoading || loading}
               loadingText='جاري اضافة الطلب'
               colorScheme='green'
-              disabled={!name || !phone_number || !state || !address}
+              disabled={checkValidation}
               onClick={onClose}
             >
               تــــم

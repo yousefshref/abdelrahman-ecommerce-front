@@ -45,33 +45,29 @@ const AdminLayout = ({ children }) => {
             {/* Sidebar */}
             <Box
                 as="aside"
-                className={`fixed md:static h-screen ${isSidebarOpen ? 'w-[250px]' : 'w-16'} md:w-[250px] transition-all duration-300 bg-gray-900 text-white p-4 z-20`}
+                className={`fixed md:static h-screen ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0 
+                md:w-[250px] w-[250px] transition-transform duration-300 bg-gray-900 text-white p-4 z-20`}
                 boxShadow="xl"
             >
+                {/* Sidebar Content */}
                 <VStack className='justify-between flex flex-col h-full' spacing={4} align="stretch">
                     <Text fontSize="2xl" fontWeight="bold" mb={4} className={`${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
                         لوحة التحكم
                     </Text>
                     <ul className='my-auto'>
-                        {is_shipping_employee ? (
-                            null
-                        ) : (
+                        {is_shipping_employee ? null : (
                             <>
                                 <li>
-                                    <Link to={adminUsers()} className={`
-                                flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
-                                ${window.location.pathname === adminUsers() ? "bg-gray-700" : "bg-transparent"}
-                                `}
+                                    <Link to={adminUsers()} className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
+                            ${window.location.pathname === adminUsers() ? "bg-gray-700" : "bg-transparent"}`}
                                     >
                                         <FiUser size={20} />
                                         <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>المستخدمين</p>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={adminProducts()} className={`
-                                flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
-                                ${window.location.pathname === adminProducts() ? "bg-gray-700" : "bg-transparent"}
-                                `}
+                                    <Link to={adminProducts()} className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
+                            ${window.location.pathname === adminProducts() ? "bg-gray-700" : "bg-transparent"}`}
                                     >
                                         <IoCartOutline size={20} />
                                         <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>المنتجات</p>
@@ -80,10 +76,8 @@ const AdminLayout = ({ children }) => {
                             </>
                         )}
                         <li>
-                            <Link to={adminOrders()} className={`
-                                flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
-                                ${window.location.pathname === adminOrders() ? "bg-gray-700" : "bg-transparent"}
-                                `}
+                            <Link to={adminOrders()} className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2
+                    ${window.location.pathname === adminOrders() ? "bg-gray-700" : "bg-transparent"}`}
                             >
                                 <BiPurchaseTagAlt size={20} />
                                 <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>الطلبات</p>
@@ -92,7 +86,8 @@ const AdminLayout = ({ children }) => {
                     </ul>
                     <ul className='md:mb-0 mb-20'>
                         <li>
-                            <Link to={adminSettings()} className={`${`${window.location.pathname === adminSettings() ? "bg-gray-700" : "bg-transparent"}`} flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2`}>
+                            <Link to={adminSettings()} className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2 
+                    ${window.location.pathname === adminSettings() ? "bg-gray-700" : "bg-transparent"}`}>
                                 <FiSettings size={20} />
                                 <p className={`text-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>الاعدادات</p>
                             </Link>
@@ -109,14 +104,14 @@ const AdminLayout = ({ children }) => {
 
             {/* Burger Icon for Mobile */}
             <button
-                className="md:hidden fixed top-4 right-4 z-30 p-2 bg-gray-800 text-white rounded-md"
+                className="md:hidden fixed top-4 left-4 z-30 p-2 bg-gray-800 text-white rounded-md"
                 onClick={toggleSidebar}
             >
                 <FiMenu size={24} />
             </button>
 
             {/* Main Content */}
-            <div className={`flex-1 md:p-4 p-2 transition-all duration-300 ${isSidebarOpen ? 'ms-[250px]' : 'ms-16'} md:ms-0 max-h-screen overflow-y-scroll`}>
+            <div className={`flex-1 md:p-4 p-2 transition-all duration-300 ${isSidebarOpen ? 'ms-[250px]' : ''} md:ms-0 max-h-screen overflow-y-scroll`}>
                 <div className='flex gap-10 justify-between items-center'>
                     <div className='flex gap-2 items-center'>
                         <img loading="lazy"

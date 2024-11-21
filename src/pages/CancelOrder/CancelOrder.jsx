@@ -2,10 +2,14 @@ import React, { useContext, useEffect } from 'react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { CiClock2 } from 'react-icons/ci'
+import { IoCopyOutline } from "react-icons/io5";
+
 
 const CancelOrder = () => {
-    const navigate = useNavigate()
 
+    const navigator = window.navigator
+
+    const navigate = useNavigate()
 
     const orderContext = useContext(OrderContextProvider)
     // get the order first
@@ -56,7 +60,12 @@ const CancelOrder = () => {
                     </div>
                     <div className='p-1 flex-col items-end text-xl bg-green-200 absolute md:-top-12 -top-10 -right-8 flex px-5 rounded-md shadow-lg'>
                         <p className='text-xs text-gray-500'>.Track Code</p>
-                        <p className='md:text-balance text-sm'>{order?.tracking_code ? order?.tracking_code : "لا يوجد كود تتبع"}</p>
+                        <div className={`${order?.tracking_code ? "flex flex-row gap-4 items-center" : ""}`}>
+                            {order?.tracking_code ? (
+                                <IoCopyOutline size={10} className='cursor-pointer' onClick={() => navigator.clipboard.writeText(order?.tracking_code)} />
+                            ) : null}
+                            <p className='md:text-balance text-sm'>{order?.tracking_code ? order?.tracking_code : "لا يوجد كود تتبع"}</p>
+                        </div>
                     </div>
                     <div className='p-1 text-green-700 flex-col text-xl bg-black/15 backdrop-blur-sm absolute -bottom-4 -left-8 flex px-10 rounded-md shadow-lg'>
                         <p className='text-sm'>مجموع المبلغ</p>
