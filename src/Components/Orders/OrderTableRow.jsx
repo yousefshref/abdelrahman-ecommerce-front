@@ -74,7 +74,7 @@ const OrderTableRow = ({ order, index }) => {
                         <option value="">اختر الحالة</option>
                         <option value="pending">في الانتظار</option>
                         <option value="processing">قيد التنفيذ</option>
-                        <option value="shipped">تم الشخن</option>
+                        <option value="shipped">تم الشحن</option>
                         <option value="delivered">تم التسليم</option>
                         <option value="cancelled">ملغي</option>
                     </select>
