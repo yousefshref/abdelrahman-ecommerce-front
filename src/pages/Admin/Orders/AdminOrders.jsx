@@ -245,7 +245,7 @@ const AdminOrders = () => {
             <Box className='mt-3'>
                 <Flex justifyContent={"space-between"} gap={4}>
                     <strong>اجمالي المبيعات: {totalOrders} EGP</strong>
-                    <strong>الكوميشين: {commission} EGP</strong>
+                    <strong>الكوميشين: {Number(commission)} EGP</strong>
                 </Flex>
             </Box>
 
