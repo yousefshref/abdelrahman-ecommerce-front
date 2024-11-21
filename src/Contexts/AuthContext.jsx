@@ -18,10 +18,10 @@ const AuthContext = ({ children }) => {
             // 200
             const res = await axios.post('/login/', data)
             localStorage.setItem('token', res.data.token)
-            if (res.data.user.is_superuser) {
+            if (res?.data?.user?.is_superuser) {
                 navigate(adminProducts())
             }
-            if (res.data.user.res.data.user.is_shipping_employee) {
+            if (res?.data?.user?.is_shipping_employee) {
                 navigate(adminOrders())
             }
         } catch (err) {
