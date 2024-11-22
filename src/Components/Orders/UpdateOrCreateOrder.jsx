@@ -235,7 +235,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                             }
                         </p>
                         <Button isLoading={loading} isDisabled={loading} colorScheme='green' size={"sm"} onClick={order?.id ? handleUpdateOrder : handleCreateOrder} className='px-5'>
-                            {order?.id ? "الانتهاء" : "انشاء"}
+                            {order?.id ? "تــــم" : "انشاء"}
                         </Button>
                     </Flex>
                 </ModalHeader>
