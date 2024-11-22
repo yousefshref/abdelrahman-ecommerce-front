@@ -70,7 +70,7 @@ const OrderTableRow = ({ order, index }) => {
                 <td className="border p-2 text-start">
                     <select onChange={(e) => {
                         handleUpdateOrder(e.target.value)
-                    }} value={status} className='p-1 w-full px-3 border border-green-500'>
+                    }} value={status} className={`p-1 w-full px-3 border ${status == 'delivered' ? "border-green-500" : ""} ${status == 'cancelled' ? "border-red-500" : ""}`}>
                         <option value="">اختر الحالة</option>
                         <option value="pending">في الانتظار</option>
                         <option value="processing">قيد التنفيذ</option>

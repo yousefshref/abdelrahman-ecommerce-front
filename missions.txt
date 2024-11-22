@@ -1,9 +1,4 @@
-- send email to the user when add tracking code                                     done
-- calculate the commission to the sales before doing anything                       done
-- make the sales wait untill aprove to him
-
-
-
+- pop up for the cart
 
 
 Admin Order:

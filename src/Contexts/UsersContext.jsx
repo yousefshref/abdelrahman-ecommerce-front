@@ -104,6 +104,19 @@ const UsersContext = ({ children }) => {
             console.log(err)
         }
     }
+
+
+
+
+    const sendEmail = async (data) => {
+        try {
+            const res = await axios.post('/email/send/', data)
+            console.log(res);
+            return res
+        } catch (err) {
+            console.log(err);
+        }
+    }
     return (
         <UsersContextProvider.Provider value={{
             users,
@@ -119,6 +132,8 @@ const UsersContext = ({ children }) => {
 
             user,
             getUser,
+
+            sendEmail
         }}>
             {children}
         </UsersContextProvider.Provider>

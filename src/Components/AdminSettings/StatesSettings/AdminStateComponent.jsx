@@ -5,11 +5,13 @@ const AdminStateComponent = ({ state, create, setOpenCreate }) => {
     const [name, setName] = React.useState(state?.name)
     const [shipping_price, setShippingPrice] = React.useState(state?.shipping_price)
     const [fast_shipping_price, setFastShippingPrice] = React.useState(state?.fast_shipping_price)
+    const [rank, setRank] = React.useState(state?.rank)
 
     useEffect(() => {
         setName(state?.name)
         setShippingPrice(state?.shipping_price)
         setFastShippingPrice(state?.fast_shipping_price)
+        setRank(state?.rank)
     }, [state])
 
 
@@ -24,7 +26,8 @@ const AdminStateComponent = ({ state, create, setOpenCreate }) => {
         const data = {
             name,
             shipping_price,
-            fast_shipping_price
+            fast_shipping_price,
+            rank
         }
         await statesContext?.updateState(state?.id, data, setOpenUpdate)
         setLoading(false)
@@ -35,14 +38,21 @@ const AdminStateComponent = ({ state, create, setOpenCreate }) => {
         const data = {
             name,
             shipping_price,
-            fast_shipping_price
+            fast_shipping_price,
+            rank
         }
         await statesContext?.createState(data, setOpenCreate)
         setLoading(false)
     }
 
     return (
-        <div className='flex rounded-md shadow-md items-center justify-between flex-col p-2 bg-white'>
+        <div className='flex rounded-md shadow-md items-center justify-between flex-col p-2 bg-white relative'>
+            {openUpdate || create ? (
+                <input type="number" value={rank} onChange={(e) => setRank(e.target.value)} className='w-full text-center p-0.5 bg-white outline-none mb-1' placeholder='الترتيب' />
+            ) : (
+                <p>{state?.rank}</p>
+            )}
+
             {openUpdate || create ? (
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} className='w-full text-center p-0.5 bg-white outline-none' />
             ) : (

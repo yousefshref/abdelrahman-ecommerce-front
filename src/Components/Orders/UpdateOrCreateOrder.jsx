@@ -22,6 +22,9 @@ import { StatesContextProvider } from '../../Contexts/StatesContext'
 import OrderItemTableRow from './OrderItemTableRow'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { AuthContextProvider } from '../../Contexts/AuthContext'
+import { UsersContextProvider } from '../../Contexts/UsersContext'
+import { trackOrders } from '../../Variables/pathes'
+import { api, clientUrl } from '../../Variables/server'
 
 
 const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
@@ -132,7 +135,27 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     }, [order])
 
 
+
+    const usersContext = useContext(UsersContextProvider)
+
     const handleUpdateOrder = async () => {
+        let sendTrackingCode = false   // updated
+
+        if (tracking_code !== order?.tracking_code) {
+            sendTrackingCode = true
+        } else {
+            sendTrackingCode = false
+        }
+
+
+        let sendStatusChanged = false   // updated
+
+        if (status !== order?.status && status == "shipped") {
+            sendStatusChanged = true
+        } else {
+            sendStatusChanged = false
+        }
+
         setLoading(true)
         const data = {
             name,
@@ -151,6 +174,36 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
         await ordersContext?.updateOrder(order?.id, data).then(e => {
             if (e) {
                 onClose()
+                // send tracking code
+                if (sendTrackingCode && e?.email && e?.tracking_code) {
+                    usersContext?.sendEmail({
+                        recipient_email: e?.email,
+                        subject: "تم أضافة رقم شحنة طلبك",
+                        message: `
+                                <h2>تم إضافة رقم تتبتع للشحنة رقم ${e?.id}</h2>
+                                <p style="margin-top: 15px">يمكنك تتبع الشحنة الأن عن طريقة هذا رقم التتبع ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a></p>
+                            `,
+                        content_type: "html",
+                    })
+                }
+
+                // send status
+                if (sendStatusChanged && e?.email) {
+                    usersContext?.sendEmail({
+                        recipient_email: e?.email,
+                        subject: "تم أضافة رقم شحنة طلبك",
+                        message: `
+                                <h2>تم تغيير حالة الطلب وسيتم توصيلة قريبا ${e?.id}</h2>
+                                <p style="margin-top: 15px">
+                                    تغير تغيير حالة الطلب رقم ${e?.id} وهو في الطريق الأن تم شحنه.... ترقب مكالمة المندوب قريبا
+                                </p>
+                                <p style="margin-top: 10px">
+                                    يمكنك تتبع الطلب من خلال هذا الكود ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
+                                </p>
+                            `,
+                        content_type: "html",
+                    })
+                }
             }
         })
         setLoading(false)
@@ -182,7 +235,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                             }
                         </p>
                         <Button isLoading={loading} isDisabled={loading} colorScheme='green' size={"sm"} onClick={order?.id ? handleUpdateOrder : handleCreateOrder} className='px-5'>
-                            {order?.id ? "تعديل" : "انشاء"}
+                            {order?.id ? "الانتهاء" : "انشاء"}
                         </Button>
                     </Flex>
                 </ModalHeader>
