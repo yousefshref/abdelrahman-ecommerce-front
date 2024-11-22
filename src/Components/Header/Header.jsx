@@ -21,7 +21,7 @@ const Header = () => {
           <Link
             to={productsPage() + `?category=${category?.id}`}
             key={category?.id}
-            className="px-3 md:text-base text-xs py-1 rounded-full border-green-500 text-green-500 border cursor-pointer transition-all hover:bg-green-500 hover:text-white"
+            className="px-3 py-1 rounded-full border-green-500 text-green-500 border cursor-pointer transition-all hover:bg-green-500 hover:text-white"
           >
             {category?.name}
           </Link>
