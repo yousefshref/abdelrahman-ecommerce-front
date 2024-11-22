@@ -1,3 +1,118 @@
-- send email to the user when add tracking code
+- send email to the user when add tracking code                                     done
+- calculate the commission to the sales before doing anything                       done
 - make the sales wait untill aprove to him
-- calculate the commission to the sales before doing anything
+
+
+
+
+
+Admin Order:
+
+    // const user = authContext?.user
+
+
+    // // search terms
+    // const [sales_id, setSalesId] = React.useState('')
+    // const [search, setSearch] = React.useState('')
+    // const [status, setStatus] = React.useState('')
+    // const [from, setFrom] = React.useState('')
+    // const [to, setTo] = React.useState('')
+
+    // const [see_your_orders, setSeeYourOrders] = useState(false)
+
+    // const orders = ordersContext?.orders
+
+    // const [loading, setLoading] = useState(true)
+
+    // const handleGetOrders = async () => {
+    //     setLoading(true)
+    //     const params = {
+    //         sales_id: user?.is_shipping_employee ? see_your_orders ? user?.id : "" : sales_id,
+    //         search,
+    //         status,
+    //         from,
+    //         to
+    //     }
+
+    //     await ordersContext?.getOrders(params)
+
+    //     setLoading(false)
+    // }
+
+    // useEffect(() => {
+    //     handleGetOrders()
+    // }, [user?.is_shipping_employee, user?.id, see_your_orders])
+
+
+    // const usersContext = useContext(UsersContextProvider)
+
+    // const salesUsers = usersContext?.salesUsers
+
+    // useEffect(() => {
+    //     if (!user?.is_shipping_employee) {
+    //         usersContext?.getSalesUsers()
+    //     }
+    // }, [user?.is_shipping_employee])
+
+
+    // const { isOpen, onOpen, onClose } = useDisclosure()
+
+
+
+    // const [totalOrders, setTotalOrders] = useState(0)
+
+    // const handleCalculateTotalOrders = () => {
+    //     // Calculate the total price for all orders
+    //     let totalPrice = 0;
+    //     orders.forEach(order => {
+    //         order?.order_items.forEach(item => {
+    //             totalPrice += Number(item.product_details.offer_price ? item.product_details.offer_price * item.quantity : item.product_details.price * item.quantity) + Number(order.state_details.shipping_price);
+    //         });
+    //         if (order?.is_fast_shipping) {
+    //             totalPrice += Number(order?.state_details.fast_shipping_price);
+    //         }
+    //     });
+
+    //     // Update the totalOrdersPrice state
+    //     setTotalOrders(totalPrice);
+    // }
+
+    // useEffect(() => {
+    //     handleCalculateTotalOrders();
+    // }, [orders]);
+
+
+
+    // // const salesUser = usersContext?.user
+    // const [salesUser, setSalseUser] = useState({})
+
+    // const handleGetSalesUser = () => {
+    //     if (user?.is_superuser) {
+    //         if (sales_id) {
+    //             usersContext?.getUser(sales_id).then((res) => setSalseUser(res))
+    //         } else {
+    //             setSalseUser({})
+    //         }
+    //     } else {
+    //         if (user?.id) {
+    //             usersContext?.getUser(user?.id).then((res) => setSalseUser(res))
+    //         }
+    //     }
+    // }
+
+
+    // useEffect(() => {
+    //     handleGetSalesUser()
+    // }, [user, sales_id])
+
+
+    // // calculate the commission
+    // const [commission, setCommission] = useState(0)
+    // const calculateCommission = () => {
+    //     // calculate the commission of the sales user
+    //     const commission = totalOrders * (salesUser?.commission / 100);
+    //     setCommission(commission);
+    // }
+    // useEffect(() => {
+    //     calculateCommission();
+    // }, [totalOrders, salesUser?.commission, user]);

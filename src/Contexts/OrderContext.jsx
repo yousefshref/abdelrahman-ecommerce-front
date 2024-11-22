@@ -19,7 +19,7 @@ const OrderContext = ({ children }) => {
 
     const [orders, setOrders] = React.useState([])
 
-    const getOrders = async (params) => {
+    const getOrders = async (params = {}) => {
         setLoading(true)
         try {
             const res = await axios.get('/orders/', {

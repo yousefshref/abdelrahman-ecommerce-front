@@ -12,126 +12,94 @@ import Loading from '../../../Components/Loading/Loading';
 
 const AdminOrders = () => {
     const ordersContext = React.useContext(OrderContextProvider)
-
     const authContext = useContext(AuthContextProvider)
-
-    const user = authContext?.user
-
-
-    // search terms
-    const [sales_id, setSalesId] = React.useState('')
-    const [search, setSearch] = React.useState('')
-    const [status, setStatus] = React.useState('')
-    const [from, setFrom] = React.useState('')
-    const [to, setTo] = React.useState('')
-
-    const [see_your_orders, setSeeYourOrders] = useState(false)
-
-    const orders = ordersContext?.orders
-
-    const [loading, setLoading] = useState(true)
-
-    const handleGetOrders = async () => {
-        setLoading(true)
-        const params = {
-            sales_id: user?.is_shipping_employee ? see_your_orders ? user?.id : "" : sales_id,
-            search,
-            status,
-            from,
-            to
-        }
-
-        await ordersContext?.getOrders(params)
-
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        handleGetOrders()
-    }, [user?.is_shipping_employee, user?.id, see_your_orders])
-
-
     const usersContext = useContext(UsersContextProvider)
 
-    const salesUsers = usersContext?.salesUsers
-
-    useEffect(() => {
-        if (!user?.is_shipping_employee) {
-            usersContext?.getSalesUsers()
-        }
-    }, [user?.is_shipping_employee])
+    const user = authContext?.user
 
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
 
+    // get orders
+    const [loading, setLoading] = useState(true)
 
-    const [totalOrders, setTotalOrders] = useState(0)
+    const [search, setSearch] = useState("")
+    const [sales_id, setSalesId] = useState("")
 
-    const handleCalculateTotalOrders = () => {
-        // Calculate the total price for all orders
-        let totalPrice = 0;
-        orders.forEach(order => {
-            order?.order_items.forEach(item => {
-                totalPrice += Number(item.product_details.offer_price ? item.product_details.offer_price * item.quantity : item.product_details.price * item.quantity) + Number(order.state_details.shipping_price);
-            });
-            if (order?.is_fast_shipping) {
-                totalPrice += Number(order?.state_details.fast_shipping_price);
-            }
-        });
-
-        // Update the totalOrdersPrice state
-        setTotalOrders(totalPrice);
+    const orders = ordersContext?.orders
+    const handleGetOrders = async () => {
+        const params = {
+            search,
+            sales_id
+        }
+        setLoading(true)
+        await ordersContext?.getOrders(params)
+        setLoading(false)
     }
 
     useEffect(() => {
-        handleCalculateTotalOrders();
-    }, [orders]);
+        handleGetOrders()
+    }, [sales_id])
 
 
 
-    // const salesUser = usersContext?.user
-    const [salesUser, setSalseUser] = useState({})
+    // get all sales
+    const salesUsers = usersContext?.salesUsers
+    const getSalseUsers = () => {
+        usersContext?.getSalesUsers()
+    }
+    useEffect(() => {
+        getSalseUsers()
+    }, [])
 
-    const handleGetSalesUser = () => {
-        if (user?.is_superuser) {
-            if (sales_id) {
-                usersContext?.getUser(sales_id).then((res) => setSalseUser(res))
-            } else {
-                setSalseUser({})
-            }
+
+
+    // calculate total orders
+    const calculateTotalOrders = (filterdOrders = []) => {
+        let total = 0
+        if (filterdOrders?.length) {
+            filterdOrders.forEach(order => {
+                total += order?.total
+            })
         } else {
-            if (user?.id) {
-                usersContext?.getUser(user?.id).then((res) => setSalseUser(res))
-            }
+            orders.forEach(order => {
+                total += order?.total
+            })
+        }
+        return total
+    }
+
+
+
+
+    // calculate commission
+    const [commission, setCommission] = useState(0)
+
+    // if the user is the admin add no commission
+    // if sales add the commission to total orders
+    const calculateCommission = () => {
+        if (user?.is_superuser) {
+            // get the selected user
+            const salesUser = salesUsers?.find(user => user?.id == sales_id)
+            // get the commission of it
+            const user_commission = salesUser?.commission
+            // return the total
+            setCommission(calculateTotalOrders() * (user_commission / 100))
+        } else {
+            setCommission(calculateTotalOrders(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100))
         }
     }
 
-
     useEffect(() => {
-        handleGetSalesUser()
-    }, [user, sales_id])
-
-
-    // calculate the commission
-    const [commission, setCommission] = useState(0)
-    const calculateCommission = () => {
-        // calculate the commission of the sales user
-        const commission = totalOrders * (salesUser?.commission / 100);
-        setCommission(commission);
-    }
-    useEffect(() => {
-        calculateCommission();
-    }, [totalOrders, salesUser?.commission, user]);
-
-
-
-    if (loading) {
-        return <Loading />
-    }
+        calculateCommission()
+    }, [orders?.length, user, sales_id])
 
     return (
         <AdminLayout>
+            {loading ? (
+                <Loading />
+            ) : null}
             {/* Search Section */}
             <Box>
                 <Flex gap={4} className='flex flex-col'>
@@ -146,10 +114,10 @@ const AdminOrders = () => {
                             size={"sm"}
                             className="w-full"
                         />
-                        {/* {
+                        {
                             user?.is_shipping_employee ? null : (
                                 <Select
-                                    value={sales_id}
+                                    value={user?.is_superuser ? sales_id : user?.id}
                                     onChange={(e) => setSalesId(e.target.value)}
                                     placeholder="سيلز معين"
                                     sx={{
@@ -165,7 +133,7 @@ const AdminOrders = () => {
                                     ))}
                                 </Select>
                             )
-                        } */}
+                        }
                     </Flex>
                     {/* {user?.is_shipping_employee ? (
                         <div className='flex items-center gap-3'>
@@ -244,8 +212,8 @@ const AdminOrders = () => {
             {/* total orders price */}
             <Box className='mt-3'>
                 <Flex justifyContent={"space-between"} gap={4}>
-                    <strong>اجمالي المبيعات: {totalOrders} EGP</strong>
-                    <strong>الكوميشين: {Number(commission)} EGP</strong>
+                    <strong>اجمالي المبيعات: {calculateTotalOrders()} EGP</strong>
+                    <strong>الكوميشين: {parseInt(commission)} EGP</strong>
                 </Flex>
             </Box>
 
