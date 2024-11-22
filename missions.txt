@@ -1,5 +1,6 @@
 - pop up for the cart
-
+- delete users
+- payment methods
 
 Admin Order:
 
