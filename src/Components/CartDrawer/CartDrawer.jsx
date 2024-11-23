@@ -24,8 +24,6 @@ const CartDrawer = ({ isOpen, onOpen, onClose }) => {
         cartContext?.getCart()
     }, [])
 
-    console.log(cart);
-
     return (
         <>
             <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={window.innerWidth < 768 ? "sm" : "lg"}>
