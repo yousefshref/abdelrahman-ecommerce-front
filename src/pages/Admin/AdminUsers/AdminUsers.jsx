@@ -63,6 +63,7 @@ const AdminUsers = () => {
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200">كوميشن</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200">ارسال بريد بالأداء</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200"></th>
+                            <th className="px-4 py-2 text-start text-nowrap bg-lime-200"></th>
                         </tr>
                     </thead>
                     <tbody>

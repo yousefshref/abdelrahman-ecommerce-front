@@ -144,6 +144,19 @@ const UserTableRow = ({ user }) => {
                         حفظ
                     </Button>
                 </td>
+                <td className="border px-4 py-2 text-nowrap">
+                    <Button
+                        colorScheme={"red"}
+                        size="sm"
+                        onClick={() => {
+                            userContext?.deleteUser(user?.id)
+                        }}
+                        className='w-full'
+                        isLoading={loading}
+                    >
+                        حذف
+                    </Button>
+                </td>
             </tr>
         </>
     )

@@ -1,6 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { createContext } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const UsersContext = ({ children }) => {
 
@@ -117,6 +118,32 @@ const UsersContext = ({ children }) => {
             console.log(err);
         }
     }
+
+
+
+    const navigate = useNavigate()
+
+
+    const deleteUser = async (id) => {
+        try {
+            const res = await axios.delete(`/users/${id}/delete/`, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`
+                }
+            })
+            getUsers()
+            taost({
+                title: 'تم حذف المستخدم بنجاح',
+                status: 'success',
+                duration: 3000,
+            })
+            return res.data
+        } catch (err) {
+            console.log(err)
+            localStorage.removeItem('token')
+            navigate('/')
+        }
+    }
     return (
         <UsersContextProvider.Provider value={{
             users,
@@ -133,7 +160,9 @@ const UsersContext = ({ children }) => {
             user,
             getUser,
 
-            sendEmail
+            sendEmail,
+
+            deleteUser
         }}>
             {children}
         </UsersContextProvider.Provider>
