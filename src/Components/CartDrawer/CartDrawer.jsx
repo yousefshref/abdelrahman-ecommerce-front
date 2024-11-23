@@ -13,6 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { CartContextProvider } from '../../Contexts/CartContext';
 import CartItem from '../Cart/CartItem';
+import { Link } from 'react-router-dom';
+import { cartPage } from '../../Variables/pathes';
 
 const CartDrawer = ({ isOpen, onOpen, onClose }) => {
 
@@ -26,9 +28,8 @@ const CartDrawer = ({ isOpen, onOpen, onClose }) => {
 
     return (
         <>
-            <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={window.innerWidth < 768 ? "sm" : "lg"}>
+            <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={window.innerWidth < 768 ? "xs" : "lg"}>
                 <DrawerOverlay />
-                <CloseButton className='absolute top-2 left-2' onClick={onClose} />
                 <DrawerContent>
                     <DrawerHeader className='font'>المنتجات في السلة</DrawerHeader>
 
@@ -38,9 +39,11 @@ const CartDrawer = ({ isOpen, onOpen, onClose }) => {
 
                     <DrawerFooter className='font'>
                         <Button variant="outline" ml={3} onClick={onClose}>
-                            مسح السلة
+                            تكملة التسوق
                         </Button>
-                        <Button colorScheme="blue">الذهاب للدفع</Button>
+                        <Link to={cartPage()}>
+                            <Button colorScheme="green">الذهاب للدفع</Button>
+                        </Link>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

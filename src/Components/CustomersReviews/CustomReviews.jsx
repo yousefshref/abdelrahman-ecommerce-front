@@ -39,9 +39,9 @@ const CustomReviews = () => {
         <p className="w-full md:w-[500px] mt-5">
           القي نظرة على ما يقول عملاءنا في منتجاتنا وثقتهم بنا
         </p>
-        <button className="md:block hidden group mt-5 group-hover:before:duration-500 group-hover:after:duration-1000 after:duration-500 hover:border-lime-300  duration-500 before:duration-500 hover:duration-500 hover:after:-right-2 hover:before:top-8 hover:before:right-16 hover:after:scale-150 hover:after:blur-none hover:before:-bottom-8 hover:before:blur-none hover:bg-lime-300 hover:underline hover:underline-offset-4  origin-left hover:decoration-2 hover:text-lime-900 relative bg-lime-800 h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg  overflow-hidden  before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-lime-400 before:rounded-full before:blur-lg  after:absolute after:z-10 after:w-20 after:h-20 after:content['']  after:bg-lime-600 after:right-8 after:top-3 after:rounded-full after:blur">
+        {/* <button className="md:block hidden group mt-5 group-hover:before:duration-500 group-hover:after:duration-1000 after:duration-500 hover:border-lime-300  duration-500 before:duration-500 hover:duration-500 hover:after:-right-2 hover:before:top-8 hover:before:right-16 hover:after:scale-150 hover:after:blur-none hover:before:-bottom-8 hover:before:blur-none hover:bg-lime-300 hover:underline hover:underline-offset-4  origin-left hover:decoration-2 hover:text-lime-900 relative bg-lime-800 h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg  overflow-hidden  before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-lime-400 before:rounded-full before:blur-lg  after:absolute after:z-10 after:w-20 after:h-20 after:content['']  after:bg-lime-600 after:right-8 after:top-3 after:rounded-full after:blur">
           شاهد المزيد
-        </button>
+        </button> */}
       </div>
       {/* Right Section */}
       <div className="flex flex-col items-center mt-10 md:mt-0">
@@ -68,9 +68,9 @@ const CustomReviews = () => {
           </div>
         ))}
       </div>
-      <button className="md:hidden block group mt-5 group-hover:before:duration-500 group-hover:after:duration-1000 after:duration-500 hover:border-lime-300  duration-500 before:duration-500 hover:duration-500 hover:after:-right-2 hover:before:top-8 hover:before:right-16 hover:after:scale-150 hover:after:blur-none hover:before:-bottom-8 hover:before:blur-none hover:bg-lime-300 hover:underline hover:underline-offset-4  origin-left hover:decoration-2 hover:text-lime-900 relative bg-lime-800 h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg  overflow-hidden  before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-lime-400 before:rounded-full before:blur-lg  after:absolute after:z-10 after:w-20 after:h-20 after:content['']  after:bg-lime-600 after:right-8 after:top-3 after:rounded-full after:blur">
+      {/* <button className="md:hidden block group mt-5 group-hover:before:duration-500 group-hover:after:duration-1000 after:duration-500 hover:border-lime-300  duration-500 before:duration-500 hover:duration-500 hover:after:-right-2 hover:before:top-8 hover:before:right-16 hover:after:scale-150 hover:after:blur-none hover:before:-bottom-8 hover:before:blur-none hover:bg-lime-300 hover:underline hover:underline-offset-4  origin-left hover:decoration-2 hover:text-lime-900 relative bg-lime-800 h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg  overflow-hidden  before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-lime-400 before:rounded-full before:blur-lg  after:absolute after:z-10 after:w-20 after:h-20 after:content['']  after:bg-lime-600 after:right-8 after:top-3 after:rounded-full after:blur">
         شاهد المزيد
-      </button>
+      </button> */}
     </div>
   );
 };
