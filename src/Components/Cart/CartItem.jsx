@@ -16,7 +16,7 @@ const CartItem = ({ item, index }) => {
     const [price, setPrice] = React.useState(item?.offer_price ? item?.offer_price : item?.price)
     useEffect(() => {
         setPrice(item?.offer_price ? item?.offer_price : item?.price)
-    }, [])
+    }, [item])
 
     const [total, setTotal] = React.useState(item?.quantity * price)
 

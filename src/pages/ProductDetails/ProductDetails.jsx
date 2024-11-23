@@ -8,6 +8,7 @@ import { CartContextProvider } from "../../Contexts/CartContext";
 import { server } from "../../Variables/pathes";
 import Loading from "../../Components/Loading/Loading";
 import { BsWhatsapp } from "react-icons/bs";
+import AddToCartButton from "../../Components/AddToCartButton/AddToCartButton";
 
 const ProductDetails = () => {
 
@@ -81,15 +82,11 @@ const ProductDetails = () => {
                 </div>
               </div>
               <div className="flex items-center gap-5">
-                <button onClick={() => handleAddToCart(productDetails)} className="bg-lime-500 transition-all duration-300 hover:bg-lime-600 active:bg-lime-700 text-white px-3 py-2 flex items-center gap-2 mt-5 w-full text-center justify-center">
-                  <CiShoppingCart size={25} />
-                  اضف الى السلة
-                </button>
-                {/* <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[100px] px-3 py-2 flex items-center gap-2 mt-5 text-center justify-center">
-                  شراء
-                </button> */}
+                <div className="w-full">
+                  <AddToCartButton product={productDetails} />
+                </div>
                 <Link to={"https://wa.me/201093952937"}>
-                  <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[200px] px-3 py-2 flex flex-row items-center gap-2 mt-5 text-center justify-center">
+                  <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[200px] px-3 py-2 flex flex-row items-center gap-2 text-center justify-center">
                     <BsWhatsapp size={20} />
                     <p>طلب عبر واتساب</p>
                   </button>

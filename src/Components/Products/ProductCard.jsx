@@ -6,13 +6,9 @@ import { CartContextProvider } from '../../Contexts/CartContext'
 import { Flex } from '@chakra-ui/react'
 import { BsWhatsapp } from 'react-icons/bs'
 import { CgShoppingCart } from 'react-icons/cg'
+import AddToCartButton from '../AddToCartButton/AddToCartButton'
 
 const ProductCard = ({ product }) => {
-    const cartContext = React.useContext(CartContextProvider)
-
-    const handleAddToCart = () => {
-        cartContext.addToCart(product)
-    }
     return (
         <div
             className="flex shadow-md flex-col gap-5 p-2 bg-white relative h-[100%]"
@@ -46,9 +42,9 @@ const ProductCard = ({ product }) => {
                 <div className='my-2'></div>
                 <div className="flex flex-col items-center gap-2">
                     <Flex gap={3} className='flex md:flex-row flex-col w-full'>
-                        <button onClick={handleAddToCart} className="w-full md:w-[50%] bg-lime-500 transition-all justify-center duration-300 text-nowrap hover:bg-lime-600 active:bg-lime-700 text-white font-bold px-3 py-2 text-sm flex items-center gap-2">
-                            <CgShoppingCart size={20} /> اضف للسلة
-                        </button>
+                        <div className='w-full md:w-[50%]'>
+                            <AddToCartButton product={product} />
+                        </div>
                         <button className="w-full md:w-[50%] bg-transparent border border-lime-500 text-lime-500 transition-all justify-center text-nowrap duration-300 hover:bg-lime-100 hover:border-lime-100 active:bg-lime-700 font-bold px-2 py-2 text-sm flex items-center gap-2">
                             <Link className='flex gap-2' to={"https://wa.me/201093952937"}>
                                 <BsWhatsapp size={20} />

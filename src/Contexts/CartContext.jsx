@@ -46,6 +46,8 @@ const CartContext = ({ children }) => {
                     isClosable: true,
                     position: "bottom-left",
                 });
+
+                return true
             }
         } catch (error) {
             console.error('Error with IndexedDB:', error);
