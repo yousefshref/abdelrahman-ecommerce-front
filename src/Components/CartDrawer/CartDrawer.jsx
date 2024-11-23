@@ -9,6 +9,7 @@ import {
     DrawerCloseButton,
     Button,
     useDisclosure,
+    CloseButton,
 } from "@chakra-ui/react";
 import { CartContextProvider } from '../../Contexts/CartContext';
 import CartItem from '../Cart/CartItem';
@@ -29,6 +30,7 @@ const CartDrawer = ({ isOpen, onOpen, onClose }) => {
         <>
             <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={window.innerWidth < 768 ? "sm" : "lg"}>
                 <DrawerOverlay />
+                <CloseButton className='absolute top-2 left-2' onClick={onClose} />
                 <DrawerContent>
                     <DrawerHeader className='font'>المنتجات في السلة</DrawerHeader>
 
