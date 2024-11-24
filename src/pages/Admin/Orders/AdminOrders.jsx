@@ -242,6 +242,7 @@ const AdminOrders = () => {
                                 <th className="border p-2 text-nowrap text-start w-[200px]">العنوان</th>
                                 <th className="border p-2 text-nowrap text-start w-[150px]">هل شحن سريع</th>
                                 <th className="border p-2 text-nowrap text-start w-[200px]">الحالة</th>
+                                <th className="border p-2 text-nowrap text-start w-[200px]">كود التتبع</th>
                                 <th className="border p-2 text-nowrap text-start w-[150px]">الاجمالي</th>
                                 <th className="border p-2 text-nowrap text-start w-[60px]"></th>
                             </tr>

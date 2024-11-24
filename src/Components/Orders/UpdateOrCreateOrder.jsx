@@ -159,7 +159,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
 
         let sendArrivedEmail = false   // updated
 
-        if (status !== order?.status && status == "arrived") {
+        if (status !== order?.status && status == "delivered") {
             sendArrivedEmail = true
         } else {
             sendArrivedEmail = false
