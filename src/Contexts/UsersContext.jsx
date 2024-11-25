@@ -2,6 +2,8 @@ import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { createContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { clientUrl } from '../Variables/server';
+import { trackOrders } from '../Variables/pathes';
 
 const UsersContext = ({ children }) => {
 
@@ -109,7 +111,30 @@ const UsersContext = ({ children }) => {
 
 
 
-    const sendEmail = async (data) => {
+    const sendEmail = async (data, message) => {
+        if (message == "shipped") {
+            data.message = `
+                <h2>تم تغيير حالة الطلب وسيتم توصيلة قريبا</h2>
+                <p style="margin-top: 15px">
+                    تم شحن طلبك, ترقب مكالمة المندوب في اي وقت قريب
+                </p>
+                <p style="margin-top: 10px">
+                    يمكنك تتبع الطلب من خلال هذا الكود ${data?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
+                </p>
+            `
+        }
+
+        if (message == "delivered") {
+            data.message = `
+            <h2>تم تسليم شحنتك</h2>
+            <p style="margin-top: 15px">
+                تم تسليم الشحنة للمندوب وترقب وصولها اليوم من الساعة 9 صباحا حتى الساعة 9 مساءً
+            </p>
+            <p style="margin-top: 10px">
+                يمكنك تتبع الطلب من خلال هذا الكود ${data?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
+            </p>
+        `
+        }
         try {
             const res = await axios.post('/email/send/', data)
             console.log(res);

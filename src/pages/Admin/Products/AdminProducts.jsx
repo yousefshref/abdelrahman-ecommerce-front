@@ -13,16 +13,26 @@ import { CgAdd } from 'react-icons/cg'
 
 const AdminProducts = () => {
     const productsContext = useContext(ProductsContextProvider)
+    const categoryContext = useContext(CategoryContextProvider)
+
+    const categories = categoryContext?.categories
+    useEffect(() => {
+        categoryContext?.fetchCategories()
+    }, [])
 
     const products = productsContext?.products
 
     const [loading, setLoading] = useState(true)
 
     const [about_to_end, setAboutToEnd] = useState("")
+    const [search, setSearch] = useState("")
+    const [category, setCategory] = useState("")
     const getProducts = async () => {
         setLoading(true);
         const params = {
-            about_to_end
+            about_to_end,
+            search,
+            category
         }
         await productsContext?.fetchProducts(params);
         setLoading(false);
@@ -108,10 +118,11 @@ const AdminProducts = () => {
                         <div className='w-[100%]'>
                             <Input
                                 type='text'
-                                placeholder='ابحث بالID او الاسم'
+                                placeholder='ابحث عن منتج'
                                 sx={{
                                     backgroundColor: "white"
                                 }}
+                                onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
                         <div className='md:w-[calc(100%-200px)] w-full'>
@@ -121,14 +132,17 @@ const AdminProducts = () => {
                                 sx={{
                                     backgroundColor: "white"
                                 }}
+                                onChange={(e) => setCategory(e.target.value)}
                             >
-                                <option value='option1'>Option 1</option>
-                                <option value='option2'>Option 2</option>
-                                <option value='option3'>Option 3</option>
+                                {categories?.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.name}
+                                    </option>
+                                ))}
                             </Select>
                         </div>
                     </Flex>
-                    <Button colorScheme='green' className='w-full max-w-[100px] flex gap-2 items-center'>
+                    <Button onClick={getProducts} colorScheme='green' className='w-full max-w-[100px] flex gap-2 items-center'>
                         <Icon as={BiSearch} />
                         <p>بحث</p>
                     </Button>

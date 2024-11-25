@@ -139,14 +139,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     const usersContext = useContext(UsersContextProvider)
 
     const handleUpdateOrder = async () => {
-        // let sendTrackingCode = false   // updated
-
-        // if (tracking_code !== order?.tracking_code) {
-        //     sendTrackingCode = true
-        // } else {
-        //     sendTrackingCode = false
-        // }
-
 
         let sendStatusChanged = false   // updated
 
@@ -183,52 +175,20 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
         await ordersContext?.updateOrder(order?.id, data).then(e => {
             if (e) {
                 onClose()
-                // send tracking code
-                // if (sendTrackingCode && e?.email && e?.tracking_code) {
-                //     usersContext?.sendEmail({
-                //         recipient_email: e?.email,
-                //         subject: "تم أضافة رقم شحنة طلبك",
-                //         message: `
-                //                 <h2>تم إضافة رقم تتبتع للشحنة رقم ${e?.id}</h2>
-                //                 <p style="margin-top: 15px">يمكنك تتبع الشحنة الأن عن طريقة هذا رقم التتبع ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a></p>
-                //             `,
-                //         content_type: "html",
-                //     })
-                // }
-
                 // send status
                 if (sendStatusChanged && e?.email) {
                     usersContext?.sendEmail({
                         recipient_email: e?.email,
-                        subject: "تم أضافة رقم شحنة طلبك",
-                        message: `
-                                <h2>تم تغيير حالة الطلب وسيتم توصيلة قريبا ${e?.id}</h2>
-                                <p style="margin-top: 15px">
-                                    تغير تغيير حالة الطلب رقم ${e?.id} وهو في الطريق الأن تم شحنه.... ترقب مكالمة المندوب قريبا
-                                </p>
-                                <p style="margin-top: 10px">
-                                    يمكنك تتبع الطلب من خلال هذا الكود ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
-                                </p>
-                            `,
+                        subject: "تم شحن طلبك",
                         content_type: "html",
-                    })
+                    }, "shipped")
                 }
-
                 if (sendArrivedEmail && e?.email) {
                     usersContext?.sendEmail({
                         recipient_email: e?.email,
-                        subject: "تم أضافة رقم شحنة طلبك",
-                        message: `
-                                <h2>تم تسليم شحنتك رقم ${e?.id}</h2>
-                                <p style="margin-top: 15px">
-                                    تم تسليم الشحنة للمندوب وترقب وصولها اليوم من الساعة 9 صباحا حتى الساعة 9 مساءً
-                                </p>
-                                <p style="margin-top: 10px">
-                                    يمكنك تتبع الطلب من خلال هذا الكود ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
-                                </p>
-                            `,
+                        subject: "تم تسليم شحنتك",
                         content_type: "html",
-                    })
+                    }, "delivered")
                 }
             }
         })

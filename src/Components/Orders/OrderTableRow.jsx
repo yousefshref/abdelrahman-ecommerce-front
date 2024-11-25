@@ -8,6 +8,7 @@ import { LiaShippingFastSolid } from 'react-icons/lia'
 import { clientUrl } from '../../Variables/server'
 import { UsersContextProvider } from '../../Contexts/UsersContext'
 import { trackOrders } from '../../Variables/pathes'
+import { AuthContextProvider } from '../../Contexts/AuthContext'
 
 
 const OrderTableRow = ({ order, index }) => {
@@ -16,6 +17,15 @@ const OrderTableRow = ({ order, index }) => {
 
     const ordersContext = React.useContext(OrderContextProvider)
     const usersContext = React.useContext(UsersContextProvider)
+    const authContext = React.useContext(AuthContextProvider)
+
+
+    // get the user
+    const user = authContext?.user
+    useEffect(() => {
+        authContext?.getUser()
+    }, [])
+
 
 
     const [status, setStatus] = React.useState(order?.status)
@@ -44,9 +54,16 @@ const OrderTableRow = ({ order, index }) => {
             sendArrivedEmail = false
         }
 
+        // if the tracking code was empty then wrote and the user is shipping employee add the filed sales_who_added be the user
+        let addSalesWhoAdded = false
+
+        if (!order?.tracking_code && newTrackingCode && user?.is_shipping_employee) {
+            addSalesWhoAdded = true
+        }
 
 
-        ordersContext?.updateOrder(order?.id, { status: newStatus, tracking_code: newTrackingCode }).then(e => {
+
+        ordersContext?.updateOrder(order?.id, { status: newStatus, tracking_code: newTrackingCode, sales_who_added: addSalesWhoAdded ? user?.id : order?.sales_who_added }).then(e => {
             if (e) {
                 onClose()
 
@@ -57,33 +74,15 @@ const OrderTableRow = ({ order, index }) => {
                     usersContext?.sendEmail({
                         recipient_email: e?.email,
                         subject: "تم شحن طلبك",
-                        message: `
-                                    <h2>تم تغيير حالة الطلب وسيتم توصيلة قريبا ${e?.id}</h2>
-                                    <p style="margin-top: 15px">
-                                        تغير تغيير حالة الطلب رقم ${e?.id} وهو في الطريق الأن تم شحنه.... ترقب مكالمة المندوب قريبا
-                                    </p>
-                                    <p style="margin-top: 10px">
-                                        يمكنك تتبع الطلب من خلال هذا الكود ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
-                                    </p>
-                                `,
                         content_type: "html",
-                    })
+                    }, "shipped")
                 }
                 if (sendArrivedEmail && e?.email) {
                     usersContext?.sendEmail({
                         recipient_email: e?.email,
                         subject: "تم تسليم شحنتك",
-                        message: `
-                                    <h2>تم تسليم شحنتك رقم ${e?.id}</h2>
-                                    <p style="margin-top: 15px">
-                                        تم تسليم الشحنة للمندوب وترقب وصولها اليوم من الساعة 9 صباحا حتى الساعة 9 مساءً
-                                    </p>
-                                    <p style="margin-top: 10px">
-                                        يمكنك تتبع الطلب من خلال هذا الكود ${e?.tracking_code}, من خلال <a href=${clientUrl + trackOrders()}>هذه الصفحة</a>
-                                    </p>
-                                `,
                         content_type: "html",
-                    })
+                    }, "delivered")
                 }
             }
         })

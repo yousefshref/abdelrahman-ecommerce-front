@@ -168,7 +168,6 @@ const OrderContext = ({ children }) => {
                 });
             }
 
-            console.log(err);
         } finally {
             setLoading(true)
         }
