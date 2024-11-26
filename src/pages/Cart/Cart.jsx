@@ -56,7 +56,7 @@ const Cart = () => {
     !phone_number ||
     !state ||
     !address ||
-    phone_number.length !== 11;
+    phone_number.length < 11;
 
   // shipping fees
   const [shippingFees, setShippingFees] = React.useState(0)
