@@ -58,7 +58,6 @@ const Cart = () => {
     !phone_number ||
     !state ||
     !address ||
-    !payment_method ||
     phone_number.length < 11;
 
   // shipping fees
@@ -350,7 +349,7 @@ const Cart = () => {
 
           <DrawerFooter className='flex gap-3'>
             <Button
-              isLoading={orderLoading || loading}
+              isLoading={loading}
               loadingText='جاري اضافة الطلب'
               colorScheme='green'
               disabled={checkValidation}

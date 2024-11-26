@@ -88,6 +88,8 @@ const AdminOrders = () => {
             setCommission(calculateTotalOrders() * (user_commission / 100))
         } else {
             setCommission(calculateTotalOrders(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100))
+
+            console.log(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100);
         }
     }
 
