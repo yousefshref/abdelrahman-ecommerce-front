@@ -51,11 +51,14 @@ const Cart = () => {
 
   const [is_fast_shipping, setIsFastShipping] = React.useState(false)
 
+  const [payment_method, setPaymentMethod] = React.useState("")
+
   const checkValidation =
     !name ||
     !phone_number ||
     !state ||
     !address ||
+    !payment_method ||
     phone_number.length < 11;
 
   // shipping fees
@@ -315,6 +318,32 @@ const Cart = () => {
                   placeholder='اكتب الايميل لو تريد تتبع الشحنه'
                   aria-label='email'
                 />
+              </div>
+
+
+              <div className='flex flex-col'>
+                <div className='flex gap-2 items-center'>
+                  <input checked={true} type="checkbox" />
+                  <div className='flex gap-1 items-center'>
+                    <img className='w-10' src="/cash-on-delivery.png" alt="" />
+                    <p>الدفع عند الاستلام</p>
+                  </div>
+                </div>
+                <div className='flex gap-2 items-center opacity-50'>
+                  <input type="checkbox" disabled />
+                  <div className='flex gap-1 items-center'>
+                    <img className='w-10' src="/visa.png" alt="" />
+                    <img className='w-10' src="/money.png" alt="" />
+                    <p>دفع ببطاقة الائتمان</p>
+                  </div>
+                </div>
+                <div className='flex gap-2 items-center opacity-50'>
+                  <input type="checkbox" disabled />
+                  <div className='flex gap-1 items-center'>
+                    <img className='w-24 p-1 bg-indigo-500' src="/Asset-6@4x-1024x125.png" alt="" />
+                    <p>دفع انستا باي</p>
+                  </div>
+                </div>
               </div>
             </div>
           </DrawerBody>
