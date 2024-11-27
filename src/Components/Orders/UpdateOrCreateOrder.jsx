@@ -286,9 +286,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                                     <option value={"pending"}>
                                         {"قيد الانتظار"}
                                     </option>
-                                    <option value={"processing"}>
-                                        {"تم التجهيز"}
-                                    </option>
                                     <option value={"shipped"}>
                                         {"تم الشحن"}
                                     </option>
