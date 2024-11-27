@@ -192,6 +192,10 @@ const Cart = () => {
     setIsDropdownOpen(false);
   };
 
+  useEffect(() => {
+    setSelectedOption(options[0]);
+  }, [selectedOption.label])
+
 
   // loading
   if (cartLoading) {
