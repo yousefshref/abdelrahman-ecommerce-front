@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../Components/Navbar/Navbar'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import CartItem from '../../Components/Cart/CartItem'
 import { StatesContextProvider } from '../../Contexts/StatesContext'
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Select, Switch, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Select, Switch, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { Form, Link } from 'react-router-dom'
 import { initDB } from '../../Utlis/initDB'
 
 import Loading from '../../Components/Loading/Loading'
 import { CgClose } from 'react-icons/cg'
+import { FaAngleDown, FaAngleUp, FaChevronDown } from 'react-icons/fa'
 
 const Cart = () => {
+
+  const toast = useToast()
 
   // modal
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -49,17 +52,29 @@ const Cart = () => {
   const [address, setAddress] = React.useState('')
   const [email, setEmail] = React.useState('')
 
+  const [selectedOption, setSelectedOption] = useState({
+    label: "اختر طريقة الدفع",
+    img: "/atm-card.png",
+  });
+
   const [is_fast_shipping, setIsFastShipping] = React.useState(false)
 
-  const [payment_method, setPaymentMethod] = React.useState("")
+  const [checkValidation, setCheckValidation] = useState(false)
 
-  const checkValidation =
-    !name ||
-    !phone_number ||
-    !state ||
-    !address ||
-    phone_number.length < 11;
 
+
+  useEffect(() => {
+    if (!name ||
+      !phone_number ||
+      !state ||
+      !address ||
+      selectedOption.label == "اختر طريقة الدفع" ||
+      phone_number.length < 11) {
+      setCheckValidation(true)
+    } else {
+      setCheckValidation(false)
+    }
+  }, [name, phone_number, state, address, selectedOption.label, phone_number.length, address])
   // shipping fees
   const [shippingFees, setShippingFees] = React.useState(0)
 
@@ -148,6 +163,34 @@ const Cart = () => {
   }
 
 
+
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const options = [
+    {
+      label: "الدفع عند الاستلام",
+      img: "/cash-on-delivery.png",
+    },
+    {
+      label: "دفع ببطاقة الائتمان",
+      img: "/visa.png",
+      img2: "/money.png",
+      disabled: true
+    },
+    {
+      label: "دفع انستا باي او محفظة الكترونية",
+      img: "/Asset-6@4x-1024x125.png",
+      img2: "/ewallet.png",
+      disabled: true,
+      imageClass: "w-14 bg-indigo-500 p-1"
+    },
+  ];
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setIsDropdownOpen(false);
+  };
 
 
   // loading
@@ -320,7 +363,73 @@ const Cart = () => {
               </div>
 
 
-              <div className='flex flex-col'>
+              <div className="relative w-full">
+                {/* Selected Option */}
+                <div
+                  className="flex items-center justify-between px-4 py-2 border border-gray-300 rounded cursor-pointer"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={selectedOption.img}
+                      alt={selectedOption.label}
+                      className="w-5 h-5"
+                    />
+                    <span>{selectedOption.label}</span>
+                  </div>
+                  {isDropdownOpen ? (
+                    <FaAngleUp className="text-gray-500" />
+                  ) : (
+                    <FaAngleDown className="text-gray-500" />
+                  )}
+                </div>
+
+                {/* Dropdown Options */}
+                {isDropdownOpen && (
+                  <div className="absolute left-0 w-full mt-2 bg-white border border-gray-300 rounded shadow-lg">
+                    {options.map((option, index) => (
+                      <div
+                        key={index}
+                        className={`
+                          flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100
+                          ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}
+                          `}
+                        onClick={() => {
+                          if (option.disabled) {
+                            toast({
+                              title: 'خطأ',
+                              description: 'هذه طريقة الدفع غير متوفرة الأن',
+                              status: 'error',
+                              duration: 3000,
+                              isClosable: true,
+                              position: 'bottom-left',
+                              variant: 'subtle',
+                            })
+                          } else {
+                            handleOptionSelect(option)
+                          }
+                        }}
+                      >
+                        <img
+                          src={option.img}
+                          alt={option.label}
+                          className={option.imageClass ? option.imageClass : "w-10"}
+                        />
+                        {option.img2 ? (
+                          <img
+                            src={option.img2}
+                            alt={option.label}
+                            className={option?.imageClass2 ? option?.imageClass2 : "w-10"}
+                          />
+                        ) : null}
+                        <span>{option.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* <div className='flex flex-col'>
                 <div className='flex gap-2 items-center'>
                   <input checked={true} type="checkbox" />
                   <div className='flex gap-1 items-center'>
@@ -343,7 +452,7 @@ const Cart = () => {
                     <p>دفع انستا باي</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </DrawerBody>
 
