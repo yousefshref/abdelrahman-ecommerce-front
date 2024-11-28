@@ -179,6 +179,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                 if (sendStatusChanged && e?.email) {
                     usersContext?.sendEmail({
                         recipient_email: e?.email,
+                        tracking_code: e?.tracking_code,
                         subject: "تم شحن طلبك",
                         content_type: "html",
                     }, "shipped")
@@ -186,6 +187,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                 if (sendArrivedEmail && e?.email) {
                     usersContext?.sendEmail({
                         recipient_email: e?.email,
+                        tracking_code: e?.tracking_code,
                         subject: "تم تسليم شحنتك",
                         content_type: "html",
                     }, "delivered")

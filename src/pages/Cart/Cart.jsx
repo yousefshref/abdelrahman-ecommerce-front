@@ -272,11 +272,23 @@ const Cart = () => {
         size='md'
         isOpen={isOpen}
         placement='right'
-        onClose={onClose}
+        onClose={() => {
+          onClose()
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        }}
       >
         <DrawerOverlay />
         <DrawerContent className='relative'>
-          <CgClose className='absolute top-3 left-3 text-2xl cursor-pointer text-red-500' onClick={onClose} />
+          <CgClose className='absolute top-3 left-3 text-2xl cursor-pointer text-red-500' onClick={() => {
+            onClose()
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }} />
 
           <DrawerHeader className='font'>تفاصيل الشحن</DrawerHeader>
 
@@ -466,7 +478,13 @@ const Cart = () => {
               loadingText='جاري اضافة الطلب'
               colorScheme='green'
               disabled={checkValidation}
-              onClick={onClose}
+              onClick={() => {
+                onClose()
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth"
+                });
+              }}
             >
               تــــم
             </Button>
