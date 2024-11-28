@@ -58,7 +58,7 @@ const HomePageImage = () => {
     return (
         <div className='md:p-4 p-2 md:grid-cols-2 mt-14 rounded-xl w-full'>
             <p>تغيير الصور الرئيسية</p>
-            <div className='mt-2 flex items-center flex-row md:gap-10 gap-5 w-full'>
+            <div className='mt-2 flex items-start flex-row md:gap-10 gap-5 w-full'>
                 <div className='w-[140px]'>
                     {/* Hidden file input */}
                     <input
