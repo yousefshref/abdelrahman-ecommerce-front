@@ -7,6 +7,8 @@ import "swiper/css/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { CategoryContextProvider } from "../../Contexts/CategoryContext";
 import { api } from "../../Variables/server";
+import { useNavigate } from "react-router-dom";
+import { productDetails } from "../../Variables/pathes";
 
 
 const Slider = () => {
@@ -18,6 +20,8 @@ const Slider = () => {
   useEffect(() => {
     categoryContext?.getHomePageImages()
   }, [])
+
+  const navigate = useNavigate()
 
   return (
     <div className="w-full mx-auto md:mt-8 mt-4">
@@ -37,7 +41,11 @@ const Slider = () => {
         className="relative"
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={index} className="w-full flex justify-center">
+          <SwiperSlide onClick={() => {
+            if (image?.product) {
+              navigate(productDetails(image?.product))
+            }
+          }} key={index} className="w-full flex justify-center">
             <div className="relative">
               <img
                 loading="lazy"

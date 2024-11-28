@@ -171,6 +171,18 @@ const CategoryContext = ({ children }) => {
             console.log(err)
         }
     }
+
+    const updateHomePageImage = async (id, data) => {
+        try {
+            const res = await axios.put(`/home_page_images/update/${id}/`, data)
+            console.log(data);
+            console.log(res.data);
+            setHomePageImages(homePageImages.map((image) => image.id === id ? res.data : image))
+            return res.data
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <CategoryContextProvider.Provider value={{
             loading,
@@ -183,6 +195,7 @@ const CategoryContext = ({ children }) => {
             homePageImages,
             getHomePageImages,
             deleteHomePageImage,
+            updateHomePageImage,
             createHomePageImage,
         }}>
             {children}

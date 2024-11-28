@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { BiPlus, BiTrash } from 'react-icons/bi'
 import { CategoryContextProvider } from '../Contexts/CategoryContext'
+import { ProductsContextProvider } from '../Contexts/ProductsContext'
+
+import ImageHomeScreen from '../Components/ImageHomeScreen/ImageHomeScreen'
 
 import { api } from '../Variables/server'
 import CropImage from './CropImage'
@@ -49,10 +52,13 @@ const HomePageImage = () => {
     };
 
 
+
+
+
     return (
         <div className='md:p-4 p-2 md:grid-cols-2 mt-14 rounded-xl w-full'>
             <p>تغيير الصور الرئيسية</p>
-            <div className='mt-2 grid md:grid-cols-4 grid-cols-2 md:gap-10 gap-5 w-full'>
+            <div className='mt-2 flex items-center flex-row md:gap-10 gap-5 w-full'>
                 <div className='w-[140px]'>
                     {/* Hidden file input */}
                     <input
@@ -72,11 +78,7 @@ const HomePageImage = () => {
                     </button>
                 </div>
                 {images?.map(image => (
-                    <div className='relative w-[140px]'>
-                        <img loading="lazy" className='w-full h-[140px] rounded-xl' src={api + image?.image} alt="" />
-
-                        <BiTrash onClick={() => categoryContext?.deleteHomePageImage(image?.id)} className='absolute top-2 right-2 w-[30px] h-[30px] p-1 rounded-md text-white bg-red-500 cursor-pointer cursor-pointer' />
-                    </div>
+                    <ImageHomeScreen categoryContext={categoryContext} image={image} api={api} />
                 ))}
                 {/* Show CropImage component if an image is selected */}
                 {imageSrc && <CropImage categoryContext={categoryContext} setImageSrc={setImageSrc} image={imageSrc} onCropComplete={handleCropComplete} />}
