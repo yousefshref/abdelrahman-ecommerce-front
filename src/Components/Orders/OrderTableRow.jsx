@@ -116,6 +116,7 @@ const OrderTableRow = ({ order, index }) => {
                 <td className="border p-2 text-start">{order.phone_number}</td>
                 <td className="border p-2 text-start">{order.state_details?.name}</td>
                 <td className="border p-2 text-wrap text-start w-[200px]">{order.address}</td>
+                <td className="border p-2 text-wrap text-start w-[200px]">{order.payment_method}</td>
                 <td className="border p-2 text-wrap text-start w-[200px]">{
                     order.is_fast_shipping
                         ?

@@ -3,14 +3,18 @@ import Navbar from '../../Components/Navbar/Navbar'
 import { CartContextProvider } from '../../Contexts/CartContext'
 import CartItem from '../../Components/Cart/CartItem'
 import { StatesContextProvider } from '../../Contexts/StatesContext'
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Select, Switch, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, Input, Switch, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { Form, Link } from 'react-router-dom'
 import { initDB } from '../../Utlis/initDB'
 
 import Loading from '../../Components/Loading/Loading'
 import { CgClose } from 'react-icons/cg'
-import { FaAngleDown, FaAngleUp, FaChevronDown } from 'react-icons/fa'
+
+import Select from "react-select";
+
+import { options } from '../../Variables/variables'
+import SelectWithImage from '../../Components/SelectWithImage/SelectWithImage'
 
 const Cart = () => {
 
@@ -44,6 +48,12 @@ const Cart = () => {
 
 
 
+  const [selected, setSelected] = useState(options[0]);
+
+  const handleSelect = (option) => {
+    setSelected(option);
+  };
+
 
   // shipping details
   const [name, setName] = React.useState('')
@@ -52,29 +62,27 @@ const Cart = () => {
   const [address, setAddress] = React.useState('')
   const [email, setEmail] = React.useState('')
 
-  const [selectedOption, setSelectedOption] = useState({
-    label: "اختر طريقة الدفع",
-    img: "/atm-card.png",
-  });
+  const [payment_method, setPaymentMethod] = useState("");
 
   const [is_fast_shipping, setIsFastShipping] = React.useState(false)
 
   const [checkValidation, setCheckValidation] = useState(false)
-
-
 
   useEffect(() => {
     if (!name ||
       !phone_number ||
       !state ||
       !address ||
-      selectedOption.label == "اختر طريقة الدفع" ||
+      !payment_method ||
       phone_number.length < 11) {
       setCheckValidation(true)
     } else {
       setCheckValidation(false)
     }
-  }, [name, phone_number, state, address, selectedOption.label, phone_number.length, address])
+  }, [name, phone_number, state, address, phone_number.length, address, payment_method])
+
+
+
   // shipping fees
   const [shippingFees, setShippingFees] = React.useState(0)
 
@@ -90,6 +98,7 @@ const Cart = () => {
   }, [state, is_fast_shipping])
 
 
+  // state details
   const [stateDetails, setStateDetails] = React.useState(null)
 
   const getState = () => {
@@ -101,6 +110,7 @@ const Cart = () => {
   }, [state])
 
 
+  // fast shipping
   useEffect(() => {
     if (!stateDetails?.is_fast_shipping) {
       setIsFastShipping(false)
@@ -108,6 +118,7 @@ const Cart = () => {
   }, [stateDetails])
 
 
+  // total
   const [total, setTotal] = React.useState(0)
 
   const calculateTotal = () => {
@@ -129,8 +140,6 @@ const Cart = () => {
 
 
 
-
-
   // create order
   const orderContext = React.useContext(OrderContextProvider)
 
@@ -146,6 +155,7 @@ const Cart = () => {
       state,
       address,
       email,
+      payment_method,
       is_fast_shipping,
       total,
 
@@ -165,36 +175,7 @@ const Cart = () => {
 
 
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const options = [
-    {
-      label: "الدفع عند الاستلام",
-      img: "/cash-on-delivery.png",
-    },
-    {
-      label: "دفع ببطاقة الائتمان",
-      img: "/visa.png",
-      img2: "/money.png",
-      disabled: true
-    },
-    {
-      label: "دفع انستا باي او محفظة الكترونية",
-      img: "/Asset-6@4x-1024x125.png",
-      img2: "/ewallet.png",
-      disabled: true,
-      imageClass: "w-14 bg-indigo-500 p-1"
-    },
-  ];
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setIsDropdownOpen(false);
-  };
-
-  useEffect(() => {
-    setSelectedOption(options[0]);
-  }, [selectedOption.label])
 
 
   // loading
@@ -365,6 +346,7 @@ const Cart = () => {
                 />
               </div>
 
+              <SelectWithImage payment_method={payment_method} setPaymentMethod={setPaymentMethod} />
 
               <div className='flex flex-col gap-2'>
                 <div className='flex gap-2 items-center'>
@@ -378,97 +360,6 @@ const Cart = () => {
                 />
               </div>
 
-
-              <div className="relative w-full">
-                {/* Selected Option */}
-                <div
-                  className="flex items-center justify-between px-4 py-2 border border-gray-300 rounded cursor-pointer"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={selectedOption.img}
-                      alt={selectedOption.label}
-                      className="w-5 h-5"
-                    />
-                    <span>{selectedOption.label}</span>
-                  </div>
-                  {isDropdownOpen ? (
-                    <FaAngleUp className="text-gray-500" />
-                  ) : (
-                    <FaAngleDown className="text-gray-500" />
-                  )}
-                </div>
-
-                {/* Dropdown Options */}
-                {isDropdownOpen && (
-                  <div className="absolute left-0 w-full mt-2 bg-white border border-gray-300 rounded shadow-lg">
-                    {options.map((option, index) => (
-                      <div
-                        key={index}
-                        className={`
-                          flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100
-                          ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}
-                          `}
-                        onClick={() => {
-                          if (option.disabled) {
-                            toast({
-                              title: 'خطأ',
-                              description: 'هذه طريقة الدفع غير متوفرة الأن',
-                              status: 'error',
-                              duration: 3000,
-                              isClosable: true,
-                              position: 'bottom-left',
-                              variant: 'subtle',
-                            })
-                          } else {
-                            handleOptionSelect(option)
-                          }
-                        }}
-                      >
-                        <img
-                          src={option.img}
-                          alt={option.label}
-                          className={option.imageClass ? option.imageClass : "w-10"}
-                        />
-                        {option.img2 ? (
-                          <img
-                            src={option.img2}
-                            alt={option.label}
-                            className={option?.imageClass2 ? option?.imageClass2 : "w-10"}
-                          />
-                        ) : null}
-                        <span>{option.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* <div className='flex flex-col'>
-                <div className='flex gap-2 items-center'>
-                  <input checked={true} type="checkbox" />
-                  <div className='flex gap-1 items-center'>
-                    <img className='w-10' src="/cash-on-delivery.png" alt="" />
-                    <p>الدفع عند الاستلام</p>
-                  </div>
-                </div>
-                <div className='flex gap-2 items-center opacity-50'>
-                  <input type="checkbox" disabled />
-                  <div className='flex gap-1 items-center'>
-                    <img className='w-10' src="/visa.png" alt="" />
-                    <img className='w-10' src="/money.png" alt="" />
-                    <p>دفع ببطاقة الائتمان</p>
-                  </div>
-                </div>
-                <div className='flex gap-2 items-center opacity-50'>
-                  <input type="checkbox" disabled />
-                  <div className='flex gap-1 items-center'>
-                    <img className='w-24 p-1 bg-indigo-500' src="/Asset-6@4x-1024x125.png" alt="" />
-                    <p>دفع انستا باي</p>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </DrawerBody>
 

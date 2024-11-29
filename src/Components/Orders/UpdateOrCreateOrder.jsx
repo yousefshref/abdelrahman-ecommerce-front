@@ -25,6 +25,8 @@ import { AuthContextProvider } from '../../Contexts/AuthContext'
 import { UsersContextProvider } from '../../Contexts/UsersContext'
 import { trackOrders } from '../../Variables/pathes'
 import { api, clientUrl } from '../../Variables/server'
+import { options } from '../../Variables/variables'
+import SelectWithImage from '../SelectWithImage/SelectWithImage'
 
 
 const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
@@ -37,6 +39,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     const [tracking_code, set_tracking_code] = useState("")
     const [status, setStatus] = useState("pending")
     const [sales_who_added, setSalesWhoAdded] = useState("")
+
+    const [payment_method, setPaymentMethod] = useState("");
 
     const [order_items, setOrderItems] = useState([])
 
@@ -102,6 +106,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             state,
             address,
             email,
+            payment_method,
             tracking_code,
             status,
             sales_who_added,
@@ -125,6 +130,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             setPhone(order?.phone_number)
             setState(order?.state)
             setAddress(order?.address)
+            setPaymentMethod(order?.payment_method)
             set_tracking_code(order?.tracking_code)
             setStatus(order?.status)
             setEmail(order?.email)
@@ -164,6 +170,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             state,
             address,
             email,
+            payment_method,
             tracking_code,
             status,
             sales_who_added,
@@ -275,8 +282,9 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                             size="sm"
                             className="w-full mb-10"
                         />
+                        <SelectWithImage payment_method={payment_method} setPaymentMethod={setPaymentMethod} />
                         {!isClient && (
-                            <FormControl>
+                            <FormControl className='mt-5'>
                                 <FormLabel className='font-bold'>الحالة</FormLabel>
                                 <Select
                                     value={status}
