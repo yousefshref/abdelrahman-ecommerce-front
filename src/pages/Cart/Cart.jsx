@@ -47,14 +47,6 @@ const Cart = () => {
   }, [])
 
 
-
-  const [selected, setSelected] = useState(options[0]);
-
-  const handleSelect = (option) => {
-    setSelected(option);
-  };
-
-
   // shipping details
   const [name, setName] = React.useState('')
   const [phone_number, setPhoneNumber] = React.useState('')
@@ -80,6 +72,10 @@ const Cart = () => {
       setCheckValidation(false)
     }
   }, [name, phone_number, state, address, phone_number.length, address, payment_method])
+
+  useEffect(() => {
+    setPaymentMethod(options[0].value)
+  }, [])
 
 
 

@@ -1,13 +1,14 @@
 import { useToast } from '@chakra-ui/react';
 import React from 'react'
-
 import Select from "react-select";
 import { options } from '../../Variables/variables';
 
 const SelectWithImage = ({ payment_method, setPaymentMethod }) => {
     const toast = useToast()
+
     return (
         <Select
+            isSearchable={false}
             value={options?.find((option) => option.value === payment_method)} // Ensures the selected value matches
             placeholder="طريقة الدفع"
             className="w-full"
