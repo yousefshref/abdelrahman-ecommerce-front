@@ -70,20 +70,20 @@ const OrderTableRow = ({ order, index }) => {
                 setStatus(e?.status)
                 setTrackingCode(e?.tracking_code)
 
-                if (sendStatusChanged && e?.email) {
-                    usersContext?.sendEmail({
-                        recipient_email: e?.email,
-                        subject: "تم شحن طلبك",
-                        content_type: "html",
-                    }, "shipped")
-                }
-                if (sendArrivedEmail && e?.email) {
-                    usersContext?.sendEmail({
-                        recipient_email: e?.email,
-                        subject: "تم تسليم شحنتك",
-                        content_type: "html",
-                    }, "delivered")
-                }
+                // if (sendStatusChanged && e?.email) {
+                //     usersContext?.sendEmail({
+                //         recipient_email: e?.email,
+                //         subject: "تم شحن طلبك",
+                //         content_type: "html",
+                //     }, "shipped")
+                // }
+                // if (sendArrivedEmail && e?.email) {
+                //     usersContext?.sendEmail({
+                //         recipient_email: e?.email,
+                //         subject: "تم تسليم شحنتك",
+                //         content_type: "html",
+                //     }, "delivered")
+                // }
             }
         })
     }

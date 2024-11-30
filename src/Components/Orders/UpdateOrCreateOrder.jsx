@@ -183,22 +183,22 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             if (e) {
                 onClose()
                 // send status
-                if (sendStatusChanged && e?.email) {
-                    usersContext?.sendEmail({
-                        recipient_email: e?.email,
-                        tracking_code: e?.tracking_code,
-                        subject: "تم شحن طلبك",
-                        content_type: "html",
-                    }, "shipped")
-                }
-                if (sendArrivedEmail && e?.email) {
-                    usersContext?.sendEmail({
-                        recipient_email: e?.email,
-                        tracking_code: e?.tracking_code,
-                        subject: "تم تسليم شحنتك",
-                        content_type: "html",
-                    }, "delivered")
-                }
+                // if (sendStatusChanged && e?.email) {
+                //     usersContext?.sendEmail({
+                //         recipient_email: e?.email,
+                //         tracking_code: e?.tracking_code,
+                //         subject: "تم شحن طلبك",
+                //         content_type: "html",
+                //     }, "shipped")
+                // }
+                // if (sendArrivedEmail && e?.email) {
+                //     usersContext?.sendEmail({
+                //         recipient_email: e?.email,
+                //         tracking_code: e?.tracking_code,
+                //         subject: "تم تسليم شحنتك",
+                //         content_type: "html",
+                //     }, "delivered")
+                // }
             }
         })
         setLoading(false)
