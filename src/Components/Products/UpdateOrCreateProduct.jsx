@@ -211,17 +211,22 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                         onChange={(e) => {
                                             const file = e.target.files[0];
                                             if (file) {
-                                                const reader = new FileReader();
-                                                reader.onload = () => {
-                                                    setCropImageSrc(reader.result); // Open the crop modal with the uploaded image
-                                                };
-                                                reader.readAsDataURL(file);
+                                                // const reader = new FileReader();
+                                                // reader.onload = () => {
+                                                //     setCropImageSrc(reader.result); // Open the crop modal with the uploaded image
+                                                // };
+                                                // reader.readAsDataURL(file);
 
                                                 // Determine which slot is being updated
-                                                if (!image1) setImageSlot("image1");
-                                                else if (!image2) setImageSlot("image2");
-                                                else if (!image3) setImageSlot("image3");
-                                                else if (!image4) setImageSlot("image4");
+                                                // if (!image1) setImageSlot("image1");
+                                                // else if (!image2) setImageSlot("image2");
+                                                // else if (!image3) setImageSlot("image3");
+                                                // else if (!image4) setImageSlot("image4");
+
+                                                if (!image1) setImage1(file);
+                                                else if (!image2) setImage2(file);
+                                                else if (!image3) setImage3(file);
+                                                else if (!image4) setImage4(file);
                                             }
                                         }}
                                     />
