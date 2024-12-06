@@ -109,15 +109,15 @@ const OrderTableRow = ({ order, index }) => {
     return (
         <>
             <tr>
-                <td onClick={onOpen} className="border p-2 cursor-pointer text-start transition-all hover:bg-green-400 bg-green-100">{index + 1}</td>
-                <td className="border p-2 text-start">{order.tracking_code ? order.tracking_code : 'لا يوجد'}</td>
-                <td className="border p-2 text-start">{order.user_details?.username}</td>
-                <td className="border p-2 text-start">{order.name}</td>
-                <td className="border p-2 text-start">{order.phone_number}</td>
-                <td className="border p-2 text-start">{order.state_details?.name}</td>
-                <td className="border p-2 text-wrap text-start w-[200px]">{order.address}</td>
-                <td className="border p-2 text-wrap text-start w-[200px]">{order.payment_method}</td>
-                <td className="border p-2 text-wrap text-start w-[200px]">{
+                {/* <td onClick={onOpen} className="border p-2 cursor-pointer text-start transition-all hover:bg-green-400 bg-green-100">{index + 1}</td> */}
+                {/* <td className="border p-2 text-start">{order.tracking_code ? order.tracking_code : 'لا يوجد'}</td> */}
+                {/* <td className="border p-2 text-start">{order.user_details?.username}</td> */}
+                <td onClick={onOpen} className="border p-2 text-start">{order.name}</td>
+                {/* <td className="border p-2 text-start">{order.phone_number}</td> */}
+                {/* <td className="border p-2 text-start">{order.state_details?.name}</td> */}
+                {/* <td className="border p-2 text-wrap text-start w-[200px]">{order.address}</td> */}
+                {/* <td className="border p-2 text-wrap text-start w-[200px]">{order.payment_method}</td> */}
+                {/* <td className="border p-2 text-wrap text-start w-[200px]">{
                     order.is_fast_shipping
                         ?
                         <div className='text-green-600 flex gap-2 items-center'>
@@ -126,7 +126,7 @@ const OrderTableRow = ({ order, index }) => {
                         </div>
                         :
                         <p>توصيل عادي</p>
-                }</td>
+                }</td> */}
                 <td className="border p-2 text-start">
                     <select onChange={(e) => {
                         handleUpdateOrder(e.target.value, tracking_code)
@@ -139,7 +139,7 @@ const OrderTableRow = ({ order, index }) => {
                     </select>
                 </td>
                 {/* <td className="border p-2 text-start">{order?.order_items?.reduce((acc, item) => item?.product_details?.offer_price ? item?.product_details?.offer_price * item.quantity : item?.product_details?.price * item.quantity, 0) + Number(order?.state_details?.shipping_price)} EGP</td> */}
-                <td className="border p-2 text-start">
+                {/* <td className="border p-2 text-start">
                     <input
                         onChange={(e) => {
                             setInterval(() => {
@@ -149,8 +149,8 @@ const OrderTableRow = ({ order, index }) => {
                         value={tracking_code}
                         className="p-1 w-full px-3 border"
                     />
-                </td>
-                <td className="border p-2 text-start">{total} EGP</td>
+                </td> */}
+                {/* <td className="border p-2 text-start">{total} EGP</td> */}
                 <td className="border p-2 text-nowrap text-start">
                     <Button
                         colorScheme="red"

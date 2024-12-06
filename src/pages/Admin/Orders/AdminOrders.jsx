@@ -185,31 +185,28 @@ const AdminOrders = () => {
                             className="w-full"
                         />
                     </Flex> */}
-                    <Button
-                        onClick={!loading ? handleGetOrders : null}
-                        colorScheme="purple"
-                        size={"sm"}
-                        className='w-full max-w-[80px]'
-                        isLoading={loading}
-                    >
-                        بحث
-                    </Button>
+                    <Flex justifyContent={"space-between"}>
+                        <Button
+                            onClick={!loading ? handleGetOrders : null}
+                            colorScheme="purple"
+                            size={"sm"}
+                            className='w-full max-w-[80px]'
+                            isLoading={loading}
+                        >
+                            بحث
+                        </Button>
+                        <Button
+                            colorScheme="green"
+                            size={"sm"}
+                            onClick={onOpen}
+                        >
+                            انشاء طلب جديد
+                        </Button>
+                    </Flex>
                 </Flex>
             </Box>
 
-
-            <hr className='bg-black h-[1px] my-5' />
-
-            {/* Actions Section */}
-            <Box>
-                <Button
-                    colorScheme="green"
-                    size={"sm"}
-                    onClick={onOpen}
-                >
-                    انشاء طلب جديد
-                </Button>
-            </Box>
+            <hr className='my-5' />
 
             {/* total orders price */}
             <Box className='mt-3'>
@@ -232,22 +229,22 @@ const AdminOrders = () => {
                         />
                     </div>
                 ) : (
-                    <table className="mt-3 w-full min-w-[800px] bg-white table-fixed">
+                    <table className="mt-3 w-full bg-white table-fixed">
                         <thead>
                             <tr>
-                                <th className="border p-2 text-nowrap text-start w-[50px] bg-green-300">#</th>
-                                <th className="border p-2 text-nowrap text-start w-[150px]">كود تتبع الشحن</th>
-                                <th className="border p-2 text-nowrap text-start w-[100px]">المستخدم</th>
-                                <th className="border p-2 text-nowrap text-start w-[150px]">اسم</th>
-                                <th className="border p-2 text-nowrap text-start w-[100px]">رقم الهاتف</th>
-                                <th className="border p-2 text-nowrap text-start w-[100px]">المحافظة</th>
-                                <th className="border p-2 text-nowrap text-start w-[200px]">العنوان</th>
-                                <th className="border p-2 text-nowrap text-start w-[150px]">طريقة الدفع</th>
-                                <th className="border p-2 text-nowrap text-start w-[150px]">هل شحن سريع</th>
-                                <th className="border p-2 text-nowrap text-start w-[200px]">الحالة</th>
-                                <th className="border p-2 text-nowrap text-start w-[200px]">كود التتبع</th>
-                                <th className="border p-2 text-nowrap text-start w-[150px]">الاجمالي</th>
-                                <th className="border p-2 text-nowrap text-start w-[60px]"></th>
+                                {/* <th className="border p-2 text-nowrap text-start w-[20px] bg-green-300">#</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">كود تتبع الشحن</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[100px]">المستخدم</th> */}
+                                <th className="border p-2 text-nowrap text-start w-[100px]">اسم</th>
+                                {/* <th className="border p-2 text-nowrap text-start w-[100px]">رقم الهاتف</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[100px]">المحافظة</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[200px]">العنوان</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">طريقة الدفع</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">هل شحن سريع</th> */}
+                                <th className="border p-2 text-nowrap text-start w-[70px]">الحالة</th>
+                                {/* <th className="border p-2 text-nowrap text-start w-[200px]">كود التتبع</th> */}
+                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">الاجمالي</th> */}
+                                <th className="border p-2 text-nowrap text-start w-[50px]"></th>
                             </tr>
                         </thead>
                         <tbody>
