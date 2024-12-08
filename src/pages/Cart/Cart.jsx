@@ -161,7 +161,7 @@ const Cart = () => {
       }))
     }
 
-    await orderContext?.createOrder({ data }).then(async () => {
+    await orderContext?.createOrder({ data, orderConfirm: true }).then(async () => {
       const db = await initDB();
       await db.clear('cart');
     })
