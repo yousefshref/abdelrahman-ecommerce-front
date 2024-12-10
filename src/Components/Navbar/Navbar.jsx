@@ -25,7 +25,7 @@ import { MdOutlineSupportAgent } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
 
-const Navbar = () => {
+const Navbar = ({ classes }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const cartContext = React.useContext(CartContextProvider)
@@ -46,7 +46,10 @@ const Navbar = () => {
 
 
   return (
-    <Box bg={useColorModeValue("white", "black")} px={window.innerWidth < 768 ? 1 : 4} className="bg-amber-200 pb-2 w-full mb-2 md:shadow-md shadow-sm">
+    <Box bg={useColorModeValue("white", "black")} px={window.innerWidth < 768 ? 1 : 4} className={`
+    bg-amber-200 pb-2 w-full mb-2 md:shadow-md shadow-sm
+    ${classes}
+    `}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
 
         <Box

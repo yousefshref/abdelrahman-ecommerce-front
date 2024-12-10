@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
-import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cancelOrder, cartPage, productDetails, productsPage, trackOrders } from "./Variables/pathes";
+import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cancelOrder, cartPage, orderConfirm, productDetails, productsPage, trackOrders } from "./Variables/pathes";
 import TrackOrders from "./pages/TrackOrders/TrackOrders";
 import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import AdminPage from "./pages/Admin/AdminPage/AdminPage";
@@ -15,6 +15,7 @@ import AdminRegister from "./pages/Admin/AdminRegister/AdminRegister";
 import AdminSettings from "./pages/Admin/AdminSettings/AdminSettings";
 import Products from "./pages/Products/Products";
 import CancelOrder from "./pages/CancelOrder/CancelOrder";
+import OrderConfirm from "./pages/OrderConfirm/OrderConfirm";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path={trackOrders()} element={<TrackOrders />} />
         <Route path={productsPage()} element={<Products />} />
         <Route path={cancelOrder()} element={<CancelOrder />} />
+        <Route path={orderConfirm()} element={<OrderConfirm />} />
 
         {/* admin */}
         <Route path={adminLoginPage()} element={<AdminLogin />} />

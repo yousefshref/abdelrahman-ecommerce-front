@@ -11,6 +11,8 @@ export const cartPage = () => `/cart/`
 export const trackOrders = () => `/orders/track/`
 export const productsPage = () => `/products/`
 
+export const orderConfirm = () => `/confirm/`
+
 export const cancelOrder = () => `/orders/cancel/`
 
 // admin

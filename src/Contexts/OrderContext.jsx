@@ -70,11 +70,12 @@ const OrderContext = ({ children }) => {
                 if (!nav) {
 
                 } else {
-                    if (orderConfirm) {
-                        navigate(trackOrders() + "?confirm=true")
-                    } else {
-                        navigate(trackOrders())
-                    }
+                    navigate(orderConfirm())
+                    // if (orderConfirm) {
+                    //     navigate(trackOrders() + "?confirm=true")
+                    // } else {
+                    //     navigate(trackOrders())
+                    // }
                 }
                 toast({
                     title: "تم طلب منتجاتك بنجاح",
