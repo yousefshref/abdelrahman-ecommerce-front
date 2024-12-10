@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from '../../Components/Navbar/Navbar'
 import { Button } from '@chakra-ui/react'
+import { trackOrders } from '../../Variables/pathes'
+import { Link } from 'react-router-dom'
 
 const OrderConfirm = () => {
     return (
@@ -15,10 +17,14 @@ const OrderConfirm = () => {
                     <p className='mt-8'>تم تأكيد الطلب على المنتجات وسيتم توصيلهم في اسرع وقت, وسيتم ارسال لك رمز على البريد الالكتروني لتتبع الشحنة (في حالة كتابه البريد الالكتروني)</p>
                     <div className='flex gap-3 items-center'>
                         <Button colorScheme='teal' variant={"outline"}>
-                            تتبع الشحنة
+                            <Link to={trackOrders()}>
+                                تتبع الشحنة
+                            </Link>
                         </Button>
                         <Button colorScheme='green' variant={"solid"}>
-                            اكمل التسوق
+                            <Link to={"/"}>
+                                اكمل التسوق
+                            </Link>
                         </Button>
                     </div>
                 </div>
