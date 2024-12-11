@@ -54,7 +54,7 @@ const OrderContext = ({ children }) => {
 
 
 
-    const createOrder = async ({ data, nav = true, orderConfirm = false }) => {
+    const createOrder = async ({ data, nav = true }) => {
         setLoading(true)
         try {
             const res = await axios.post('orders/create/', data, {
@@ -64,7 +64,6 @@ const OrderContext = ({ children }) => {
             })
             // 201
             if (res.status === 201) {
-                console.log(orderConfirm);
                 cartContext.setCart([])
                 setOrders([...orders, res.data])
                 if (!nav) {
