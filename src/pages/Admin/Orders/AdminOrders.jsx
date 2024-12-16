@@ -240,7 +240,7 @@ const AdminOrders = () => {
                                 {/* <th className="border p-2 text-nowrap text-start w-[100px]">المحافظة</th> */}
                                 {/* <th className="border p-2 text-nowrap text-start w-[200px]">العنوان</th> */}
                                 {/* <th className="border p-2 text-nowrap text-start w-[150px]">طريقة الدفع</th> */}
-                                <th className="border p-2 text-nowrap text-start w-[100px]">هل شحن سريع</th>
+                                <th className="border p-2 text-nowrap text-start text-xs w-[90px]">نوع الشحن</th>
                                 <th className="border p-2 text-nowrap text-start w-[100px]">الحالة</th>
                                 {/* <th className="border p-2 text-nowrap text-start w-[200px]">كود التتبع</th> */}
                                 {/* <th className="border p-2 text-nowrap text-start w-[150px]">الاجمالي</th> */}
