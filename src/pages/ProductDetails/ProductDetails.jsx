@@ -81,17 +81,23 @@ const ProductDetails = () => {
                   }
                 </div>
               </div>
-              <div className="flex items-center gap-5">
-                <div className="w-full">
-                  <AddToCartButton product={productDetails} />
+              {productDetails?.stock == 0 ? (
+                <div className="flex items-center gap-5 text-red-500">
+                  <p>نفذ مخزون المنتج, سيتم توافره في أقرب وقت.</p>
                 </div>
-                <Link to={"https://wa.me/201093952937"}>
-                  <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[200px] px-3 py-2 flex flex-row items-center gap-2 text-center justify-center">
-                    <BsWhatsapp size={20} />
-                    <p>طلب عبر واتساب</p>
-                  </button>
-                </Link>
-              </div>
+              ) : (
+                <div className="flex items-center gap-5">
+                  <div className="w-full">
+                    <AddToCartButton product={productDetails} />
+                  </div>
+                  <Link to={"https://wa.me/201093952937"}>
+                    <button className="bg-transparent transition-all duration-300 hover:bg-lime-100 hover:border-lime-100 hover:text-lime-700 active:bg-lime-200 border border-lime-500 text-lime-500 w-[200px] px-3 py-2 flex flex-row items-center gap-2 text-center justify-center">
+                      <BsWhatsapp size={20} />
+                      <p>طلب عبر واتساب</p>
+                    </button>
+                  </Link>
+                </div>
+              )}
               <p className="mt-5 text-right text-gray-500">
                 {productDetails?.description?.split("\n").map((i, key) => {
                   return <React.Fragment key={key}>

@@ -41,17 +41,23 @@ const ProductCard = ({ product }) => {
                 </p>
                 <div className='my-2'></div>
                 <div className="flex flex-col items-center gap-2">
-                    <Flex gap={3} className='flex md:flex-row flex-col w-full'>
-                        <div className='w-full md:w-[50%]'>
-                            <AddToCartButton product={product} />
+                    {product?.stock == 0 ? (
+                        <div className="flex me-auto gap-5 text-red-500">
+                            <p>نفذ مخزون المنتج, سيتم توافره في أقرب وقت.</p>
                         </div>
-                        <button className="w-full md:w-[50%] bg-transparent border border-lime-500 text-lime-500 transition-all justify-center text-nowrap duration-300 hover:bg-lime-100 hover:border-lime-100 active:bg-lime-700 font-bold px-2 py-2 text-sm flex items-center gap-2">
-                            <Link className='flex gap-2' to={"https://wa.me/201093952937"}>
-                                <BsWhatsapp size={20} />
-                                <p>طلب عبر واتساب</p>
-                            </Link>
-                        </button>
-                    </Flex>
+                    ) : (
+                        <Flex gap={3} className='flex md:flex-row flex-col w-full'>
+                            <div className='w-full md:w-[50%]'>
+                                <AddToCartButton product={product} />
+                            </div>
+                            <button className="w-full md:w-[50%] bg-transparent border border-lime-500 text-lime-500 transition-all justify-center text-nowrap duration-300 hover:bg-lime-100 hover:border-lime-100 active:bg-lime-700 font-bold px-2 py-2 text-sm flex items-center gap-2">
+                                <Link className='flex gap-2' to={"https://wa.me/201093952937"}>
+                                    <BsWhatsapp size={20} />
+                                    <p>طلب عبر واتساب</p>
+                                </Link>
+                            </button>
+                        </Flex>
+                    )}
                     <div className="flex items-center gap-2 text-nowrap md:w-[50%] w-full justify-center">
                         <p className="text-xl font-bold">{product?.offer_price ? product?.offer_price : product?.price} EGP</p>
                         {product?.offer_price ? (
