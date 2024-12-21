@@ -18,6 +18,8 @@ const OrderContext = ({ children }) => {
 
 
     const [orders, setOrders] = React.useState([])
+    const [totalCommission, setTotalCommission] = React.useState(0)
+    const [totalOrdersPrices, setTotalOrdersPrices] = React.useState(0)
 
     const getOrders = async (params = {}) => {
         setLoading(true)
@@ -28,8 +30,15 @@ const OrderContext = ({ children }) => {
                 },
                 params
             })
+            console.log(res.data);
 
-            setOrders(res.data)
+            if (res.data.orders) {
+                setOrders(res.data.orders)
+            } else {
+                setOrders(res.data)
+            }
+            setTotalCommission(res.data?.total_commission)
+            setTotalOrdersPrices(res.data?.total_orders_prices)
         }
         catch (err) {
             // 500
@@ -277,6 +286,8 @@ const OrderContext = ({ children }) => {
             orders,
             getOrders,
             order,
+            totalCommission,
+            totalOrdersPrices,
             getOrder,
             updateOrder,
             deleteOrder,

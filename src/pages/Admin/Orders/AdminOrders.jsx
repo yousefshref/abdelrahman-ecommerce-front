@@ -27,7 +27,11 @@ const AdminOrders = () => {
     const [search, setSearch] = useState("")
     const [sales_id, setSalesId] = useState("")
 
+
     const orders = ordersContext?.orders
+    const totalCommission = ordersContext?.totalCommission
+    const totalOrdersPrices = ordersContext?.totalOrdersPrices
+
     const handleGetOrders = async () => {
         const params = {
             search,
@@ -56,46 +60,46 @@ const AdminOrders = () => {
 
 
     // calculate total orders
-    const calculateTotalOrders = (filterdOrders = []) => {
-        let total = 0
-        if (filterdOrders?.length) {
-            filterdOrders.forEach(order => {
-                total += order?.total
-            })
-        } else {
-            orders.forEach(order => {
-                total += order?.total
-            })
-        }
-        return total
-    }
+    // const calculateTotalOrders = (filterdOrders = []) => {
+    //     let total = 0
+    //     if (filterdOrders?.length) {
+    //         filterdOrders.forEach(order => {
+    //             total += order?.total
+    //         })
+    //     } else {
+    //         orders.forEach(order => {
+    //             total += order?.total
+    //         })
+    //     }
+    //     return total
+    // }
 
 
 
 
     // calculate commission
-    const [commission, setCommission] = useState(0)
+    // const [commission, setCommission] = useState(0)
 
-    // if the user is the admin add no commission
-    // if sales add the commission to total orders
-    const calculateCommission = () => {
-        if (user?.is_superuser) {
-            // get the selected user
-            const salesUser = salesUsers?.find(user => user?.id == sales_id)
-            // get the commission of it
-            const user_commission = salesUser?.commission
-            // return the total
-            setCommission(calculateTotalOrders() * (user_commission / 100))
-        } else {
-            setCommission(calculateTotalOrders(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100))
+    // // if the user is the admin add no commission
+    // // if sales add the commission to total orders
+    // const calculateCommission = () => {
+    //     if (user?.is_superuser) {
+    //         // get the selected user
+    //         const salesUser = salesUsers?.find(user => user?.id == sales_id)
+    //         // get the commission of it
+    //         const user_commission = salesUser?.commission
+    //         // return the total
+    //         setCommission(calculateTotalOrders() * (user_commission / 100))
+    //     } else {
+    //         setCommission(calculateTotalOrders(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100))
 
-            console.log(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100);
-        }
-    }
+    //         console.log(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100);
+    //     }
+    // }
 
-    useEffect(() => {
-        calculateCommission()
-    }, [orders?.length, user, sales_id])
+    // useEffect(() => {
+    //     calculateCommission()
+    // }, [orders?.length, user, sales_id])
 
     return (
         <AdminLayout>
@@ -211,8 +215,10 @@ const AdminOrders = () => {
             {/* total orders price */}
             <Box className='mt-3'>
                 <Flex justifyContent={"space-between"} gap={4}>
-                    <strong>اجمالي المبيعات: {calculateTotalOrders()} EGP</strong>
-                    <strong>الكوميشين: {parseInt(commission)} EGP</strong>
+                    <strong>اجمالي المبيعات: {totalOrdersPrices} EGP</strong>
+                    {user?.is_superuser ? (
+                        <strong>الكوميشين: {parseInt(totalCommission)} EGP</strong>
+                    ) : null}
                 </Flex>
             </Box>
 

@@ -205,16 +205,12 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     }
 
 
-    // check if the user is really the "sales_who_added"
+    // // check if the user is really the "sales_who_added"
     useEffect(() => {
-        // check if the sales_who_added field is empty
-        // if empty -----> add the current user
-        // if not dont do anything
-
-        if (!sales_who_added && order?.id && tracking_code) {
+        if (order?.id && user?.is_shipping_employee && !order?.tracking_code && !order?.sales_who_added) {
             setSalesWhoAdded(user?.id)
         }
-    }, [user, order, tracking_code])
+    }, [user?.is_shipping_employee, order]);
 
 
 
