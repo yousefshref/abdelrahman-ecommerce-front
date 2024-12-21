@@ -104,8 +104,6 @@ const AdminLogin = () => {
                         <input
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            type="email"
-                            id="email"
                             className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                             placeholder="Email Address"
                         />
