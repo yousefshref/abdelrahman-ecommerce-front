@@ -93,10 +93,7 @@ const AdminLogin = () => {
                 <p className="text-gray-300 text-center mb-6 mt-3">
                     سجل الدخول لمنصة safe zone لاستكمال عملك
                 </p>
-                <form className="space-y-4" onSubmit={(e) => {
-                    e.preventDefault()
-                    handleLogin()
-                }}>
+                <div>
                     <div className="mb-4">
                         <label className="block text-gray-300 text-sm font-medium mb-2" htmlFor="email">
                             البريد الالكتروني
@@ -122,19 +119,19 @@ const AdminLogin = () => {
                         />
                     </div>
                     <button
-                        type="submit"
                         className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-lg transition duration-300"
-                        onClick={() => {
+                        onClick={(e) => {
                             if (loading) {
 
                             } else {
+                                e.preventDefault()
                                 handleLogin()
                             }
                         }}
                     >
                         تسجيل الدخول
                     </button>
-                </form>
+                </div>
                 <div className="flex justify-between items-center text-gray-300 text-sm mt-4">
                     <Text className="text-gray-200">
                         ليس لديك حساب؟{" "}
