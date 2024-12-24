@@ -83,10 +83,14 @@ const AuthContext = ({ children }) => {
         try {
             const res = await axios.post('google-auth/', { token: credentialToken })
             localStorage.setItem('token', res.data.token)
-            if (res.data.user.is_superuser) {
-                navigate(adminDashboard())
+            if (res?.data?.user?.is_superuser) {
+                navigate(adminProducts())
             } else {
-                navigate('/')
+                if (res?.data?.user?.is_shipping_employee) {
+                    navigate(adminOrders())
+                } else {
+                    navigate('/')
+                }
             }
             return res.data
         } catch (err) {
