@@ -232,7 +232,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                     />
                                     <PiPlus />
                                 </button>
-                                {cropImageSrc && (
+                                {/* {cropImageSrc && (
                                     <CropImage
                                         image={cropImageSrc}
                                         onCropComplete={(croppedImage) => {
@@ -251,7 +251,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
                                         }}
                                         setImageSrc={setCropImageSrc} // To close the crop modal
                                     />
-                                )}
+                                )} */}
                                 {typeof image1 == 'string' && image1 ? (
                                     <div className='min-w-[100px] relative w-[100px] h-[100px]' >
                                         <img loading="lazy" src={server + image1} alt="" />

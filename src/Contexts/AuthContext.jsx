@@ -3,6 +3,7 @@ import React, { createContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { adminDashboard, adminOrders, adminProducts } from '../Variables/pathes'
 import { useToast } from '@chakra-ui/react'
+import { useGoogleLogin } from '@react-oauth/google'
 
 const AuthContext = ({ children }) => {
     const navigate = useNavigate()
@@ -77,6 +78,25 @@ const AuthContext = ({ children }) => {
     }
 
 
+    const googleLogin = async (credentialToken) => {
+        setLoading(true)
+        try {
+            const res = await axios.post('google-auth/', { token: credentialToken })
+            localStorage.setItem('token', res.data.token)
+            if (res.data.user.is_superuser) {
+                navigate(adminDashboard())
+            } else {
+                navigate('/')
+            }
+            return res.data
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
 
     const [user, setUser] = React.useState({})
 
@@ -116,6 +136,8 @@ const AuthContext = ({ children }) => {
         <AuthContextProvider.Provider value={{
             loading,
             login,
+
+            googleLogin,
 
             getUser,
             user,

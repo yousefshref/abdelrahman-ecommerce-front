@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Button, Input, FormControl, FormLabel, Heading, Text, VStack, Flex } from '@chakra-ui/react';
+import { Heading, Text } from '@chakra-ui/react';
 import { AuthContextProvider } from '../../../Contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { adminRegisterPage } from '../../../Variables/pathes';
+import { GoogleLogin } from '@react-oauth/google';
 
 const AdminLogin = () => {
     const authContext = React.useContext(AuthContextProvider)
@@ -18,67 +19,11 @@ const AdminLogin = () => {
         }
         authContext?.login(data)
     }
+
+    const handleGoogleLogin = () => {
+        authContext?.googleLogin()
+    }
     return (
-        // <div className="flex items-center p-2 justify-center min-h-screen bg-gradient-to-br from-black/40 to-black">
-        //     <Box
-        //         className="w-full max-w-md p-8 bg-opacity-70 bg-green-800/40 backdrop-blur-sm rounded-lg shadow-lg z-20"
-        //         boxShadow="lg"
-        //     >
-        //         <VStack spacing={4} align="stretch">
-        //             <Heading
-        //                 className="text-center text-3xl text-white font-bold flex gap-2 items-center justify-center"
-        //                 size="lg"
-        //             >
-        //                 <p>Safe Zone</p>
-        //                 <img loading="lazy" src="/logo.png" className='w-[70px]' alt="" />
-        //             </Heading>
-        //             <FormControl id="username">
-        //                 <FormLabel className="text-gray-300">اسم الحساب</FormLabel>
-        //                 <Input
-        //                     value={username}
-        //                     onChange={(e) => setUsername(e.target.value)}
-        //                     type="username"
-        //                     className="bg-gray-700 text-white border-none focus:ring-2 focus:ring-blue-500"
-        //                     placeholder="ادخل اسم حساب الادمن"
-        //                 />
-        //             </FormControl>
-        //             <FormControl id="password">
-        //                 <FormLabel className="text-gray-300">كلمة المرور</FormLabel>
-        //                 <Input
-        //                     value={password}
-        //                     onChange={(e) => setPassword(e.target.value)}
-        //                     type="password"
-        //                     className="bg-gray-700 text-white border-none focus:ring-2 focus:ring-blue-500"
-        //                     placeholder="Enter your password"
-        //                 />
-        //             </FormControl>
-        //             <Flex>
-        //                 <Text className="text-gray-400">
-        //                     ليس لديك حساب؟{" "}
-        //                     <Link to={adminRegisterPage()} className="text-blue-500 hover:underline">
-        //                         سجل هنا
-        //                     </Link>
-        //                 </Text>
-        //             </Flex>
-        //             <Button
-        //                 className="w-full mt-4 bg-blue-500 text-white hover:bg-blue-600"
-        //                 size="lg"
-        //                 onClick={() => {
-        //                     if (loading) {
-
-        //                     } else {
-        //                         handleLogin()
-        //                     }
-        //                 }}
-        //             >
-        //                 {
-        //                     loading ? ("جار التسجيل...") : "تسجيل الدخول"
-        //                 }
-        //             </Button>
-        //         </VStack>
-        //     </Box>
-        // </div>
-
         <div className="min-h-screen relative bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/Safe Zone.png')" }}>
             <div className='absolute top-0 left-0 w-full h-full bg-black opacity-50' />
             <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg p-8 w-full max-w-sm">
@@ -139,6 +84,22 @@ const AdminLogin = () => {
                             سجل هنا
                         </Link>
                     </Text>
+                </div>
+                <div className='flex flex-col mt-4 text-center text-white'>
+                    <p>او قم بالستجيل بطرق اخرى</p>
+
+                    <div className='my-0.5' />
+
+                    <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            authContext?.googleLogin(credentialResponse.credential)
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                        width={"300"}
+                    />
+
                 </div>
             </div>
         </div >

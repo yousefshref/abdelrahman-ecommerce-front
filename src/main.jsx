@@ -12,28 +12,31 @@ import OrderContext from "./Contexts/OrderContext.jsx";
 import AuthContext from "./Contexts/AuthContext.jsx";
 import UsersContext from "./Contexts/UsersContext.jsx";
 import AlertContext from "./Contexts/AlertContext.jsx";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ChakraProvider>
-        <AuthContext>
-          <ProductsContext>
-            <CartContext>
-              <StateContext>
-                <OrderContext>
-                  <CategoryContext>
-                    <UsersContext>
-                      <AlertContext>
-                        <App />
-                      </AlertContext>
-                    </UsersContext>
-                  </CategoryContext>
-                </OrderContext>
-              </StateContext>
-            </CartContext>
-          </ProductsContext>
-        </AuthContext>
+        <GoogleOAuthProvider clientId={"113071870770-6v09dj39vjveg3etc2i1r2ikj9aqsjn0.apps.googleusercontent.com"}>
+          <AuthContext>
+            <ProductsContext>
+              <CartContext>
+                <StateContext>
+                  <OrderContext>
+                    <CategoryContext>
+                      <UsersContext>
+                        <AlertContext>
+                          <App />
+                        </AlertContext>
+                      </UsersContext>
+                    </CategoryContext>
+                  </OrderContext>
+                </StateContext>
+              </CartContext>
+            </ProductsContext>
+          </AuthContext>
+        </GoogleOAuthProvider>
       </ChakraProvider>
     </BrowserRouter>
   </StrictMode>
