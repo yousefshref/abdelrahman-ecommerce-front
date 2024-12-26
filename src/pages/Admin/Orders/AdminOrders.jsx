@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AdminLayout from '../../../Layouts/AdminLayout'
-import { Input, Button, Select, Box, Flex, useDisclosure, Spinner } from '@chakra-ui/react';
+import { Input, Button, Select, Box, Flex, useDisclosure, Spinner, StepStatus } from '@chakra-ui/react';
 
 import { OrderContextProvider } from '../../../Contexts/OrderContext';
 import OrderTableRow from '../../../Components/Orders/OrderTableRow';
@@ -9,6 +9,7 @@ import { UsersContextProvider } from '../../../Contexts/UsersContext';
 import { AuthContextProvider } from '../../../Contexts/AuthContext';
 
 import Loading from '../../../Components/Loading/Loading';
+import { Pagination } from 'antd';
 
 const AdminOrders = () => {
     const ordersContext = React.useContext(OrderContextProvider)
@@ -26,8 +27,10 @@ const AdminOrders = () => {
 
     const [search, setSearch] = useState("")
     const [sales_id, setSalesId] = useState("")
+    const [page, setPage] = useState("")
 
 
+    const total_pages = ordersContext?.total_pages
     const orders = ordersContext?.orders
     const totalCommission = ordersContext?.totalCommission
     const totalOrdersPrices = ordersContext?.totalOrdersPrices
@@ -35,7 +38,8 @@ const AdminOrders = () => {
     const handleGetOrders = async () => {
         const params = {
             search,
-            sales_id
+            sales_id,
+            page
         }
         setLoading(true)
         await ordersContext?.getOrders(params)
@@ -44,7 +48,7 @@ const AdminOrders = () => {
 
     useEffect(() => {
         handleGetOrders()
-    }, [sales_id])
+    }, [sales_id, page])
 
 
 
@@ -58,48 +62,6 @@ const AdminOrders = () => {
     }, [])
 
 
-
-    // calculate total orders
-    // const calculateTotalOrders = (filterdOrders = []) => {
-    //     let total = 0
-    //     if (filterdOrders?.length) {
-    //         filterdOrders.forEach(order => {
-    //             total += order?.total
-    //         })
-    //     } else {
-    //         orders.forEach(order => {
-    //             total += order?.total
-    //         })
-    //     }
-    //     return total
-    // }
-
-
-
-
-    // calculate commission
-    // const [commission, setCommission] = useState(0)
-
-    // // if the user is the admin add no commission
-    // // if sales add the commission to total orders
-    // const calculateCommission = () => {
-    //     if (user?.is_superuser) {
-    //         // get the selected user
-    //         const salesUser = salesUsers?.find(user => user?.id == sales_id)
-    //         // get the commission of it
-    //         const user_commission = salesUser?.commission
-    //         // return the total
-    //         setCommission(calculateTotalOrders() * (user_commission / 100))
-    //     } else {
-    //         setCommission(calculateTotalOrders(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100))
-
-    //         console.log(orders?.filter(order => order?.sales_who_added == user?.id)) * (user?.commission / 100);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     calculateCommission()
-    // }, [orders?.length, user, sales_id])
 
     return (
         <AdminLayout>
@@ -141,54 +103,7 @@ const AdminOrders = () => {
                             )
                         }
                     </Flex>
-                    {/* {user?.is_shipping_employee ? (
-                        <div className='flex items-center gap-3'>
-                            <input type="checkbox" checked={see_your_orders} onChange={(e) => setSeeYourOrders(e.target.checked)} />
-                            <p>عرض الطلبات الخاصة بك</p>
-                        </div>
-                    ) : (
-                        null
-                    )}
-                    <Select
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                        placeholder="حالة الطلب"
-                        sx={{
-                            backgroundColor: "white",
-                        }}
-                        size={"sm"}
-                        className="w-full font"
-                    >
-                        <option value="pending">في الانتظار</option>
-                        <option value="processing">في المعالجة</option>
-                        <option value="shipped">تم الشحن</option>
-                        <option value="delivered">تم التوصيل</option>
-                        <option value="cancelled">تم الغاء</option>
-                    </Select>
-                    <Flex gap={2} className='w-full'>
-                        <Input
-                            value={from}
-                            onChange={(e) => setFrom(e.target.value)}
-                            placeholder="من تاريخ"
-                            sx={{
-                                backgroundColor: "white",
-                            }}
-                            size={"sm"}
-                            type='date'
-                            className="w-full"
-                        />
-                        <Input
-                            value={to}
-                            onChange={(e) => setTo(e.target.value)}
-                            placeholder="الي تاريخ"
-                            sx={{
-                                backgroundColor: "white",
-                            }}
-                            size={"sm"}
-                            type='date'
-                            className="w-full"
-                        />
-                    </Flex> */}
+
                     <Flex justifyContent={"space-between"}>
                         <Button
                             onClick={!loading ? handleGetOrders : null}
@@ -222,6 +137,17 @@ const AdminOrders = () => {
                 </Flex>
             </Box>
 
+            {sales_id ? null : (
+                <div dir='ltr' className='mt-5 mb-1 flex justify-end'>
+                    <Pagination
+                        defaultCurrent={10}
+                        total={total_pages}
+                        current={page}
+                        pageSize={1}
+                        onChange={(page) => setPage(page)}
+                    />
+                </div>
+            )}
             {/* table */}
             <div className="w-full max-w-full overflow-x-auto">
                 {loading ? (
@@ -238,18 +164,9 @@ const AdminOrders = () => {
                     <table className="mt-3 w-full bg-white table-fixed">
                         <thead>
                             <tr>
-                                {/* <th className="border p-2 text-nowrap text-start w-[20px] bg-green-300">#</th> */}
-                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">كود تتبع الشحن</th> */}
-                                {/* <th className="border p-2 text-nowrap text-start w-[100px]">المستخدم</th> */}
                                 <th className="border p-2 text-nowrap text-start w-[100px]">اسم</th>
-                                {/* <th className="border p-2 text-nowrap text-start w-[100px]">رقم الهاتف</th> */}
-                                {/* <th className="border p-2 text-nowrap text-start w-[100px]">المحافظة</th> */}
-                                {/* <th className="border p-2 text-nowrap text-start w-[200px]">العنوان</th> */}
-                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">طريقة الدفع</th> */}
                                 <th className="border p-2 text-nowrap text-start w-[70px]">نوع الشحن</th>
                                 <th className="border p-2 text-nowrap text-start w-[130px]">الحالة</th>
-                                {/* <th className="border p-2 text-nowrap text-start w-[200px]">كود التتبع</th> */}
-                                {/* <th className="border p-2 text-nowrap text-start w-[150px]">الاجمالي</th> */}
                                 <th className="border p-2 text-nowrap text-start w-[50px]"></th>
                             </tr>
                         </thead>

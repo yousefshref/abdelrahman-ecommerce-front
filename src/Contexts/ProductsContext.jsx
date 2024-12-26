@@ -14,14 +14,20 @@ const ProductsContext = ({ children }) => {
     const [products, setProducts] = React.useState([])
 
     const fetchProducts = async (params = {}) => {
-        setLoading(true)
-        try {
-            const res = await axios.get('/products/', { params })
-            setProducts(res.data)
-        } catch (err) {
-            console.log(err)
-        } finally {
-            setLoading(false)
+        if (
+            window.location.pathname == '/admin/products/' ||
+            window.location.pathname == '/' ||
+            window.location.pathname == '/products/'
+        ) {
+            setLoading(true)
+            try {
+                const res = await axios.get('/products/', { params })
+                setProducts(res.data)
+            } catch (err) {
+                console.log(err)
+            } finally {
+                setLoading(false)
+            }
         }
     }
 

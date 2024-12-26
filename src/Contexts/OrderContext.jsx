@@ -20,11 +20,12 @@ const OrderContext = ({ children }) => {
     const [orders, setOrders] = React.useState([])
     const [totalCommission, setTotalCommission] = React.useState(0)
     const [totalOrdersPrices, setTotalOrdersPrices] = React.useState(0)
+    const [total_pages, set_total_pages] = React.useState(0)
 
     const getOrders = async (params = {}) => {
         setLoading(true)
         try {
-            const res = await axios.get('/orders/', {
+            const res = await axios.get(`/orders/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`
                 },
@@ -36,6 +37,9 @@ const OrderContext = ({ children }) => {
                 setOrders(res.data.orders)
             } else {
                 setOrders(res.data)
+            }
+            if (res.data.total_pages) {
+                set_total_pages(res.data.total_pages)
             }
             setTotalCommission(res.data?.total_commission)
             setTotalOrdersPrices(res.data?.total_orders_prices)
@@ -285,6 +289,7 @@ const OrderContext = ({ children }) => {
 
             orders,
             getOrders,
+            total_pages,
             order,
             totalCommission,
             totalOrdersPrices,
