@@ -1,38 +1,65 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
-import React, { createContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import { clientUrl } from '../Variables/server';
-import { trackOrders } from '../Variables/pathes';
+import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers, trackOrders } from '../Variables/pathes';
 
 const UsersContext = ({ children }) => {
 
+    const location = useLocation()
+
     const [users, setUsers] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
 
     const getUsers = async () => {
-        if (localStorage.getItem('token')) {
-            const res = await axios.get('/users/', {
-                headers: {
-                    ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
-                }
-            });
-            setUsers(res.data)
-            return res.data
+        try {
+            setLoading(true)
+            if (localStorage.getItem('token')) {
+                const res = await axios.get('/users/', {
+                    headers: {
+                        ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                    }
+                });
+                setUsers(res.data)
+                return res.data
+            }
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
         }
     }
+
+    const allowedLocationsForUsers = [adminUsers()]
+    useEffect(() => {
+        if (allowedLocationsForUsers.includes(location.pathname)) {
+            getUsers()
+        }
+    }, [location])
 
 
     const [user, setUser] = React.useState({})
 
     const getUser = async (id) => {
-        const res = await axios.get(`/users/${id}/`, {
-            headers: {
-                Authorization: `Token ${localStorage.getItem('token')}`
-            }
-        });
-        setUser(res.data)
-        return res.data
+        if (id) {
+            const res = await axios.get(`/users/${id}/`, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`
+                }
+            });
+            console.log(location.pathname);
+            setUser(res.data)
+            return res.data
+        }
     }
+
+    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers()]
+    useEffect(() => {
+        if (allowedLocations.includes(location.pathname)) {
+            getUser()
+        }
+    }, [location])
 
     const updateUser = async (id, data) => {
         try {
@@ -171,6 +198,7 @@ const UsersContext = ({ children }) => {
     }
     return (
         <UsersContextProvider.Provider value={{
+            loading,
             users,
             getUsers,
 

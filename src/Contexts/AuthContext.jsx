@@ -1,12 +1,13 @@
 import axios from 'axios'
-import React, { createContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { adminDashboard, adminOrders, adminProducts } from '../Variables/pathes'
+import React, { createContext, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers } from '../Variables/pathes'
 import { useToast } from '@chakra-ui/react'
 import { useGoogleLogin } from '@react-oauth/google'
 
 const AuthContext = ({ children }) => {
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [loading, setLoading] = React.useState(false)
 
@@ -125,6 +126,13 @@ const AuthContext = ({ children }) => {
             }
         }
     }
+
+    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers()]
+    useEffect(() => {
+        if (allowedLocations.includes(location.pathname)) {
+            getUser()
+        }
+    }, [location])
 
 
 

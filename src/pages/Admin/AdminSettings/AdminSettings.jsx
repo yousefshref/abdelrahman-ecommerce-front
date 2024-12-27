@@ -12,10 +12,6 @@ const AdminSettings = () => {
 
     const user = authContext?.user
 
-    useEffect(() => {
-        authContext?.getUser()
-    }, [])
-
     const [username, setUsername] = React.useState(user?.username)
     const [email, setEmail] = React.useState(user?.username)
     useEffect(() => {

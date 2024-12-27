@@ -8,9 +8,6 @@ const StatesSettings = () => {
 
     const states = statesContext?.states
 
-    useEffect(() => {
-        statesContext?.getStates()
-    }, [])
 
     const [openCreate, setOpenCreate] = React.useState(false)
     return (

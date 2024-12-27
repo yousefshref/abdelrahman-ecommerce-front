@@ -11,17 +11,7 @@ const AdminUsers = () => {
 
     const users = usersContext?.users
 
-    const [usersLoading, setUsersLoading] = React.useState(true)
-
-    const handleGetUsers = async () => {
-        setUsersLoading(true)
-        await usersContext?.getUsers()
-        setUsersLoading(false)
-    }
-
-    useEffect(() => {
-        handleGetUsers()
-    }, [])
+    const usersLoading = usersContext?.loading
 
 
     if (usersLoading) {

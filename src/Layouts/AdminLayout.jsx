@@ -16,10 +16,6 @@ const AdminLayout = ({ children }) => {
 
     const user = authContext?.user
 
-    useEffect(() => {
-        authContext?.getUser()
-    }, [])
-
 
     const [is_shipping_employee, setIs_shipping_employee] = React.useState(user?.is_shipping_employee)
 

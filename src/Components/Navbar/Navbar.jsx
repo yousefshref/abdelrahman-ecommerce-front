@@ -39,10 +39,6 @@ const Navbar = ({ classes }) => {
 
   const userContext = React.useContext(AuthContextProvider)
   const user = userContext?.user
-  useEffect(() => {
-    userContext?.getUser()
-  }, [])
-    ;
 
 
   return (

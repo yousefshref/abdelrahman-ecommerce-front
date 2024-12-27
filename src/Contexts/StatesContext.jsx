@@ -1,7 +1,11 @@
 import axios from 'axios'
-import React, { createContext } from 'react'
+import React, { createContext, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { adminOrders, adminSettings, cartPage } from '../Variables/pathes'
 
 const StatesContext = ({ children }) => {
+
+    const location = useLocation()
 
 
     const [loading, setLoading] = React.useState(true)
@@ -21,6 +25,13 @@ const StatesContext = ({ children }) => {
             setLoading(true)
         }
     }
+
+    const alloedPathesForStates = [cartPage(), adminOrders(), adminSettings()]
+    useEffect(() => {
+        if (alloedPathesForStates.includes(location.pathname)) {
+            getStates()
+        }
+    }, [location])
 
 
     const createState = async (data, setOpenCreate) => {

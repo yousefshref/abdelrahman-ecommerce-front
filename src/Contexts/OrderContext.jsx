@@ -1,6 +1,6 @@
-import React, { createContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { orderConfirm, trackOrders } from '../Variables/pathes'
+import React, { createContext, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { adminOrders, orderConfirm, trackOrders } from '../Variables/pathes'
 import { CartContextProvider } from './CartContext'
 import axios from 'axios'
 import { useToast } from '@chakra-ui/react'
@@ -20,27 +20,25 @@ const OrderContext = ({ children }) => {
     const [orders, setOrders] = React.useState([])
     const [totalCommission, setTotalCommission] = React.useState(0)
     const [totalOrdersPrices, setTotalOrdersPrices] = React.useState(0)
-    const [total_pages, set_total_pages] = React.useState(0)
 
-    const getOrders = async (params = {}) => {
+    const [from, setFrom] = React.useState("")
+    const [to, setTo] = React.useState("")
+
+    const [sales_id, setSalesId] = React.useState("")
+    const [search, setSearch] = React.useState("")
+
+    const getOrders = async () => {
         setLoading(true)
         try {
-            const res = await axios.get(`/orders/`, {
+            const res = await axios.get(`/orders/?sales_id=${sales_id}&search=${search}`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`
-                },
-                params
+                }
             })
+
             console.log(res.data);
 
-            if (res.data.orders) {
-                setOrders(res.data.orders)
-            } else {
-                setOrders(res.data)
-            }
-            if (res.data.total_pages) {
-                set_total_pages(res.data.total_pages)
-            }
+            setOrders(res.data.orders)
             setTotalCommission(res.data?.total_commission)
             setTotalOrdersPrices(res.data?.total_orders_prices)
         }
@@ -61,9 +59,16 @@ const OrderContext = ({ children }) => {
 
             console.log(err);
         } finally {
-            setLoading(true)
+            setLoading(false)
         }
     }
+
+    const location = useLocation()
+    useEffect(() => {
+        if (location.pathname === adminOrders()) {
+            getOrders()
+        }
+    }, [from, to, sales_id, location])
 
 
 
@@ -289,10 +294,14 @@ const OrderContext = ({ children }) => {
 
             orders,
             getOrders,
-            total_pages,
             order,
             totalCommission,
             totalOrdersPrices,
+            from, setFrom,
+            to, setTo,
+            sales_id, setSalesId,
+            search, setSearch,
+
             getOrder,
             updateOrder,
             deleteOrder,

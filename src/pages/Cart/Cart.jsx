@@ -42,9 +42,7 @@ const Cart = () => {
   // states
   const statesContext = React.useContext(StatesContextProvider)
   const states = statesContext?.states
-  useEffect(() => {
-    statesContext?.getStates()
-  }, [])
+
 
 
   // shipping details

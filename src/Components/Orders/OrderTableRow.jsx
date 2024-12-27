@@ -22,9 +22,6 @@ const OrderTableRow = ({ order, index }) => {
 
     // get the user
     const user = authContext?.user
-    useEffect(() => {
-        authContext?.getUser()
-    }, [])
 
 
 

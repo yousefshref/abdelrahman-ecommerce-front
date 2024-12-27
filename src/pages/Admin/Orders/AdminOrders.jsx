@@ -22,33 +22,36 @@ const AdminOrders = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
 
-    // get orders
-    const [loading, setLoading] = useState(true)
 
-    const [search, setSearch] = useState("")
-    const [sales_id, setSalesId] = useState("")
-    const [page, setPage] = useState("")
+    const loading = ordersContext?.loading
 
-
-    const total_pages = ordersContext?.total_pages
     const orders = ordersContext?.orders
     const totalCommission = ordersContext?.totalCommission
     const totalOrdersPrices = ordersContext?.totalOrdersPrices
 
-    const handleGetOrders = async () => {
-        const params = {
-            search,
-            sales_id,
-            page
-        }
-        setLoading(true)
-        await ordersContext?.getOrders(params)
-        setLoading(false)
-    }
+    const search = ordersContext?.search
+    const setSearch = ordersContext?.setSearch
 
-    useEffect(() => {
-        handleGetOrders()
-    }, [sales_id, page])
+    const sales_id = ordersContext?.sales_id
+    const setSalesId = ordersContext?.setSalesId
+
+    // const from = ordersContext?.from
+    // const setFrom = ordersContext?.setFrom
+
+    // const to = ordersContext?.to
+    // const setTo = ordersContext?.setTo
+
+
+    // useEffect(() => {
+    //     const date = new Date()
+    //     const today = date.toISOString().split('T')[0]
+    //     date.setDate(date.getDate() + 7)
+    //     const to_date = date.toISOString().split('T')[0]
+
+    //     setFrom(today)
+    //     setTo(to_date)
+    // }, [])
+
 
 
 
@@ -104,9 +107,24 @@ const AdminOrders = () => {
                         }
                     </Flex>
 
+                    {/* <Flex gap='3'>
+                        <input
+                            type="date"
+                            value={from}
+                            onChange={(e) => setFrom(e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                        />
+                        <input
+                            type="date"
+                            value={to}
+                            onChange={(e) => setTo(e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                        />
+                    </Flex> */}
+
                     <Flex justifyContent={"space-between"}>
                         <Button
-                            onClick={!loading ? handleGetOrders : null}
+                            onClick={!loading ? ordersContext?.getOrders : null}
                             colorScheme="purple"
                             size={"sm"}
                             className='w-full max-w-[80px]'
@@ -137,17 +155,6 @@ const AdminOrders = () => {
                 </Flex>
             </Box>
 
-            {sales_id ? null : (
-                <div dir='ltr' className='mt-5 mb-1 flex justify-end'>
-                    <Pagination
-                        defaultCurrent={10}
-                        total={total_pages}
-                        current={page}
-                        pageSize={1}
-                        onChange={(page) => setPage(page)}
-                    />
-                </div>
-            )}
             {/* table */}
             <div className="w-full max-w-full overflow-x-auto">
                 {loading ? (

@@ -64,15 +64,9 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     }, [user])
 
     useEffect(() => {
-        authContext?.getUser()
-    }, [])
-
-    useEffect(() => {
         productsContext?.fetchProducts()
     }, [])
-    useEffect(() => {
-        statesContext?.getStates()
-    }, [])
+
 
 
     const [total, setTotal] = useState(0)
