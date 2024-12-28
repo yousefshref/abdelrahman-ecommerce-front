@@ -106,14 +106,10 @@ const OrderTableRow = ({ order, index }) => {
     return (
         <>
             <tr>
-                {/* <td onClick={onOpen} className="border p-2 cursor-pointer text-start transition-all hover:bg-green-400 bg-green-100">{index + 1}</td> */}
-                {/* <td className="border p-2 text-start">{order.tracking_code ? order.tracking_code : 'لا يوجد'}</td> */}
-                {/* <td className="border p-2 text-start">{order.user_details?.username}</td> */}
+                <td className="border p-2 text-nowrap text-start">
+                    {order?.created_at?.split('T')[0]}
+                </td>
                 <td onClick={onOpen} className="border p-2 text-start">{order.name}</td>
-                {/* <td className="border p-2 text-start">{order.phone_number}</td> */}
-                {/* <td className="border p-2 text-start">{order.state_details?.name}</td> */}
-                {/* <td className="border p-2 text-wrap text-start w-[200px]">{order.address}</td> */}
-                {/* <td className="border p-2 text-wrap text-start w-[200px]">{order.payment_method}</td> */}
                 <td className="border p-2 text-wrap text-start">{
                     order.is_fast_shipping
                         ?
@@ -135,29 +131,31 @@ const OrderTableRow = ({ order, index }) => {
                         <option value="cancelled">ملغي</option>
                     </select>
                 </td>
-                {/* <td className="border p-2 text-start">{order?.order_items?.reduce((acc, item) => item?.product_details?.offer_price ? item?.product_details?.offer_price * item.quantity : item?.product_details?.price * item.quantity, 0) + Number(order?.state_details?.shipping_price)} EGP</td> */}
-                {/* <td className="border p-2 text-start">
-                    <input
-                        onChange={(e) => {
-                            setInterval(() => {
-                                handleUpdateOrder(status, e.target.value)
-                            }, 3000)
-                        }}
-                        value={tracking_code}
-                        className="p-1 w-full px-3 border"
-                    />
-                </td> */}
-                {/* <td className="border p-2 text-start">{total} EGP</td> */}
-                <td className="border p-2 text-nowrap text-start">
-                    {order?.created_at?.split('T')[0]}
-                </td>
                 <td className="border p-2 text-nowrap text-start">
                     <Button
                         colorScheme="red"
                         size="sm"
                         className="flex-shrink-0 w-full"
                         onClick={() => {
-                            ordersContext?.deleteOrder(order?.id)
+                            // Ask the user a yes or no question
+                            let response = prompt("Do you want to continue? (yes or no)");
+
+                            // Check the user's response
+                            if (response) {
+                                response = response.toLowerCase(); // Normalize the input
+                                if (response === "yes") {
+                                    ordersContext?.deleteOrder(order?.id)
+                                    console.log("You chose Yes.");
+                                    // Add actions for "Yes"
+                                } else if (response === "no") {
+                                    console.log("You chose No.");
+                                    // Add actions for "No"
+                                } else {
+                                    console.log("Invalid input. Please enter 'yes' or 'no'.");
+                                }
+                            } else {
+                                console.log("No response received.");
+                            }
                         }}
                     >
                         حذف

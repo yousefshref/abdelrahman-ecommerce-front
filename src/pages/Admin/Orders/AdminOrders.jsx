@@ -171,10 +171,10 @@ const AdminOrders = () => {
                     <table className="mt-3 w-full bg-white table-fixed">
                         <thead>
                             <tr>
+                                <th className="border p-2 text-nowrap text-start w-[80px]">التاريخ</th>
                                 <th className="border p-2 text-nowrap text-start w-[100px]">اسم</th>
                                 <th className="border p-2 text-nowrap text-start w-[70px]">نوع الشحن</th>
                                 <th className="border p-2 text-nowrap text-start w-[130px]">الحالة</th>
-                                <th className="border p-2 text-nowrap text-start w-[100px]">التاريخ</th>
                                 <th className="border p-2 text-nowrap text-start w-[50px]"></th>
                             </tr>
                         </thead>
