@@ -5,9 +5,7 @@ import { OrderContextProvider } from '../../Contexts/OrderContext'
 
 
 import { LiaShippingFastSolid } from 'react-icons/lia'
-import { clientUrl } from '../../Variables/server'
 import { UsersContextProvider } from '../../Contexts/UsersContext'
-import { trackOrders } from '../../Variables/pathes'
 import { AuthContextProvider } from '../../Contexts/AuthContext'
 
 
@@ -137,24 +135,8 @@ const OrderTableRow = ({ order, index }) => {
                         size="sm"
                         className="flex-shrink-0 w-full"
                         onClick={() => {
-                            // Ask the user a yes or no question
-                            let response = prompt("Do you want to continue? (yes or no)");
-
-                            // Check the user's response
-                            if (response) {
-                                response = response.toLowerCase(); // Normalize the input
-                                if (response === "yes") {
-                                    ordersContext?.deleteOrder(order?.id)
-                                    console.log("You chose Yes.");
-                                    // Add actions for "Yes"
-                                } else if (response === "no") {
-                                    console.log("You chose No.");
-                                    // Add actions for "No"
-                                } else {
-                                    console.log("Invalid input. Please enter 'yes' or 'no'.");
-                                }
-                            } else {
-                                console.log("No response received.");
+                            if (window.confirm("هل انت متاكد من حذف هذا الطلب؟")) {
+                                ordersContext?.deleteOrder(order?.id)
                             }
                         }}
                     >
