@@ -216,7 +216,12 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                     <Flex justifyContent={"space-between"}>
                         <p>
                             {
-                                order?.id ? "تعديل الطلب" : "انشاء طلب جديد"
+                                order?.id ? (
+                                    <div className='flex flex-col'>
+                                        <p>تعديل الطلب</p>
+                                        <small className='text-sm text-gray-500 -mt-0.5'>{order?.created_at?.split("T")[0]}</small>
+                                    </div>
+                                ) : "انشاء طلب جديد"
                             }
                         </p>
                         <Button isLoading={loading} isDisabled={loading} colorScheme='green' size={"sm"} onClick={order?.id ? handleUpdateOrder : handleCreateOrder} className='px-5'>
