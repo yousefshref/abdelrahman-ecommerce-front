@@ -110,11 +110,8 @@ const AuthContext = ({ children }) => {
             setLoading(true)
             try {
                 const res = await axios.get('/user/', {
-                    // headers: {
-                    //     Authorization: `Token ${localStorage.getItem('token')}`
-                    // }
                     headers: {
-                        ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                        Authorization: `Token ${localStorage.getItem('token')}`
                     }
                 })
                 setUser(res.data)
@@ -127,7 +124,7 @@ const AuthContext = ({ children }) => {
         }
     }
 
-    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers()]
+    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers(), '/']
     useEffect(() => {
         if (allowedLocations.includes(location.pathname)) {
             getUser()

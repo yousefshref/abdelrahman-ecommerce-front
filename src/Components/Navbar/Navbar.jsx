@@ -40,6 +40,9 @@ const Navbar = ({ classes }) => {
   const userContext = React.useContext(AuthContextProvider)
   const user = userContext?.user
 
+  console.log(user);
+
+
 
   return (
     <Box bg={useColorModeValue("white", "black")} px={window.innerWidth < 768 ? 1 : 4} className={`
