@@ -35,9 +35,7 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
 
     const categoryContext = useContext(CategoryContextProvider)
     const categories = categoryContext?.categories
-    useEffect(() => {
-        categoryContext?.fetchCategories()
-    }, [])
+
 
 
 
@@ -160,10 +158,6 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
 
 
     const products = productsContext?.products
-
-    useEffect(() => {
-        productsContext?.fetchProducts()
-    }, [])
 
 
 

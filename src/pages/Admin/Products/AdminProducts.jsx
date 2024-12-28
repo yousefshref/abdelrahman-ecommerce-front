@@ -16,27 +16,22 @@ const AdminProducts = () => {
     const categoryContext = useContext(CategoryContextProvider)
 
     const categories = categoryContext?.categories
-    useEffect(() => {
-        categoryContext?.fetchCategories()
-    }, [])
+
+
+
+    const loading = productsContext?.loading
 
     const products = productsContext?.products
+    const getProducts = productsContext?.fetchProducts
 
-    const [loading, setLoading] = useState(true)
+    const about_to_end = productsContext?.about_to_end
+    const setAboutToEnd = productsContext?.setAboutToEnd
 
-    const [about_to_end, setAboutToEnd] = useState("")
-    const [search, setSearch] = useState("")
-    const [category, setCategory] = useState("")
-    const getProducts = async () => {
-        setLoading(true);
-        const params = {
-            about_to_end,
-            search,
-            category
-        }
-        await productsContext?.fetchProducts(params);
-        setLoading(false);
-    };
+    const search = productsContext?.search
+    const setSearch = productsContext?.setSearch
+
+    const category = productsContext?.category
+    const setCategory = productsContext?.setCategory
 
     useEffect(() => {
         getProducts();

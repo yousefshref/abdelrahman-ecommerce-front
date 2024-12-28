@@ -25,19 +25,17 @@ const Products = () => {
 
     const productsContext = useContext(ProductsContextProvider)
 
+    const loading = productsContext?.loading
+
     const products = productsContext?.products
 
-    const [search, setSearch] = useState('')
-    const [category, setCategory] = useState('')
+    const search = productsContext?.search
+    const setSearch = productsContext?.setSearch
 
-    const [loading, setLoading] = React.useState(true);
+    const category = productsContext?.category
+    const setCategory = productsContext?.setCategory
 
-    const handleGetProducts = async () => {
-        setLoading(true)
-        const params = { search, category }
-        await productsContext?.fetchProducts(params);
-        setLoading(false)
-    };
+    const handleGetProducts = productsContext?.fetchProducts
 
     useEffect(() => {
         handleGetProducts()
@@ -46,9 +44,7 @@ const Products = () => {
 
     const categoryContext = useContext(CategoryContextProvider)
     const categories = categoryContext?.categories
-    useEffect(() => {
-        categoryContext?.fetchCategories()
-    }, [])
+
 
 
 

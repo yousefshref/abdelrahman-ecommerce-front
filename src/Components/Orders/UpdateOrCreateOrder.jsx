@@ -56,16 +56,13 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     const products = productsContext?.products
     const states = statesContext?.states
     const user = authContext?.user
+    const loading = ordersContext?.loading
 
     const [isClient, setIsClient] = useState(true)
 
     useEffect(() => {
         if (user?.is_superuser || user?.is_shipping_employee) setIsClient(false)
     }, [user])
-
-    useEffect(() => {
-        productsContext?.fetchProducts()
-    }, [])
 
 
 
@@ -89,11 +86,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
 
 
 
-    const [loading, setLoading] = useState(false)
-
 
     const handleCreateOrder = async () => {
-        setLoading(true)
         const data = {
             name,
             phone_number,
@@ -114,7 +108,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                 onClose()
             }
         })
-        setLoading(false)
     }
 
 
@@ -136,66 +129,49 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
 
 
 
-    const usersContext = useContext(UsersContextProvider)
-
     const handleUpdateOrder = async () => {
+        try {
+            let sendStatusChanged = false   // updated
 
-        let sendStatusChanged = false   // updated
-
-        if (status !== order?.status && status == "shipped") {
-            sendStatusChanged = true
-        } else {
-            sendStatusChanged = false
-        }
-
-
-        let sendArrivedEmail = false   // updated
-
-        if (status !== order?.status && status == "delivered") {
-            sendArrivedEmail = true
-        } else {
-            sendArrivedEmail = false
-        }
-
-        setLoading(true)
-        const data = {
-            name,
-            phone_number,
-            state,
-            address,
-            email,
-            payment_method,
-            tracking_code,
-            status,
-            sales_who_added,
-            is_fast_shipping,
-            order_items,
-            total
-        }
-
-        await ordersContext?.updateOrder(order?.id, data).then(e => {
-            if (e) {
-                onClose()
-                // send status
-                // if (sendStatusChanged && e?.email) {
-                //     usersContext?.sendEmail({
-                //         recipient_email: e?.email,
-                //         tracking_code: e?.tracking_code,
-                //         subject: "تم شحن طلبك",
-                //         content_type: "html",
-                //     }, "shipped")
-                // }
-                // if (sendArrivedEmail && e?.email) {
-                //     usersContext?.sendEmail({
-                //         recipient_email: e?.email,
-                //         tracking_code: e?.tracking_code,
-                //         subject: "تم تسليم شحنتك",
-                //         content_type: "html",
-                //     }, "delivered")
-                // }
+            if (status !== order?.status && status == "shipped") {
+                sendStatusChanged = true
+            } else {
+                sendStatusChanged = false
             }
-        })
-        setLoading(false)
+
+
+            let sendArrivedEmail = false   // updated
+
+            if (status !== order?.status && status == "delivered") {
+                sendArrivedEmail = true
+            } else {
+                sendArrivedEmail = false
+            }
+
+            const data = {
+                name,
+                phone_number,
+                state,
+                address,
+                email,
+                payment_method,
+                tracking_code,
+                status,
+                sales_who_added,
+                is_fast_shipping,
+                order_items,
+                total
+            }
+
+            await ordersContext?.updateOrder(order?.id, data).then(e => {
+                if (e) {
+                    onClose()
+                }
+            })
+        } catch (err) {
+            console.log(err)
+        } finally {
+        }
     }
 
 

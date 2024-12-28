@@ -1,9 +1,13 @@
 import { useToast } from '@chakra-ui/react'
 import axios from 'axios'
-import React, { createContext } from 'react'
+import React, { createContext, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { adminProducts, productsPage } from '../Variables/pathes'
 
 const CategoryContext = ({ children }) => {
     const toast = useToast()
+
+    const location = useLocation()
 
 
     const [loading, setLoading] = React.useState(true)
@@ -21,6 +25,15 @@ const CategoryContext = ({ children }) => {
             setLoading(false)
         }
     }
+
+    const allowedLocationsForCategories = [
+        adminProducts(), productsPage()
+    ]
+    useEffect(() => {
+        if (allowedLocationsForCategories.includes(location.pathname)) {
+            fetchCategories()
+        }
+    }, [location])
 
     const createCategory = async ({ data }, onClose) => {
         try {

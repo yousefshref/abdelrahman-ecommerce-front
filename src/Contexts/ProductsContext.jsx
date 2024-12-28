@@ -1,7 +1,8 @@
 import axios from 'axios'
-import React, { createContext } from 'react'
+import React, { createContext, useEffect } from 'react'
 import { api } from '../Variables/server'
 import { adminOrders, adminProducts, productsPage } from '../Variables/pathes'
+import { useLocation } from 'react-router-dom'
 
 const ProductsContext = ({ children }) => {
 
@@ -13,25 +14,35 @@ const ProductsContext = ({ children }) => {
 
     const [loading, setLoading] = React.useState(true)
     const [products, setProducts] = React.useState([])
+    const [search, setSearch] = React.useState('')
+    const [category, setCategory] = React.useState('')
+    const [about_to_end, setAboutToEnd] = React.useState("")
 
-    const fetchProducts = async (params = {}) => {
-        if (
-            window.location.pathname == adminProducts() ||
-            window.location.pathname == adminOrders() ||
-            window.location.pathname == '/' ||
-            window.location.pathname == productsPage()
-        ) {
-            setLoading(true)
-            try {
-                const res = await axios.get('/products/', { params })
-                setProducts(res.data)
-            } catch (err) {
-                console.log(err)
-            } finally {
-                setLoading(false)
-            }
+    const fetchProducts = async () => {
+        setLoading(true)
+        try {
+            const res = await axios.get(`/products/?search=${search}&category=${category}&about_to_end=${about_to_end}`)
+            setProducts(res.data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
         }
+
     }
+
+    const location = useLocation()
+
+    useEffect(() => {
+        if (
+            location.pathname == adminProducts() ||
+            location.pathname == adminOrders() ||
+            location.pathname == '/' ||
+            location.pathname == productsPage()
+        ) {
+            fetchProducts()
+        }
+    }, [location])
 
 
     const createProduct = async (data) => {
@@ -127,6 +138,9 @@ const ProductsContext = ({ children }) => {
             loading, setLoading,
             products, setProducts,
             fetchProducts,
+            search, setSearch,
+            category, setCategory,
+            about_to_end, setAboutToEnd,
             product, setProduct,
             fetchProduct,
 

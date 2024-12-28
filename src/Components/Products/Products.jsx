@@ -14,23 +14,10 @@ const Products = () => {
   const products = productsContext?.products;
 
 
+  const loading = productsContext?.loading;
+  const search = productsContext?.search;
+  const setSearch = productsContext?.setSearch;
 
-  const [loading, setLoading] = React.useState(false);
-
-  const [search, setSearch] = React.useState("");
-
-  const handleGetProducts = async () => {
-    setLoading(true);
-    const params = {
-      search
-    }
-    await productsContext?.fetchProducts(params);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    handleGetProducts()
-  }, [search]);
   return (
     <div className="md:my-20 my-10 bg-gray-50 md:p-5 p-1">
       <input

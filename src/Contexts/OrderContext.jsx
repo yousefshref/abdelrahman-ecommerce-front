@@ -139,7 +139,7 @@ const OrderContext = ({ children }) => {
 
             console.log(err);
         } finally {
-            setLoading(true)
+            setLoading(false)
         }
     }
 
@@ -192,7 +192,7 @@ const OrderContext = ({ children }) => {
             }
 
         } finally {
-            setLoading(true)
+            setLoading(false)
         }
     }
 
@@ -239,7 +239,7 @@ const OrderContext = ({ children }) => {
 
             console.log(err);
         } finally {
-            setLoading(true)
+            setLoading(false)
         }
     }
 

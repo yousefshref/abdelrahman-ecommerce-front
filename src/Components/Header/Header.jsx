@@ -10,9 +10,6 @@ const Header = () => {
 
   const categories = categoryContext?.categories;
 
-  useEffect(() => {
-    categoryContext?.fetchCategories();
-  }, []);
   return (
     <header className="md:p-5 p-1.5">
       <Navbar />

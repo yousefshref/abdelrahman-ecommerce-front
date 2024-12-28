@@ -109,7 +109,7 @@ const OrderTableRow = ({ order, index }) => {
                 <td className="border p-2 text-nowrap text-start">
                     {order?.created_at?.split('T')[0]}
                 </td>
-                <td onClick={onOpen} className="border p-2 text-start">{order.name}</td>
+                <td onClick={onOpen} className="border p-2 text-start bg-green-200/50 hover:bg-green-200 cursor-pointer">{order.name}</td>
                 <td className="border p-2 text-wrap text-start">{
                     order.is_fast_shipping
                         ?
