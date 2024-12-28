@@ -149,6 +149,9 @@ const OrderTableRow = ({ order, index }) => {
                 </td> */}
                 {/* <td className="border p-2 text-start">{total} EGP</td> */}
                 <td className="border p-2 text-nowrap text-start">
+                    {order?.created_at?.split('T')[0]}
+                </td>
+                <td className="border p-2 text-nowrap text-start">
                     <Button
                         colorScheme="red"
                         size="sm"
