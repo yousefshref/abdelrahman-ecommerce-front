@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { createContext } from 'react'
 import { api } from '../Variables/server'
+import { adminOrders, adminProducts, productsPage } from '../Variables/pathes'
 
 const ProductsContext = ({ children }) => {
 
@@ -15,9 +16,10 @@ const ProductsContext = ({ children }) => {
 
     const fetchProducts = async (params = {}) => {
         if (
-            window.location.pathname == '/admin/products/' ||
+            window.location.pathname == adminProducts() ||
+            window.location.pathname == adminOrders() ||
             window.location.pathname == '/' ||
-            window.location.pathname == '/products/'
+            window.location.pathname == productsPage()
         ) {
             setLoading(true)
             try {
