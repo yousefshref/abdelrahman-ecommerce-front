@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { createContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { clientUrl } from '../Variables/server';
-import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers, trackOrders } from '../Variables/pathes';
+import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers, trackOrders, userProfile, userProfileOrdersCancelled, userProfileOrdersDeliverd } from '../Variables/pathes';
 
 const UsersContext = ({ children }) => {
 
@@ -59,7 +59,7 @@ const UsersContext = ({ children }) => {
         if (allowedLocations.includes(location.pathname)) {
             getUser()
         }
-    }, [location])
+    }, [location.pathname])
 
     const updateUser = async (id, data) => {
         try {

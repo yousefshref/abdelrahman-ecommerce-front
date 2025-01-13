@@ -29,28 +29,41 @@ import { options } from '../../Variables/variables'
 import SelectWithImage from '../SelectWithImage/SelectWithImage'
 
 
-const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
+const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
+
+    const orderIdFromProps = orderFromProps?.id
+    const ordersContext = useContext(OrderContextProvider)
+
+    const setOrderId = ordersContext?.setOrderId
+
+    const order = ordersContext?.order
+    const order_items = ordersContext?.orderItems
+    const setOrderItems = ordersContext?.setOrderItems
+    const totalPrice = ordersContext?.totalPrice
+    const shippingPrice = ordersContext?.shippingPrice
+    const fastShipping = ordersContext?.fastShipping
+
+    useEffect(() => {
+        if (orderIdFromProps) {
+            setOrderId(orderIdFromProps)
+        }
+    }, [orderIdFromProps, isOpen])
+
     const [name, setName] = useState('')
     const [phone_number, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [state, setState] = useState('')
     const [address, setAddress] = useState('')
-
     const [tracking_code, set_tracking_code] = useState("")
     const [status, setStatus] = useState("pending")
     const [sales_who_added, setSalesWhoAdded] = useState("")
-
     const [payment_method, setPaymentMethod] = useState("");
-
-    const [order_items, setOrderItems] = useState([])
-
     const [is_fast_shipping, setIsFastShipping] = useState(false)
 
 
 
     const productsContext = useContext(ProductsContextProvider)
     const statesContext = useContext(StatesContextProvider)
-    const ordersContext = useContext(OrderContextProvider)
     const authContext = useContext(AuthContextProvider)
 
     const products = productsContext?.products
@@ -63,26 +76,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
     useEffect(() => {
         if (user?.is_superuser || user?.is_shipping_employee) setIsClient(false)
     }, [user])
-
-
-
-    const [total, setTotal] = useState(0)
-
-    const calculateTotal = () => {
-        let total = 0;
-        order?.order_items?.forEach((item) => {
-            const product = products?.find((p) => p?.id == item?.product);
-            total += (product?.offer_price ? product?.offer_price : product?.price) * item?.quantity;
-        });
-        total += Number(order?.state_details?.shipping_price);
-        if (is_fast_shipping) {
-            total += Number(order?.state_details?.fast_shipping_price);
-        }
-        setTotal(total);
-    }
-    useEffect(() => {
-        calculateTotal();
-    }, [order, products, is_fast_shipping]);
 
 
 
@@ -100,7 +93,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             sales_who_added,
             is_fast_shipping,
             order_items,
-            total
         }
 
         await ordersContext?.createOrder({ data, nav: false }).then(e => {
@@ -122,8 +114,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
             setStatus(order?.status)
             setEmail(order?.email)
             setIsFastShipping(order?.is_fast_shipping)
-            setTotal(order?.total)
-            setOrderItems(order?.order_items)
         }
     }, [order])
 
@@ -160,7 +150,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
                 sales_who_added,
                 is_fast_shipping,
                 order_items,
-                total
             }
 
             await ordersContext?.updateOrder(order?.id, data).then(e => {
@@ -304,11 +293,11 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, order }) => {
 
 
                     <div className='my-5 flex md:flex-row flex-col justify-between items-center'>
-                        <p>المجموع الكلي: {total} EGP</p>
-                        <p>سعر الشحن: {states?.find((s) => s.id == state)?.shipping_price} EGP</p>
+                        <p>المجموع الكلي: {totalPrice} EGP</p>
+                        <p>سعر الشحن: {shippingPrice} EGP</p>
                         {
                             order?.is_fast_shipping ? (
-                                <p>سعر الشحن السريع: {states?.find((s) => s.id == state)?.fast_shipping_price} EGP</p>
+                                <p>سعر الشحن السريع: {fastShipping} EGP</p>
                             ) : null
                         }
                     </div>

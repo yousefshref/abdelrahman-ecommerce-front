@@ -1,6 +1,6 @@
 import React, { createContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { adminOrders, orderConfirm, trackOrders } from '../Variables/pathes'
+import { adminOrders, cancelOrder, orderConfirm, trackOrders, userProfile, userProfileOrdersCancelled, userProfileOrdersDeliverd } from '../Variables/pathes'
 import { CartContextProvider } from './CartContext'
 import axios from 'axios'
 import { useToast } from '@chakra-ui/react'
@@ -36,8 +36,6 @@ const OrderContext = ({ children }) => {
                 }
             })
 
-            console.log(res.data);
-
             setOrders(res.data.orders)
             setTotalCommission(res.data?.total_commission)
             setTotalOrdersPrices(res.data?.total_orders_prices)
@@ -64,8 +62,9 @@ const OrderContext = ({ children }) => {
     }
 
     const location = useLocation()
+    const allowedPathes = [adminOrders()]
     useEffect(() => {
-        if (location.pathname === adminOrders()) {
+        if (allowedPathes.includes(location.pathname)) {
             getOrders()
         }
     }, [from, to, sales_id, location])
@@ -246,15 +245,31 @@ const OrderContext = ({ children }) => {
 
 
     const [order, setOrder] = React.useState({})
+    const [orderItems, setOrderItems] = React.useState([])
+    const [totalPrice, setTotalPrice] = React.useState(0)
+    const [shippingPrice, setShippingPrice] = React.useState(0)
+    const [fastShipping, setFastShipping] = React.useState(0)
 
-    const getOrder = async (id) => {
+    const [orderId, setOrderId] = React.useState(null)
+    const getOrder = async () => {
         try {
-            const res = await axios.get(`/orders/${id}/`)
-            setOrder(res.data)
+            const res = await axios.get(`/orders/${orderId}/`)
+            setOrder(res.data.order)
+            setOrderItems(res.data.order_items)
+            setTotalPrice(res.data.total_price)
+            setShippingPrice(res.data.shipping_price)
+            setFastShipping(res.data.fast_shipping)
         } catch (err) {
             console.log(err)
         }
     }
+
+    const allowedPathesForOrder = [cancelOrder(), adminOrders()]
+    useEffect(() => {
+        if (orderId && allowedPathesForOrder.includes(location.pathname)) {
+            getOrder(orderId)
+        }
+    }, [orderId, location.pathname])
 
 
     const handleCancelOrder = async (params = {}) => {
@@ -287,14 +302,105 @@ const OrderContext = ({ children }) => {
             }
         }
     }
+
+
+    const [loadingLatestOrders, setLoadingLatestOrders] = React.useState(false)
+    const [latestOrders, setLatestOrders] = React.useState([])
+    const getLatestOrders = async () => {
+        try {
+            setLoadingLatestOrders(true)
+            const res = await axios.get('/orders/latest/', {
+                headers: {
+                    ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                }
+            })
+            setLatestOrders(res.data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoadingLatestOrders(false)
+        }
+    }
+    const allowedLatestOrders = [userProfile()]
+    useEffect(() => {
+        if (allowedLatestOrders.includes(location.pathname)) {
+            getLatestOrders()
+        }
+    }, [location.pathname])
+
+
+
+    const [loadingDeliverdOrders, setLoadingDeliverdOrders] = React.useState(false)
+    const [deliverdOrders, setDeliverdOrders] = React.useState([])
+    const getDeliverdOrders = async () => {
+        try {
+            setLoadingDeliverdOrders(true)
+            const res = await axios.get('/orders/deliverd/', {
+                headers: {
+                    ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                }
+            })
+            setDeliverdOrders(res.data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoadingDeliverdOrders(false)
+        }
+    }
+    const allowedDeliverdOrders = [userProfileOrdersDeliverd()]
+    useEffect(() => {
+        if (allowedDeliverdOrders.includes(location.pathname)) {
+            getDeliverdOrders()
+        }
+    }, [location.pathname])
+
+
+
+    const [cancelledOrders, setCancelledOrders] = React.useState([])
+    const [loadingCancelledOrders, setLoadingCancelledOrders] = React.useState(false)
+
+    const getCancelledOrders = async () => {
+        try {
+            setLoadingCancelledOrders(true)
+            const res = await axios.get('/orders/cancelled/', {
+                headers: {
+                    ...(localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : {})
+                }
+            })
+            setCancelledOrders(res.data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoadingCancelledOrders(false)
+        }
+    }
+
+    const allowedCancelledOrders = [userProfileOrdersCancelled()]
+    useEffect(() => {
+        if (allowedCancelledOrders.includes(location.pathname)) {
+            getCancelledOrders()
+        }
+    }, [location.pathname])
+
     return (
         <OrderContextProvider.Provider value={{
+            cancelledOrders, loadingCancelledOrders,
+
+            loadingDeliverdOrders, deliverdOrders,
+
+            loadingLatestOrders,
+            latestOrders,
+
             loading,
             createOrder,
 
             orders,
             getOrders,
             order,
+            orderItems, setOrderItems,
+            totalPrice,
+            shippingPrice,
+            fastShipping,
             totalCommission,
             totalOrdersPrices,
             from, setFrom,
@@ -302,7 +408,7 @@ const OrderContext = ({ children }) => {
             sales_id, setSalesId,
             search, setSearch,
 
-            getOrder,
+            getOrder, setOrderId, orderId,
             updateOrder,
             deleteOrder,
             handleCancelOrder

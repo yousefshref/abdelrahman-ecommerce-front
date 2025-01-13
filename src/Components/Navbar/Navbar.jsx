@@ -19,13 +19,13 @@ import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { AuthContextProvider } from "../../Contexts/AuthContext";
-import { adminOrders, cartPage, productsPage, trackOrders } from "../../Variables/pathes";
-import { BiHelpCircle } from "react-icons/bi";
+import { adminOrders, cartPage, loginPagePath, productsPage, trackOrders, userProfile } from "../../Variables/pathes";
+import { BiHelpCircle, BiLogIn } from "react-icons/bi";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
-import { FiShoppingCart } from "react-icons/fi";
+import { FiLogIn, FiShoppingCart } from "react-icons/fi";
 
-const Navbar = ({ classes }) => {
+const Navbar = ({ classes, profile }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const cartContext = React.useContext(CartContextProvider)
@@ -40,13 +40,10 @@ const Navbar = ({ classes }) => {
   const userContext = React.useContext(AuthContextProvider)
   const user = userContext?.user
 
-  console.log(user);
-
-
 
   return (
     <Box bg={useColorModeValue("white", "black")} px={window.innerWidth < 768 ? 1 : 4} className={`
-    bg-amber-200 pb-2 w-full mb-2 md:shadow-md shadow-sm
+    bg-amber-200 w-full ${profile ? "mb-0 pb-2 pt-2" : "mb-2 pb-2"} md:shadow-md shadow-sm
     ${classes}
     `}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -63,13 +60,14 @@ const Navbar = ({ classes }) => {
           />
         </Box>
 
-        <Box fontSize="xl" fontWeight="bold" className="w-[33.33%] flex md:justify-start justify-center">
+        <Box fontSize="xl" fontWeight="bold" className="md:w-[33.33%] flex md:justify-start justify-center">
           <Link to={'/'}>
             <img loading="lazy"
               src="/logo.png"
               alt="logo"
               width="60"
               height="60"
+              className="min-w-[60px]"
             />
           </Link>
         </Box>
@@ -101,18 +99,42 @@ const Navbar = ({ classes }) => {
               الدعم
             </Link>
           </Button>
-          {user?.is_shipping_employee && (
-            <Button variant="link">
-              <Link to={adminOrders()} onClick={onClose}>
-                الداشبورد
-              </Link>
-            </Button>
-          )}
           <Button variant="link">
             <Link className="relative flex gap-2 items-center" to={cartPage()} onClick={onClose}>
+              <IconButton
+                className="flex justify-center"
+                size="md"
+                icon={<CiShoppingCart size={30} />}
+              />
               <p className="bg-green-500 text-xs -top-1 -right-3 text-white p-2 absolute rounded-full flex flex-col justify-center items-center w-[20px] h-[20px]">{cart?.length}</p>
-              <CiShoppingCart size={30} />
             </Link>
+          </Button>
+          <Button variant="link">
+            {
+              !user?.id ? (
+                <Link to={loginPagePath()} onClick={onClose}>
+                  <IconButton
+                    className="flex justify-center"
+                    size="md"
+                    icon={<FiLogIn />}
+                  />
+                </Link>
+              ) : (
+                user?.is_shipping_employee ? (
+                  <Link to={adminOrders()} onClick={onClose}>
+                    <IconButton
+                      className="flex justify-center"
+                      size="md"
+                      icon={<RxDashboard />}
+                    />
+                  </Link>
+                ) : (
+                  <Link to={userProfile()} onClick={onClose}>
+                    <img className="w-10 rounded-full my-auto" src="/profile_image.webp" alt="profile image" />
+                  </Link>
+                )
+              )
+            }
           </Button>
         </HStack>
 
@@ -126,7 +148,32 @@ const Navbar = ({ classes }) => {
               icon={<FiShoppingCart />}
             />
           </Link>
-          {user?.is_shipping_employee ? (
+          {
+            !user?.id ? (
+              <Link to={loginPagePath()} onClick={onClose}>
+                <IconButton
+                  className="flex justify-center"
+                  size="md"
+                  icon={<FiLogIn />}
+                />
+              </Link>
+            ) : (
+              user?.is_shipping_employee ? (
+                <Link to={adminOrders()} onClick={onClose}>
+                  <IconButton
+                    className="flex justify-center"
+                    size="md"
+                    icon={<RxDashboard />}
+                  />
+                </Link>
+              ) : (
+                <Link to={userProfile()} onClick={onClose}>
+                  <img className="w-10 rounded-full my-auto" src="/profile_image.webp" alt="profile image" />
+                </Link>
+              )
+            )
+          }
+          {/* {user?.is_shipping_employee ? (
             <Button variant="link">
               <Link to={adminOrders()} onClick={onClose}>
                 <IconButton
@@ -137,14 +184,12 @@ const Navbar = ({ classes }) => {
               </Link>
             </Button>
           ) :
-            <Link to={"https://wa.me/201093952937"}>
-              <IconButton
-                className="flex justify-center"
-                size="md"
-                icon={<MdOutlineSupportAgent />}
-              />
-            </Link>
-          }
+            <>
+              {
+                
+              }
+            </>
+          } */}
         </Flex>
       </Flex>
 
@@ -184,6 +229,11 @@ const Navbar = ({ classes }) => {
                 <Link className="flex gap-2 items-center" to={cartPage()} onClick={onClose}>
                   <p>{cart?.length}</p>
                   <CiShoppingCart size={25} />
+                </Link>
+              </Button>
+              <Button variant="link">
+                <Link to={loginPagePath()} onClick={onClose}>
+                  <BiLogIn size={25} />
                 </Link>
               </Button>
             </Stack>

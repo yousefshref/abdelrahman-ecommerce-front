@@ -145,7 +145,7 @@ const OrderTableRow = ({ order, index }) => {
                 </td>
             </tr>
 
-            <UpdateOrCreateOrder order={isOpen ? order : null} isOpen={isOpen} onClose={onClose} />
+            <UpdateOrCreateOrder orderFromProps={isOpen ? order : null} isOpen={isOpen} onClose={onClose} />
         </>
     )
 }

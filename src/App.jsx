@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
-import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cancelOrder, cartPage, orderConfirm, productDetails, productsPage, trackOrders } from "./Variables/pathes";
+import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cancelOrder, cartPage, loginPagePath, orderConfirm, productDetails, productsPage, signUpPagePath, trackOrders, userProfile, userProfileOrdersCancelled, userProfileOrdersDeliverd } from "./Variables/pathes";
 import TrackOrders from "./pages/TrackOrders/TrackOrders";
 import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import AdminPage from "./pages/Admin/AdminPage/AdminPage";
@@ -16,6 +16,11 @@ import AdminSettings from "./pages/Admin/AdminSettings/AdminSettings";
 import Products from "./pages/Products/Products";
 import CancelOrder from "./pages/CancelOrder/CancelOrder";
 import OrderConfirm from "./pages/OrderConfirm/OrderConfirm";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import UserProfile from "./pages/UserProfile/UserProfile";
+import UserProfileOrdersDeliverd from "./pages/UserProfileOrdersDeliverd/UserProfileOrdersDeliverd";
+import UserProfileOrdersCancelled from "./pages/UserProfileOrdersCancelled/UserProfileOrdersCancelled";
 
 
 function App() {
@@ -29,6 +34,12 @@ function App() {
         <Route path={productsPage()} element={<Products />} />
         <Route path={cancelOrder()} element={<CancelOrder />} />
         <Route path={orderConfirm()} element={<OrderConfirm />} />
+        <Route path={loginPagePath()} element={<Login />} />
+        <Route path={signUpPagePath()} element={<Signup />} />
+        {/* profile */}
+        <Route path={userProfile()} element={<UserProfile />} />
+        <Route path={userProfileOrdersDeliverd()} element={<UserProfileOrdersDeliverd />} />
+        <Route path={userProfileOrdersCancelled()} element={<UserProfileOrdersCancelled />} />
 
         {/* admin */}
         <Route path={adminLoginPage()} element={<AdminLogin />} />

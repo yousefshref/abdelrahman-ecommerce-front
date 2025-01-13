@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { createContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers } from '../Variables/pathes'
+import { adminDashboard, adminOrders, adminProducts, adminSettings, adminUsers, userProfile, userProfileOrdersCancelled, userProfileOrdersDeliverd } from '../Variables/pathes'
 import { useToast } from '@chakra-ui/react'
 import { useGoogleLogin } from '@react-oauth/google'
 
@@ -22,10 +22,13 @@ const AuthContext = ({ children }) => {
             localStorage.setItem('token', res.data.token)
             if (res?.data?.user?.is_superuser) {
                 navigate(adminProducts())
+                return
             }
             if (res?.data?.user?.is_shipping_employee) {
                 navigate(adminOrders())
+                return
             }
+            navigate(userProfile())
         } catch (err) {
             // 404 not found
             if (err.response.status === 404) {
@@ -86,13 +89,13 @@ const AuthContext = ({ children }) => {
             localStorage.setItem('token', res.data.token)
             if (res?.data?.user?.is_superuser) {
                 navigate(adminProducts())
-            } else {
-                if (res?.data?.user?.is_shipping_employee) {
-                    navigate(adminOrders())
-                } else {
-                    navigate('/')
-                }
+                return
             }
+            if (res?.data?.user?.is_shipping_employee) {
+                navigate(adminOrders())
+                return
+            }
+            navigate(userProfile())
             return res.data
         } catch (err) {
             console.log(err);
@@ -124,7 +127,7 @@ const AuthContext = ({ children }) => {
         }
     }
 
-    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers(), '/']
+    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers(), '/', userProfile(), userProfileOrdersDeliverd(), userProfileOrdersCancelled()]
     useEffect(() => {
         if (allowedLocations.includes(location.pathname)) {
             getUser()

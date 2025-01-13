@@ -21,15 +21,9 @@ const CancelOrder = () => {
 
     const [loading, setLoading] = React.useState(true)
 
-    const handleGetOrder = async () => {
-        setLoading(true)
-        await orderContext?.getOrder(orderID)
-        setLoading(false)
-    }
-
     useEffect(() => {
         if (orderID) {
-            handleGetOrder()
+            orderContext?.setOrderId(orderID)
         }
     }, [orderID])
 

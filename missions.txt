@@ -1,1 +1,18 @@
-- sales has to add the tracking code then change the status
+- compelete user profile ✅
+- navbar for all users types ✅
+- sales pending page
+
+
+
+
+
+
+
+
+-------------------------------
+if client (not logged in) -> appear login
+if logged in:
+    if client:
+        appear profile
+    if sales:
+        appear dashboard

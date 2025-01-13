@@ -15,6 +15,15 @@ export const orderConfirm = () => `/confirm/`
 
 export const cancelOrder = () => `/orders/cancel/`
 
+export const userProfile = () => `/profile/`
+export const userProfileOrdersDeliverd = () => `/profile/orders/devilerd/`
+export const userProfileOrdersCancelled = () => `/profile/orders/cancelled/`
+
+// auth
+export const loginPagePath = () => `/auth/login/`
+export const signUpPagePath = () => `/auth/register/`
+
+
 // admin
 export const adminLoginPage = () => `/admin/login/`
 export const adminRegisterPage = () => `/admin/register/`
