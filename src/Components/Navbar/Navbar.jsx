@@ -112,11 +112,17 @@ const Navbar = ({ classes, profile }) => {
           <Button variant="link">
             {
               !user?.id ? (
-                <Link to={loginPagePath()} onClick={onClose}>
-                  <IconButton
+                // <Link to={loginPagePath()} onClick={onClose}>
+                <Link to={'https://wa.me/201093952937'} onClick={onClose}>
+                  {/* <IconButton
                     className="flex justify-center"
                     size="md"
                     icon={<FiLogIn />}
+                  /> */}
+                  <IconButton
+                    className="flex justify-center"
+                    size="md"
+                    icon={<BiHelpCircle />}
                   />
                 </Link>
               ) : (
@@ -150,11 +156,16 @@ const Navbar = ({ classes, profile }) => {
           </Link>
           {
             !user?.id ? (
-              <Link to={loginPagePath()} onClick={onClose}>
-                <IconButton
+              <Link to={'https://wa.me/201093952937'} onClick={onClose}>
+                {/* <IconButton
                   className="flex justify-center"
                   size="md"
                   icon={<FiLogIn />}
+                /> */}
+                <IconButton
+                  className="flex justify-center"
+                  size="md"
+                  icon={<BiHelpCircle />}
                 />
               </Link>
             ) : (
@@ -167,9 +178,10 @@ const Navbar = ({ classes, profile }) => {
                   />
                 </Link>
               ) : (
-                <Link to={userProfile()} onClick={onClose}>
-                  <img className="w-10 rounded-full my-auto" src="/profile_image.webp" alt="profile image" />
-                </Link>
+                // <Link to={userProfile()} onClick={onClose}>
+                //   <img className="w-10 rounded-full my-auto" src="/profile_image.webp" alt="profile image" />
+                // </Link>
+                null
               )
             )
           }
@@ -232,9 +244,9 @@ const Navbar = ({ classes, profile }) => {
                 </Link>
               </Button>
               <Button variant="link">
-                <Link to={loginPagePath()} onClick={onClose}>
+                {/* <Link to={loginPagePath()} onClick={onClose}>
                   <BiLogIn size={25} />
-                </Link>
+                </Link> */}
               </Button>
             </Stack>
           </DrawerBody>
