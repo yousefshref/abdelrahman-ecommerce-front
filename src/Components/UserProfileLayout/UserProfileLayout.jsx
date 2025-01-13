@@ -19,7 +19,7 @@ const UserProfileLayout = ({ children }) => {
         },
         {
             id: 2,
-            text: "الطلبات التي وسلت",
+            text: "الطلبات التي وصلت",
             pathname: userProfileOrdersDeliverd()
         },
         {
@@ -67,7 +67,7 @@ const UserProfileLayout = ({ children }) => {
         <>
             <Navbar profile={true} />
             <div className='relative bg-[#F3F3F3] text-gray-700 min-h-screen py-14 flex flex-col justify-center'>
-                <img src="/logo.png" alt="" className='absolute left-4 top-3 w-[70px] z-10' />
+                {/* <img src="/logo.png" alt="" className='absolute left-4 top-3 w-[70px] z-10' /> */}
 
                 <div className='p-3 bg-white shadow-md w-full max-w-[1000px] mx-auto rounded-xl flex flex-col'>
                     <div className='flex items-center justify-center -mt-10 flex-col'>
