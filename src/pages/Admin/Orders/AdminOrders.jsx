@@ -26,6 +26,8 @@ const AdminOrders = () => {
     const loading = ordersContext?.loading
 
     const orders = ordersContext?.orders
+
+
     const totalCommission = ordersContext?.totalCommission
     const totalOrdersPrices = ordersContext?.totalOrdersPrices
 

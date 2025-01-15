@@ -25,6 +25,9 @@ const UserTableRow = ({ user }) => {
             is_shipping_employee,
             commission
         }
+        if (is_shipping_employee) {
+            data.is_staff = true
+        }
 
         await usersContext?.updateUser(user.id, data)
 

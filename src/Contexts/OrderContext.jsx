@@ -30,7 +30,7 @@ const OrderContext = ({ children }) => {
     const getOrders = async () => {
         setLoading(true)
         try {
-            const res = await axios.get(`/orders/?sales_id=${sales_id}&search=${search}`, {
+            const res = await axios.get(`/orders/?search=${search}`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`
                 }
@@ -64,6 +64,7 @@ const OrderContext = ({ children }) => {
     const location = useLocation()
     const allowedPathes = [adminOrders()]
     useEffect(() => {
+        console.log(allowedPathes.includes(location.pathname));
         if (allowedPathes.includes(location.pathname)) {
             getOrders()
         }
