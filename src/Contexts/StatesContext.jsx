@@ -26,7 +26,7 @@ const StatesContext = ({ children }) => {
         }
     }
 
-    const alloedPathesForStates = [cartPage(), adminOrders(), adminSettings()]
+    const alloedPathesForStates = [cartPage(), adminSettings()]
     useEffect(() => {
         if (alloedPathesForStates.includes(location.pathname)) {
             getStates()

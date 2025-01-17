@@ -25,7 +25,7 @@ const Signup = () => {
                     className='h-full p-7 flex flex-col md:justify-around justify-center md:gap-0 gap-14 items-center'>
                     <div className='flex gap-2 items-center mb-3'>
                         <h1 className='text-3xl'>Safe <span className='text-green-500'>Zone</span></h1>
-                        <img src="/logo.png" alt="safe zone" className='w-20' />
+                        <img loading="lazy" src="/logo.png" alt="safe zone" className='w-20' />
                     </div>
                     <div className='flex flex-col gap-2 w-full'>
                         <div className='flex gap-4'>

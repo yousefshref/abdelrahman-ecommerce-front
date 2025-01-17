@@ -21,38 +21,41 @@ import Signup from "./pages/Signup/Signup";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import UserProfileOrdersDeliverd from "./pages/UserProfileOrdersDeliverd/UserProfileOrdersDeliverd";
 import UserProfileOrdersCancelled from "./pages/UserProfileOrdersCancelled/UserProfileOrdersCancelled";
+import { Suspense } from "react";
 
 
 function App() {
   return (
-    <div className="font">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path={productDetails(":id")} element={<ProductDetails />} />
-        <Route path={cartPage()} element={<Cart />} />
-        <Route path={trackOrders()} element={<TrackOrders />} />
-        <Route path={productsPage()} element={<Products />} />
-        <Route path={cancelOrder()} element={<CancelOrder />} />
-        <Route path={orderConfirm()} element={<OrderConfirm />} />
-        <Route path={loginPagePath()} element={<Login />} />
-        <Route path={signUpPagePath()} element={<Signup />} />
-        {/* profile */}
-        <Route path={userProfile()} element={<UserProfile />} />
-        <Route path={userProfileOrdersDeliverd()} element={<UserProfileOrdersDeliverd />} />
-        <Route path={userProfileOrdersCancelled()} element={<UserProfileOrdersCancelled />} />
+    <Suspense fallback={null}>
+      <div className="font">
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path={productDetails(":id")} element={<ProductDetails />} />
+          <Route path={cartPage()} element={<Cart />} />
+          <Route path={trackOrders()} element={<TrackOrders />} />
+          <Route path={productsPage()} element={<Products />} />
+          <Route path={cancelOrder()} element={<CancelOrder />} />
+          <Route path={orderConfirm()} element={<OrderConfirm />} />
+          <Route path={loginPagePath()} element={<Login />} />
+          <Route path={signUpPagePath()} element={<Signup />} />
+          {/* profile */}
+          <Route path={userProfile()} element={<UserProfile />} />
+          <Route path={userProfileOrdersDeliverd()} element={<UserProfileOrdersDeliverd />} />
+          <Route path={userProfileOrdersCancelled()} element={<UserProfileOrdersCancelled />} />
 
-        {/* admin */}
-        <Route path={adminLoginPage()} element={<AdminLogin />} />
-        <Route path={adminRegisterPage()} element={<AdminRegister />} />
+          {/* admin */}
+          <Route path={adminLoginPage()} element={<AdminLogin />} />
+          <Route path={adminRegisterPage()} element={<AdminRegister />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route path={adminProducts()} element={<AdminProducts />} />
-          <Route path={adminOrders()} element={<AdminOrders />} />
-          <Route path={adminUsers()} element={<AdminUsers />} />
-          <Route path={adminSettings()} element={<AdminSettings />} />
-        </Route>
-      </Routes>
-    </div>
+          <Route element={<PrivateRoute />}>
+            <Route path={adminProducts()} element={<AdminProducts />} />
+            <Route path={adminOrders()} element={<AdminOrders />} />
+            <Route path={adminUsers()} element={<AdminUsers />} />
+            <Route path={adminSettings()} element={<AdminSettings />} />
+          </Route>
+        </Routes>
+      </div>
+    </Suspense>
   );
 }
 

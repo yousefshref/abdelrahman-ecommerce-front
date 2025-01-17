@@ -20,7 +20,7 @@ const ImageHomeScreen = ({ image, categoryContext, api }) => {
         <div key={image?.id} className='flex flex-col gap-1'>
             <div className='relative'>
                 <img loading="lazy" className='w-full h-[140px] rounded-xl' src={api + image?.image} alt="" />
-                <BiTrash onClick={() => categoryContext?.deleteHomePageImage(image?.id)} className='absolute top-2 right-2 w-[30px] h-[30px] p-1 rounded-md text-white bg-red-500 cursor-pointer cursor-pointer' />
+                <BiTrash onClick={() => categoryContext?.deleteHomePageImage(image?.id)} className='absolute top-2 right-2 w-[30px] h-[30px] p-1 rounded-md text-white bg-red-500 cursor-pointer' />
             </div>
 
             <div className='flex gap-2 items-center w-full'>

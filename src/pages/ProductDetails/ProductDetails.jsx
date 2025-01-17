@@ -23,9 +23,10 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    handleFetchProduct(id);
+    if (id) {
+      handleFetchProduct(id);
+    }
   }, [id]);
-
 
 
   useEffect(() => {
@@ -34,14 +35,6 @@ const ProductDetails = () => {
       behavior: "smooth",
     });
   }, [id]);
-
-
-
-  const cartsContext = useContext(CartContextProvider);
-
-  const handleAddToCart = (product) => {
-    cartsContext?.addToCart(product);
-  };
 
 
 

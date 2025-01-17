@@ -27,7 +27,7 @@ const CategoryContext = ({ children }) => {
     }
 
     const allowedLocationsForCategories = [
-        adminProducts(), productsPage()
+        productsPage()
     ]
     useEffect(() => {
         if (allowedLocationsForCategories.includes(location.pathname)) {

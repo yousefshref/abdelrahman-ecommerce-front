@@ -20,15 +20,12 @@ const AuthContext = ({ children }) => {
             // 200
             const res = await axios.post('/login/', data)
             localStorage.setItem('token', res.data.token)
-            if (res?.data?.user?.is_superuser) {
+            console.log(res?.data?.user?.is_staff);
+            if (res?.data?.user?.is_staff) {
                 navigate(adminProducts())
-                return
+            } else {
+                navigate(userProfile())
             }
-            if (res?.data?.user?.is_shipping_employee) {
-                navigate(adminOrders())
-                return
-            }
-            navigate(userProfile())
         } catch (err) {
             // 404 not found
             if (err.response.status === 404) {
@@ -127,12 +124,12 @@ const AuthContext = ({ children }) => {
         }
     }
 
-    const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers(), '/', userProfile(), userProfileOrdersDeliverd(), userProfileOrdersCancelled()]
-    useEffect(() => {
-        if (allowedLocations.includes(location.pathname)) {
-            getUser()
-        }
-    }, [location])
+    // const allowedLocations = [adminDashboard(), adminProducts(), adminOrders(), adminSettings(), adminUsers(), '/', userProfile(), userProfileOrdersDeliverd(), userProfileOrdersCancelled()]
+    // useEffect(() => {
+    //     if (allowedLocations.includes(location.pathname)) {
+    //         getUser()
+    //     }
+    // }, [location])
 
 
 

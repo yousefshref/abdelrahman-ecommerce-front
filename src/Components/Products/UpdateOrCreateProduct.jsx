@@ -37,12 +37,19 @@ const UpdateOrCreateProduct = ({ isOpen, onClose, create, productID }) => {
     const categories = categoryContext?.categories
 
 
+    const { fetchCategories } = useContext(CategoryContextProvider)
+    useEffect(() => {
+        if (isOpen) {
+            fetchCategories()
+            setOpend(true)
+        }
+    }, [isOpen])
 
 
     const productsContext = useContext(ProductsContextProvider)
     const product = productsContext?.product
     useEffect(() => {
-        if (productID) {
+        if (productID && isOpen) {
             productsContext?.fetchProduct(productID)
         }
     }, [productID])

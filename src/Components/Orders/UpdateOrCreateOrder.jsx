@@ -17,15 +17,10 @@ import {
     Switch,
 } from '@chakra-ui/react'
 import { ProductsContextProvider } from '../../Contexts/ProductsContext'
-import { CategoryContextProvider } from '../../Contexts/CategoryContext'
 import { StatesContextProvider } from '../../Contexts/StatesContext'
 import OrderItemTableRow from './OrderItemTableRow'
 import { OrderContextProvider } from '../../Contexts/OrderContext'
 import { AuthContextProvider } from '../../Contexts/AuthContext'
-import { UsersContextProvider } from '../../Contexts/UsersContext'
-import { trackOrders } from '../../Variables/pathes'
-import { api, clientUrl } from '../../Variables/server'
-import { options } from '../../Variables/variables'
 import SelectWithImage from '../SelectWithImage/SelectWithImage'
 
 

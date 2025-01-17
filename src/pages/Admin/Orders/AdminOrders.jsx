@@ -9,7 +9,6 @@ import { UsersContextProvider } from '../../../Contexts/UsersContext';
 import { AuthContextProvider } from '../../../Contexts/AuthContext';
 
 import Loading from '../../../Components/Loading/Loading';
-import { Pagination } from 'antd';
 
 const AdminOrders = () => {
     const ordersContext = React.useContext(OrderContextProvider)
@@ -20,6 +19,15 @@ const AdminOrders = () => {
 
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const {
+        getOrders,
+        setPageSize,
+        count,
+        currentPage,
+        pageSize,
+        handlePagination,
+    } = useContext(OrderContextProvider);
 
 
 
@@ -36,24 +44,6 @@ const AdminOrders = () => {
 
     const sales_id = ordersContext?.sales_id
     const setSalesId = ordersContext?.setSalesId
-
-    // const from = ordersContext?.from
-    // const setFrom = ordersContext?.setFrom
-
-    // const to = ordersContext?.to
-    // const setTo = ordersContext?.setTo
-
-
-    // useEffect(() => {
-    //     const date = new Date()
-    //     const today = date.toISOString().split('T')[0]
-    //     date.setDate(date.getDate() + 7)
-    //     const to_date = date.toISOString().split('T')[0]
-
-    //     setFrom(today)
-    //     setTo(to_date)
-    // }, [])
-
 
 
 
@@ -108,21 +98,6 @@ const AdminOrders = () => {
                             )
                         }
                     </Flex>
-
-                    {/* <Flex gap='3'>
-                        <input
-                            type="date"
-                            value={from}
-                            onChange={(e) => setFrom(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md"
-                        />
-                        <input
-                            type="date"
-                            value={to}
-                            onChange={(e) => setTo(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md"
-                        />
-                    </Flex> */}
 
                     <Flex justifyContent={"space-between"}>
                         <Button
@@ -187,6 +162,41 @@ const AdminOrders = () => {
                         </tbody>
                     </table>
                 )}
+            </div>
+
+            <div className="pagination mt-5 flex md:flex-row flex-col gap-7 items-center mx-auto">
+                <div className='flex gap-7 items-center'>
+                    <button
+                        className='p-1 px-3 bg-red-200 rounded-full flex flex-col justify-center items-center'
+                        onClick={() => {
+                            handlePagination(currentPage - 1)
+                        }}
+                    >
+                        Previous
+                    </button>
+                    <span>
+                        Page {currentPage} of {Math.ceil(count / pageSize)}
+                    </span>
+                    <button
+                        className='p-1 px-3 bg-green-200 rounded-full flex flex-col justify-center items-center'
+                        onClick={() => {
+                            handlePagination(currentPage + 1)
+                        }}
+                    >
+                        Next
+                    </button>
+                </div>
+                <div className='flex flex-col md:w-fit w-full'>
+                    <p>كم تريد ان تعرض</p>
+                    <select onChange={(e) => setPageSize(e.target.value)} value={pageSize} name="" id="">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="70">70</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
             </div>
 
             <UpdateOrCreateOrder isOpen={isOpen} onClose={onClose} />

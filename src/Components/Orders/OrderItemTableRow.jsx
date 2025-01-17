@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { Input, Select } from '@chakra-ui/react';
 import { CiTrash } from 'react-icons/ci';
+import { ProductsContextProvider } from '../../Contexts/ProductsContext';
+import { StatesContextProvider } from '../../Contexts/StatesContext';
 
 
 const OrderItemTableRow = ({ item, products, order_items, setOrderItems, index }) => {
@@ -9,10 +11,22 @@ const OrderItemTableRow = ({ item, products, order_items, setOrderItems, index }
     const [quantity, setQuantity] = React.useState(item?.quantity)
     const [price, setPrice] = React.useState(0)
 
+
     useEffect(() => {
         setProduct(item?.product)
         setQuantity(item?.quantity)
     }, [item, order_items])
+
+
+    const { fetchProducts } = useContext(ProductsContextProvider)
+    useEffect(() => {
+        fetchProducts()
+    }, [])
+
+    const { getStates } = useContext(StatesContextProvider)
+    useEffect(() => {
+        getStates()
+    }, [])
 
 
     useEffect(() => {

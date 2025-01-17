@@ -136,7 +136,7 @@ const Navbar = ({ classes, profile }) => {
                   </Link>
                 ) : (
                   <Link to={userProfile()} onClick={onClose}>
-                    <img className="w-10 rounded-full my-auto" src="/profile_image.webp" alt="profile image" />
+                    <img loading="lazy" className="w-10 rounded-full my-auto" src="/profile_image.webp" alt="profile image" />
                   </Link>
                 )
               )

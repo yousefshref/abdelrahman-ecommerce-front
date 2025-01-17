@@ -72,7 +72,7 @@ const UserProfileLayout = ({ children }) => {
                 <div className='p-3 bg-white shadow-md w-full max-w-[1000px] mx-auto rounded-xl flex flex-col'>
                     <div className='flex items-center justify-center -mt-10 flex-col'>
                         <div className='relative'>
-                            <img src={profile_picture} alt='' className='rounded-full w-[130px] h-[130px]' />
+                            <img loading="lazy" src={profile_picture} alt='' className='rounded-full w-[130px] h-[130px]' />
                             <input type="file" id="profile_picture" className='hidden' onChange={(e) => setProfile_picture(URL.createObjectURL(e.target.files[0]))} />
                             <label htmlFor="profile_picture">
                                 <BiEdit className='absolute bottom-0 left-5 text-white p-0.5 bg-blue-600 rounded-full cursor-pointer' size={20} />

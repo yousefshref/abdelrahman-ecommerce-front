@@ -28,21 +28,16 @@ const ProductsContext = ({ children }) => {
         } finally {
             setLoading(false)
         }
-
     }
 
     const location = useLocation()
-
+    const allowedProductLocations = [adminProducts(), productsPage(), '/'];
     useEffect(() => {
-        if (
-            location.pathname == adminProducts() ||
-            location.pathname == adminOrders() ||
-            location.pathname == '/' ||
-            location.pathname == productsPage()
-        ) {
+        if (allowedProductLocations.includes(window.location.pathname)) {
             fetchProducts()
         }
-    }, [location])
+    }, [search, category, location])
+
 
 
     const createProduct = async (data) => {

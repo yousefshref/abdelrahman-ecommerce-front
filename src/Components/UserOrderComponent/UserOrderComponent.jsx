@@ -9,7 +9,7 @@ const UserOrderComponent = ({ order, noOrders }) => {
     if (noOrders) {
         return (
             <div className='flex flex-col gap-2 w-[370px] max-w-[370px] p-1 bg-gray-200 rounded-xl'>
-                <img src="/no-order.png" alt="" className='w-[70%] mx-auto' />
+                <img loading="lazy" src="/no-order.png" alt="" className='w-[70%] mx-auto' />
                 <div className='bg-white p-2 px-4 rounded-lg mb-3 mx-3'>
                     <strong className='text-xl'>لا يوجد طلبات</strong>
                 </div>
@@ -30,7 +30,7 @@ const UserOrderComponent = ({ order, noOrders }) => {
                             key={index}
                             className='w-[100px]'
                         >
-                            <img className='w-fit' src={`${server}${item?.product_details?.image1}`} alt="" />
+                            <img loading="lazy" className='w-fit' src={`${server}${item?.product_details?.image1}`} alt="" />
                         </SwiperSlide>
                     ))
                 }

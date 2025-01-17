@@ -6,7 +6,6 @@ import ProductTableRow from '../../../Components/Products/ProductTableRow'
 import { CategoryContextProvider } from '../../../Contexts/CategoryContext'
 import UpdateOrCreateProduct from '../../../Components/Products/UpdateOrCreateProduct'
 import AdminBox from '../../../Components/AdminBox/AdminBox'
-import { CiSearch } from 'react-icons/ci'
 import { BiSearch } from 'react-icons/bi'
 import Loading from '../../../Components/Loading/Loading'
 import { CgAdd } from 'react-icons/cg'
@@ -33,9 +32,9 @@ const AdminProducts = () => {
     const category = productsContext?.category
     const setCategory = productsContext?.setCategory
 
-    useEffect(() => {
-        getProducts();
-    }, [about_to_end]);
+    // useEffect(() => {
+    //     getProducts();
+    // }, []);
 
 
     const { isOpen, onOpen, onClose } = useDisclosure()

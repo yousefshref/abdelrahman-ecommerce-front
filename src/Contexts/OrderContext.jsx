@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { adminOrders, cancelOrder, orderConfirm, trackOrders, userProfile, userProfileOrdersCancelled, userProfileOrdersDeliverd } from '../Variables/pathes'
 import { CartContextProvider } from './CartContext'
@@ -27,34 +27,43 @@ const OrderContext = ({ children }) => {
     const [sales_id, setSalesId] = React.useState("")
     const [search, setSearch] = React.useState("")
 
+
+    const [count, setCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [next, setNext] = useState(true)
+    const [prev, setPrev] = useState(true)
+
+    const [pageSize, setPageSize] = useState(10)
+
     const getOrders = async () => {
         setLoading(true)
         try {
             const res = await axios.get(`/orders/?search=${search}`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`
+                },
+                params: {
+                    page: currentPage,
+                    page_size: pageSize,
+                    sales_id: sales_id,
+                    search: search,
                 }
             })
 
-            setOrders(res.data.orders)
-            setTotalCommission(res.data?.total_commission)
-            setTotalOrdersPrices(res.data?.total_orders_prices)
+            console.log(res.data);
+            setNext(res.data.results.next)
+            setPrev(res.data.results.previous)
+
+            setCount(res.data.count);
+
+            setOrders(res?.data?.results?.orders)
+
+            setTotalCommission(res.data.results?.total_commission)
+            setTotalOrdersPrices(res.data.results.total_orders_prices)
+
         }
         catch (err) {
-            // 500
-            if (err.response.status === 500) {
-                // alert(err.response.data)
-                toast({
-                    title: err.response.data,
-                    // description: "Your item has been successfully added to the cart.",
-                    status: "error",
-                    duration: 3000, // 3 seconds
-                    isClosable: true,
-                    position: "bottom-left",
-                    variant: "subtle", // Optional: You can use subtle for a softer effect
-                });
-            }
-
             console.log(err);
         } finally {
             setLoading(false)
@@ -64,11 +73,18 @@ const OrderContext = ({ children }) => {
     const location = useLocation()
     const allowedPathes = [adminOrders()]
     useEffect(() => {
-        console.log(allowedPathes.includes(location.pathname));
         if (allowedPathes.includes(location.pathname)) {
             getOrders()
         }
-    }, [from, to, sales_id, location])
+    }, [from, to, sales_id, location, currentPage, pageSize])
+
+
+    const handlePagination = (page) => {
+        if (page < 1) return
+        if (page > Math.ceil(count / pageSize)) return
+        setCurrentPage(page)
+    }
+
 
 
 
@@ -397,6 +413,16 @@ const OrderContext = ({ children }) => {
 
             orders,
             getOrders,
+            handlePagination,
+
+            count,
+            setCount,
+            currentPage,
+            pageSize,
+            setPageSize,
+            setCurrentPage,
+            next,
+
             order,
             orderItems, setOrderItems,
             totalPrice,

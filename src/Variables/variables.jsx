@@ -6,6 +6,7 @@ export const options = [
         label: (
             <div className="flex gap-2 items-center">
                 <img
+                    loading="lazy"
                     className="w-[40px]"
                     src="/cash-on-delivery.png"
                 />
@@ -18,10 +19,12 @@ export const options = [
         label: (
             <div className="flex gap-2 items-center opacity-50">
                 <img
+                    loading="lazy"
                     className="w-[40px]"
                     src="/visa.png"
                 />
                 <img
+                    loading="lazy"
                     className="w-[40px]"
                     src="/money.png"
                 />
@@ -33,11 +36,11 @@ export const options = [
         value: "instapay-ewallet",
         label: (
             <div className="flex gap-2 items-center">
-                <img
+                <img loading="lazy"
                     className="w-[35px]"
                     src="/ewallet.png"
                 />
-                <img
+                <img loading="lazy"
                     src="/Asset-6@4x-1024x125.png"
                     className="p-1 bg-indigo-500 w-[80px]"
                 />

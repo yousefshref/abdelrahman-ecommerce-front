@@ -35,11 +35,11 @@ const Products = () => {
     const category = productsContext?.category
     const setCategory = productsContext?.setCategory
 
-    const handleGetProducts = productsContext?.fetchProducts
+    // const handleGetProducts = productsContext?.fetchProducts
 
-    useEffect(() => {
-        handleGetProducts()
-    }, [search, category])
+    // useEffect(() => {
+    //     handleGetProducts()
+    // }, [search, category])
 
 
     const categoryContext = useContext(CategoryContextProvider)
