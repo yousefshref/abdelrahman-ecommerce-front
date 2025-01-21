@@ -23,10 +23,10 @@ const AdminLayout = ({ children }) => {
         setIs_shipping_employee(user?.is_shipping_employee)
     }, [user])
 
-    const [profile_picture, setProfile_picture] = React.useState(user?.profile_picture)
+    const [profile_picture, setProfile_picture] = React.useState(user?.profile_picture || "https://via.placeholder.com/100")
 
     useEffect(() => {
-        setProfile_picture(user?.profile_picture)
+        setProfile_picture(user?.profile_picture || "https://via.placeholder.com/100")
     }, [user])
 
 
@@ -129,7 +129,7 @@ const AdminLayout = ({ children }) => {
                                 };
                             }}
                             className='md:w-20 w-14 md:h-20 h-14 rounded-full cursor-pointer'
-                            src={profile_picture ? profile_picture : "https://via.placeholder.com/100"}
+                            src={profile_picture}
                             alt=""
                         />
                         <div className='flex flex-col'>
