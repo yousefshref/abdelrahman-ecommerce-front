@@ -74,7 +74,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
     const [isClient, setIsClient] = useState(true)
 
     useEffect(() => {
-        if (user?.is_staff) setIsClient(false)
+        if (user?.is_shipping_employee || user?.is_superuser) setIsClient(false)
     }, [user])
 
 
