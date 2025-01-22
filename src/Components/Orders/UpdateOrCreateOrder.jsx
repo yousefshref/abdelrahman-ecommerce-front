@@ -268,7 +268,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                             className="w-full mb-10"
                         />
                         <SelectWithImage payment_method={payment_method} setPaymentMethod={setPaymentMethod} />
-                        {!isClient && (
+                        {(user?.is_superuser || user?.is_shipping_employee || user?.is_fast_shipping_employee) && (
                             <FormControl className='mt-5'>
                                 <FormLabel className='font-bold'>الحالة</FormLabel>
                                 <Select
