@@ -293,7 +293,19 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                                 </Select>
                             </FormControl>
                         )}
-                        {!isClient || !user.is_fast_shipping_employee && (
+                        {/* {!isClient || !user.is_fast_shipping_employee && (
+                            <FormControl>
+                                <FormLabel className='font-bold'>كود تتبع الشحنة</FormLabel>
+                                <Input
+                                    value={tracking_code}
+                                    onChange={(e) => set_tracking_code(e.target.value)}
+                                    placeholder="كود تتبع الشحنة"
+                                    size="lg"
+                                    className="w-full mb-3"
+                                />
+                            </FormControl>
+                        )} */}
+                        {!user.is_superuser || user?.is_shipping_employee && (
                             <FormControl>
                                 <FormLabel className='font-bold'>كود تتبع الشحنة</FormLabel>
                                 <Input
