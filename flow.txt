@@ -1,0 +1,5 @@
+- change user to be fast shipping ✅
+- change the user role from the admin ✅
+- login with the fast shipping ✅
+- filter fast shipping orders only for them ✅
+- check the order and the status then add the user for it if changed the status ✅

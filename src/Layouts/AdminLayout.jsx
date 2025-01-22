@@ -18,9 +18,11 @@ const AdminLayout = ({ children }) => {
 
 
     const [is_shipping_employee, setIs_shipping_employee] = React.useState(user?.is_shipping_employee)
+    const [is_fast_shipping_employee, set_is_fast_shipping_employee] = React.useState(user?.is_fast_shipping_employee)
 
     useEffect(() => {
         setIs_shipping_employee(user?.is_shipping_employee)
+        set_is_fast_shipping_employee(user?.is_fast_shipping_employee)
     }, [user])
 
     const [profile_picture, setProfile_picture] = React.useState(user?.profile_picture || "https://via.placeholder.com/100")
@@ -51,7 +53,7 @@ const AdminLayout = ({ children }) => {
                         لوحة التحكم
                     </Text>
                     <ul className='my-auto'>
-                        {is_shipping_employee ? null : (
+                        {is_shipping_employee || is_fast_shipping_employee ? null : (
                             <>
                                 <li>
                                     <Link to={adminUsers()} className={`flex gap-2 items-center transition-all hover:bg-gray-800 rounded-md p-2

@@ -411,7 +411,7 @@ const OrderContext = ({ children }) => {
             loading,
             createOrder,
 
-            orders,
+            orders, setOrders,
             getOrders,
             handlePagination,
 
@@ -437,6 +437,7 @@ const OrderContext = ({ children }) => {
 
             getOrder, setOrderId, orderId,
             updateOrder,
+            setOrder,
             deleteOrder,
             handleCancelOrder
         }}>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom';
 import { AuthContextProvider } from '../../Contexts/AuthContext';
-import { adminDashboard } from '../../Variables/pathes';
+import { adminDashboard, adminOrders } from '../../Variables/pathes';
 
 const PrivateRoute = () => {
 
@@ -15,8 +15,8 @@ const PrivateRoute = () => {
                 if (!res) {
                     navigate('/')
                 }
-                if (res.is_superuser || res.is_shipping_employee) {
-                    // navigate(adminDashboard())
+                if (res.is_staff) {
+                    navigate(adminOrders())
                 } else {
                     navigate('/')
                 }

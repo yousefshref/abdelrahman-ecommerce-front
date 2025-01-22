@@ -4,10 +4,12 @@ import { UsersContextProvider } from '../../Contexts/UsersContext'
 
 const UserTableRow = ({ user }) => {
     const [is_shipping_employee, setIs_shipping_employee] = React.useState(user?.is_shipping_employee)
+    const [is_fast_shipping_employee, set_is_fast_shipping_employee] = React.useState(user?.is_fast_shipping_employee)
     const [commission, setCommission] = React.useState(user?.commission)
 
     useEffect(() => {
         setIs_shipping_employee(user?.is_shipping_employee)
+        set_is_fast_shipping_employee(user?.is_fast_shipping_employee)
         setCommission(user?.commission)
     }, [user])
 
@@ -23,9 +25,10 @@ const UserTableRow = ({ user }) => {
         setLoading(true)
         const data = {
             is_shipping_employee,
+            is_fast_shipping_employee,
             commission
         }
-        if (is_shipping_employee) {
+        if (is_shipping_employee || is_fast_shipping_employee) {
             data.is_staff = true
         }
 
@@ -70,6 +73,19 @@ const UserTableRow = ({ user }) => {
                         onChange={(e) => {
                             setIsUpdate(true)
                             setIs_shipping_employee(e.target.value)
+                        }}
+                        className='w-full'
+                    >
+                        <option value={true}>نعم</option>
+                        <option value={false}>لا</option>
+                    </select>
+                </td>
+                <td className="border px-4 py-2 text-nowrap">
+                    <select
+                        value={is_fast_shipping_employee}
+                        onChange={(e) => {
+                            setIsUpdate(true)
+                            set_is_fast_shipping_employee(e.target.value)
                         }}
                         className='w-full'
                     >

@@ -50,6 +50,7 @@ const AdminUsers = () => {
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200">الاسم</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200">البريد الالكتروني</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200 w-[150px]">هل سيلز</th>
+                            <th className="px-4 py-2 text-start text-nowrap bg-lime-200 w-[150px]">موظف شحن سريع</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200">كوميشن</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200">ارسال بريد بالأداء</th>
                             <th className="px-4 py-2 text-start text-nowrap bg-lime-200"></th>

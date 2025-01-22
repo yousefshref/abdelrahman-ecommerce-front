@@ -28,10 +28,6 @@ const OrderItemTableRow = ({ item, products, order_items, setOrderItems, index }
         getStates()
     }, [])
 
-
-    useEffect(() => {
-        setPrice(products?.find((p) => p.id == product)?.offer_price ? products?.find((p) => p.id == product)?.offer_price * quantity : products?.find((p) => p.id == product)?.price * quantity)
-    }, [product, quantity])
     return (
         <tr className="border-b">
             <td className="px-2 py-2 bg-white">
@@ -71,7 +67,7 @@ const OrderItemTableRow = ({ item, products, order_items, setOrderItems, index }
                 />
             </td>
             <td className="px-2 py-2 bg-white">
-                {price} EGP
+                {item?.price} EGP
             </td>
             <td className="px-2 py-2 bg-white">
                 <CiTrash onClick={() => {

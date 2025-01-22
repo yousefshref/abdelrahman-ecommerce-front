@@ -31,7 +31,12 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
 
     const setOrderId = ordersContext?.setOrderId
 
+    const orders = ordersContext?.orders
+    const setOrders = ordersContext?.setOrders
+
     const order = ordersContext?.order
+    const setOrder = ordersContext?.setOrder
+
     const order_items = ordersContext?.orderItems
     const setOrderItems = ordersContext?.setOrderItems
     const totalPrice = ordersContext?.totalPrice
@@ -69,7 +74,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
     const [isClient, setIsClient] = useState(true)
 
     useEffect(() => {
-        if (user?.is_superuser || user?.is_shipping_employee) setIsClient(false)
+        if (user?.is_staff) setIsClient(false)
     }, [user])
 
 
@@ -106,6 +111,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
             setAddress(order?.address)
             setPaymentMethod(order?.payment_method)
             set_tracking_code(order?.tracking_code)
+            setSalesWhoAdded(order?.sales_who_added)
             setStatus(order?.status)
             setEmail(order?.email)
             setIsFastShipping(order?.is_fast_shipping)
@@ -147,9 +153,25 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                 order_items,
             }
 
+            if (user?.is_fast_shipping_employee && !order?.sales_who_added && status !== order?.status) {
+                data.sales_who_added = user?.id
+            }
+
             await ordersContext?.updateOrder(order?.id, data).then(e => {
                 if (e) {
                     onClose()
+                    setName(e?.name)
+                    setPhone(e?.phone_number)
+                    setEmail(e?.email)
+                    setState(e?.state)
+                    setAddress(e?.address)
+                    set_tracking_code(e?.tracking_code)
+                    setStatus(e?.status)
+                    setSalesWhoAdded(e?.sales_who_added)
+                    setPaymentMethod(e?.payment_method)
+                    setIsFastShipping(e?.is_fast_shipping)
+
+                    setOrder(e)
                 }
             })
         } catch (err) {
@@ -159,12 +181,20 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
     }
 
 
-    // // check if the user is really the "sales_who_added"
+    // check if the user is really the "sales_who_added"
     useEffect(() => {
         if (order?.id && user?.is_shipping_employee && !order?.tracking_code && !order?.sales_who_added) {
             setSalesWhoAdded(user?.id)
         }
     }, [user?.is_shipping_employee, order]);
+
+    // useEffect(() => {
+    // if (order?.id && user?.is_fast_shipping_employee && !order?.sales_who_added && status !== order?.status) {
+    // console.log(order?.status);
+    // console.log(status);
+    // setSalesWhoAdded(user?.id)
+    // }
+    // }, [user?.is_fast_shipping_employee, order]);
 
 
 
@@ -263,9 +293,9 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                                 </Select>
                             </FormControl>
                         )}
-                        {!isClient && (
+                        {!isClient || user.is_fast_shipping_employee && (
                             <FormControl>
-                                <FormLabel className='font-bold'> كود تتبع الشحنة</FormLabel>
+                                <FormLabel className='font-bold'>كود تتبع الشحنة</FormLabel>
                                 <Input
                                     value={tracking_code}
                                     onChange={(e) => set_tracking_code(e.target.value)}
