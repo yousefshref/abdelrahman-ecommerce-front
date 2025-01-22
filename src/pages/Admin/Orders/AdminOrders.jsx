@@ -78,7 +78,7 @@ const AdminOrders = () => {
                             className="w-full"
                         />
                         {
-                            user?.is_shipping_employee ? null : (
+                            user?.is_shipping_employee || user?.is_fast_shipping_employee ? null : (
                                 <Select
                                     value={user?.is_superuser ? sales_id : user?.id}
                                     onChange={(e) => setSalesId(e.target.value)}
