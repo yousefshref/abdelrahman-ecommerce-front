@@ -21,7 +21,6 @@ const AdminOrders = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const {
-        getOrders,
         setPageSize,
         count,
         currentPage,

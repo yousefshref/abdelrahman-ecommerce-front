@@ -25,10 +25,10 @@ const AdminLayout = ({ children }) => {
         set_is_fast_shipping_employee(user?.is_fast_shipping_employee)
     }, [user])
 
-    const [profile_picture, setProfile_picture] = React.useState(user?.profile_picture || "https://via.placeholder.com/100")
+    const [profile_picture, setProfile_picture] = React.useState(user?.profile_picture)
 
     useEffect(() => {
-        setProfile_picture(user?.profile_picture || "https://via.placeholder.com/100")
+        setProfile_picture(user?.profile_picture)
     }, [user])
 
 

@@ -51,7 +51,6 @@ const OrderContext = ({ children }) => {
                 }
             })
 
-            console.log(res.data);
             setNext(res.data.results.next)
             setPrev(res.data.results.previous)
 
@@ -76,7 +75,7 @@ const OrderContext = ({ children }) => {
         if (allowedPathes.includes(location.pathname)) {
             getOrders()
         }
-    }, [from, to, sales_id, location, currentPage, pageSize])
+    }, [from, to, sales_id, location.pathname, currentPage, pageSize])
 
 
     const handlePagination = (page) => {
