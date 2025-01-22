@@ -74,7 +74,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
     const [isClient, setIsClient] = useState(true)
 
     useEffect(() => {
-        if (!user?.is_shipping_employee || !user?.is_superuser) setIsClient(false)
+        if (user?.is_shipping_employee || user?.is_superuser) setIsClient(false)
     }, [user])
 
 
@@ -293,7 +293,7 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                                 </Select>
                             </FormControl>
                         )}
-                        {!isClient || user.is_fast_shipping_employee && (
+                        {!isClient || !user.is_fast_shipping_employee && (
                             <FormControl>
                                 <FormLabel className='font-bold'>كود تتبع الشحنة</FormLabel>
                                 <Input
