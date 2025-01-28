@@ -3,7 +3,30 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
-import { adminDashboard, adminLoginPage, adminOrders, adminProducts, adminRegisterPage, adminSettings, adminUsers, cancelOrder, cartPage, loginPagePath, orderConfirm, productDetails, productsPage, signUpPagePath, trackOrders, userProfile, userProfileOrdersCancelled, userProfileOrdersDeliverd } from "./Variables/pathes";
+import {
+  aboutUsPagePath,
+  adminDashboard,
+  adminHome,
+  adminLoginPage,
+  adminOrders,
+  adminProducts,
+  adminRegisterPage,
+  adminSettings,
+  adminUsers,
+  cancelOrder,
+  cartPage,
+  loginPagePath,
+  orderConfirm,
+  privacyPagePath,
+  productDetails,
+  productsPage,
+  refundPagePath,
+  signUpPagePath,
+  trackOrders,
+  userProfile,
+  userProfileOrdersCancelled,
+  userProfileOrdersDeliverd,
+} from "./Variables/pathes";
 import TrackOrders from "./pages/TrackOrders/TrackOrders";
 import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import AdminPage from "./pages/Admin/AdminPage/AdminPage";
@@ -22,7 +45,10 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import UserProfileOrdersDeliverd from "./pages/UserProfileOrdersDeliverd/UserProfileOrdersDeliverd";
 import UserProfileOrdersCancelled from "./pages/UserProfileOrdersCancelled/UserProfileOrdersCancelled";
 import { Suspense } from "react";
-
+import AdminHome from "./pages/Admin/AdminHome/AdminHome";
+import AboutUs from "./pages/AboutUs/AboutUs";
+import Privacy from "./pages/Privacy/Privacy";
+import Refund from "./pages/Refund/Refund";
 
 function App() {
   return (
@@ -38,16 +64,26 @@ function App() {
           <Route path={orderConfirm()} element={<OrderConfirm />} />
           <Route path={loginPagePath()} element={<Login />} />
           <Route path={signUpPagePath()} element={<Signup />} />
+          <Route path={aboutUsPagePath()} element={<AboutUs />} />
+          <Route path={privacyPagePath()} element={<Privacy />} />
+          <Route path={refundPagePath()} element={<Refund />} />
           {/* profile */}
           <Route path={userProfile()} element={<UserProfile />} />
-          <Route path={userProfileOrdersDeliverd()} element={<UserProfileOrdersDeliverd />} />
-          <Route path={userProfileOrdersCancelled()} element={<UserProfileOrdersCancelled />} />
+          <Route
+            path={userProfileOrdersDeliverd()}
+            element={<UserProfileOrdersDeliverd />}
+          />
+          <Route
+            path={userProfileOrdersCancelled()}
+            element={<UserProfileOrdersCancelled />}
+          />
 
           {/* admin */}
           <Route path={adminLoginPage()} element={<AdminLogin />} />
           <Route path={adminRegisterPage()} element={<AdminRegister />} />
 
           <Route element={<PrivateRoute />}>
+            <Route path={adminHome()} element={<AdminHome />} />
             <Route path={adminProducts()} element={<AdminProducts />} />
             <Route path={adminOrders()} element={<AdminOrders />} />
             <Route path={adminUsers()} element={<AdminUsers />} />
