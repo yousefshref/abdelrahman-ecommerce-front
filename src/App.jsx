@@ -45,7 +45,7 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import UserProfileOrdersDeliverd from "./pages/UserProfileOrdersDeliverd/UserProfileOrdersDeliverd";
 import UserProfileOrdersCancelled from "./pages/UserProfileOrdersCancelled/UserProfileOrdersCancelled";
 import { Suspense } from "react";
-import AdminHome from "./pages/Admin/AdminHome/AdminHome";
+// import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import Privacy from "./pages/Privacy/Privacy";
 import Refund from "./pages/Refund/Refund";
@@ -83,7 +83,7 @@ function App() {
           <Route path={adminRegisterPage()} element={<AdminRegister />} />
 
           <Route element={<PrivateRoute />}>
-            <Route path={adminHome()} element={<AdminHome />} />
+            {/* <Route path={adminHome()} element={<AdminHome />} /> */}
             <Route path={adminProducts()} element={<AdminProducts />} />
             <Route path={adminOrders()} element={<AdminOrders />} />
             <Route path={adminUsers()} element={<AdminUsers />} />
