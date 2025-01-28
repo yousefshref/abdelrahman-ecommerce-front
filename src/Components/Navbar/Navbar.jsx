@@ -43,7 +43,7 @@ const Navbar = ({ classes, profile }) => {
 
   return (
     <Box bg={useColorModeValue("white", "black")} px={window.innerWidth < 768 ? 1 : 4} className={`
-    bg-amber-200 w-full ${profile ? "mb-0 pb-2 pt-2" : "mb-2 pb-2"} md:shadow-md shadow-sm
+    bg-amber-200 w-full ${profile ? "mb-0 pb-2 pt-2" : "mb-2 pt-2 pb-2"} md:shadow-md shadow-sm
     ${classes}
     `}>
       <Flex h={16} alignItems="center" justifyContent="space-between">

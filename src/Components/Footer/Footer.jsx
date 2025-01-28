@@ -1,5 +1,6 @@
 import React from "react";
 import { BsFacebook, BsInstagram, BsTiktok } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -19,7 +20,9 @@ const Footer = () => {
           </a>
           <div class="mt-6 lg:max-w-sm">
             <p class="text-sm text-gray-800">
-              ولاني عايزك دايما في السيف زوون ف خليت كل حاجه عندك في متجر واحد مضمون خاص بيك وجوا الزوون بتاعتك            </p>
+              ولاني عايزك دايما في السيف زوون ف خليت كل حاجه عندك في متجر واحد
+              مضمون خاص بيك وجوا الزوون بتاعتك{" "}
+            </p>
           </div>
         </div>
         <div class="space-y-2 text-sm">
@@ -77,6 +80,17 @@ const Footer = () => {
             تابع كل الجديد والمحتوى المقدم من خلال متابعتنا على المنصات
           </p>
         </div>
+      </div>
+      <div className="flex justify-between pt-5 pb-10 border-t lg:flex-row">
+        <Link to="/aboutUs" className="text-blue-500 underline">
+          معلومات عنا
+        </Link>
+        <Link to="/privacy_policy" className="text-blue-500 underline">
+          سياسة الخصوصية
+        </Link>
+        <Link to="/refund_policy" className="text-blue-500 underline">
+          سياسة الاسترجاع والاستبدال
+        </Link>
       </div>
       {/* <div class="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
         <p class="text-sm text-gray-600">
