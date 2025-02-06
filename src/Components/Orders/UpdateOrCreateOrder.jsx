@@ -188,13 +188,13 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
         }
     }, [user?.is_shipping_employee, order]);
 
-    // useEffect(() => {
-    // if (order?.id && user?.is_fast_shipping_employee && !order?.sales_who_added && status !== order?.status) {
-    // console.log(order?.status);
-    // console.log(status);
-    // setSalesWhoAdded(user?.id)
-    // }
-    // }, [user?.is_fast_shipping_employee, order]);
+    useEffect(() => {
+        if (order?.id && user?.is_fast_shipping_employee && !order?.sales_who_added && status !== order?.status) {
+            console.log(order?.status);
+            console.log(status);
+            setSalesWhoAdded(user?.id)
+        }
+    }, [user?.is_fast_shipping_employee, order]);
 
 
 
