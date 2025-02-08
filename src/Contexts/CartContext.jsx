@@ -28,7 +28,7 @@ const CartContext = ({ children }) => {
                     status: "error",
                     duration: 3000,
                     isClosable: true,
-                    position: "bottom-left",
+                    position: "top",
                     variant: "subtle",
                 });
             } else {
@@ -44,7 +44,7 @@ const CartContext = ({ children }) => {
                     status: "success",
                     duration: 3000,
                     isClosable: true,
-                    position: "bottom-left",
+                    position: "top",
                 });
 
                 return true
