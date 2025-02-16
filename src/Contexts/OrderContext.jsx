@@ -21,46 +21,36 @@ const OrderContext = ({ children }) => {
     const [totalCommission, setTotalCommission] = React.useState(0)
     const [totalOrdersPrices, setTotalOrdersPrices] = React.useState(0)
 
-    const [from, setFrom] = React.useState("")
-    const [to, setTo] = React.useState("")
+    const today = new Date()
+    const last7Days = new Date(today.setDate(today.getDate() - 7))
 
     const [sales_id, setSalesId] = React.useState("")
     const [search, setSearch] = React.useState("")
+    const [from, setFrom] = React.useState(last7Days.toISOString().split('T')[0])
+    const [to, setTo] = React.useState(today.toISOString().split('T')[0])
+    const [status, setStatus] = React.useState("")
 
-
-    const [count, setCount] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const [next, setNext] = useState(true)
-    const [prev, setPrev] = useState(true)
-
-    const [pageSize, setPageSize] = useState(10)
 
     const getOrders = async () => {
         setLoading(true)
         try {
-            const res = await axios.get(`/orders/?search=${search}`, {
+            const res = await axios.get(`/orders/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`
                 },
                 params: {
-                    page: currentPage,
-                    page_size: pageSize,
                     sales_id: sales_id,
                     search: search,
+                    date_from: from,
+                    date_to: to,
+                    status: status
                 }
             })
 
-            setNext(res.data.results.next)
-            setPrev(res.data.results.previous)
+            setOrders(res?.data?.orders)
 
-            setCount(res.data.count);
-
-            setOrders(res?.data?.results?.orders)
-
-            setTotalCommission(res.data.results?.total_commission)
-            setTotalOrdersPrices(res.data.results.total_orders_prices)
-
+            setTotalCommission(res.data?.total_commission)
+            setTotalOrdersPrices(res.data?.total_orders_prices)
         }
         catch (err) {
             console.log(err);
@@ -75,15 +65,7 @@ const OrderContext = ({ children }) => {
         if (allowedPathes.includes(location.pathname)) {
             getOrders()
         }
-    }, [from, to, sales_id, location.pathname, currentPage, pageSize])
-
-
-    const handlePagination = (page) => {
-        if (page < 1) return
-        if (page > Math.ceil(count / pageSize)) return
-        setCurrentPage(page)
-    }
-
+    }, [from, to, status, sales_id, location.pathname])
 
 
 
@@ -412,15 +394,7 @@ const OrderContext = ({ children }) => {
 
             orders, setOrders,
             getOrders,
-            handlePagination,
 
-            count,
-            setCount,
-            currentPage,
-            pageSize,
-            setPageSize,
-            setCurrentPage,
-            next,
 
             order,
             orderItems, setOrderItems,
@@ -431,6 +405,7 @@ const OrderContext = ({ children }) => {
             totalOrdersPrices,
             from, setFrom,
             to, setTo,
+            status, setStatus,
             sales_id, setSalesId,
             search, setSearch,
 

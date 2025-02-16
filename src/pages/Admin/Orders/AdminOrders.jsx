@@ -11,7 +11,7 @@ import { AuthContextProvider } from '../../../Contexts/AuthContext';
 import Loading from '../../../Components/Loading/Loading';
 
 const AdminOrders = () => {
-    const ordersContext = React.useContext(OrderContextProvider)
+    const ordersContext = useContext(OrderContextProvider)
     const authContext = useContext(AuthContextProvider)
     const usersContext = useContext(UsersContextProvider)
 
@@ -19,15 +19,6 @@ const AdminOrders = () => {
 
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-
-    const {
-        setPageSize,
-        count,
-        currentPage,
-        pageSize,
-        handlePagination,
-    } = useContext(OrderContextProvider);
-
 
 
     const loading = ordersContext?.loading
@@ -44,6 +35,14 @@ const AdminOrders = () => {
     const sales_id = ordersContext?.sales_id
     const setSalesId = ordersContext?.setSalesId
 
+    const from = ordersContext?.from
+    const setFrom = ordersContext?.setFrom
+
+    const to = ordersContext?.to
+    const setTo = ordersContext?.setTo
+
+    const status = ordersContext?.status
+    const setStatus = ordersContext?.setStatus
 
 
     // get all sales
@@ -79,7 +78,8 @@ const AdminOrders = () => {
                         {
                             user?.is_shipping_employee || user?.is_fast_shipping_employee ? null : (
                                 <Select
-                                    value={user?.is_superuser ? sales_id : user?.id}
+                                    // value={user?.is_superuser ? sales_id : user?.id}
+                                    value={user?.is_superuser ? sales_id : ''}
                                     onChange={(e) => setSalesId(e.target.value)}
                                     placeholder="سيلز معين"
                                     sx={{
@@ -97,6 +97,56 @@ const AdminOrders = () => {
                             )
                         }
                     </Flex>
+
+                    <div className="flex md:flex-row flex-col item-center justify-center gap-4">
+                        <div className='flex flex-col gap-1 w-full'>
+                            <p className='text-sm text-gray-500'>من</p>
+                            <Input
+                                type="date"
+                                value={from}
+                                onChange={(e) => setFrom(e.target.value)}
+                                placeholder="من"
+                                sx={{
+                                    backgroundColor: "white",
+                                }}
+                                size={"sm"}
+                                className="w-full"
+                            />
+                        </div>
+                        <div className='flex flex-col gap-1 w-full'>
+                            <p className='text-sm text-gray-500'>الى</p>
+                            <Input
+                                type="date"
+                                value={to}
+                                onChange={(e) => setTo(e.target.value)}
+                                placeholder="الى"
+                                sx={{
+                                    backgroundColor: "white",
+                                }}
+                                size={"sm"}
+                                className="w-full"
+                            />
+                        </div>
+                        <div className='flex flex-col gap-1 w-full'>
+                            <p className='text-sm text-gray-500'>الحالة</p>
+                            <Select
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                                placeholder="الحالة"
+                                sx={{
+                                    backgroundColor: "white",
+                                }}
+                                size={"sm"}
+                                className="w-full"
+                            >
+                                <option value="">الكل</option>
+                                <option value="pending">في الانتظار</option>
+                                <option value="shipped">شحن</option>
+                                <option value="delivered">تم التوصيل</option>
+                                <option value="cancelled">ملغي</option>
+                            </Select>
+                        </div>
+                    </div>
 
                     <Flex justifyContent={"space-between"}>
                         <Button
@@ -161,41 +211,6 @@ const AdminOrders = () => {
                         </tbody>
                     </table>
                 )}
-            </div>
-
-            <div className="pagination mt-5 flex md:flex-row flex-col gap-7 items-center mx-auto">
-                <div className='flex gap-7 items-center'>
-                    <button
-                        className='p-1 px-3 bg-red-200 rounded-full flex flex-col justify-center items-center'
-                        onClick={() => {
-                            handlePagination(currentPage - 1)
-                        }}
-                    >
-                        Previous
-                    </button>
-                    <span>
-                        Page {currentPage} of {Math.ceil(count / pageSize)}
-                    </span>
-                    <button
-                        className='p-1 px-3 bg-green-200 rounded-full flex flex-col justify-center items-center'
-                        onClick={() => {
-                            handlePagination(currentPage + 1)
-                        }}
-                    >
-                        Next
-                    </button>
-                </div>
-                <div className='flex flex-col md:w-fit w-full'>
-                    <p>كم تريد ان تعرض</p>
-                    <select onChange={(e) => setPageSize(e.target.value)} value={pageSize} name="" id="">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                        <option value="70">70</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
             </div>
 
             <UpdateOrCreateOrder isOpen={isOpen} onClose={onClose} />
