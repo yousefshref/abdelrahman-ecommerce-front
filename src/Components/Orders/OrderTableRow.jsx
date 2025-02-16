@@ -32,22 +32,6 @@ const OrderTableRow = ({ order, index }) => {
 
 
     const handleUpdateOrder = (newStatus, newTrackingCode) => {
-        let sendStatusChanged = false   // updated
-
-        if (newStatus !== order?.status && newStatus == "shipped") {
-            sendStatusChanged = true
-        } else {
-            sendStatusChanged = false
-        }
-
-
-        let sendArrivedEmail = false   // updated
-
-        if (newStatus !== order?.status && newStatus == "delivered") {
-            sendArrivedEmail = true
-        } else {
-            sendArrivedEmail = false
-        }
 
         // if the tracking code was empty then wrote and the user is shipping employee add the filed sales_who_added be the user
         let addSalesWhoAdded = false
@@ -55,6 +39,11 @@ const OrderTableRow = ({ order, index }) => {
         if (!order?.tracking_code && newTrackingCode && user?.is_shipping_employee) {
             addSalesWhoAdded = true
         }
+
+        if (user?.is_fast_shipping_employee && !order?.sales_who_added && newStatus !== order?.status) {
+            addSalesWhoAdded = true
+        }
+
 
 
 
@@ -64,21 +53,6 @@ const OrderTableRow = ({ order, index }) => {
 
                 setStatus(e?.status)
                 setTrackingCode(e?.tracking_code)
-
-                // if (sendStatusChanged && e?.email) {
-                //     usersContext?.sendEmail({
-                //         recipient_email: e?.email,
-                //         subject: "تم شحن طلبك",
-                //         content_type: "html",
-                //     }, "shipped")
-                // }
-                // if (sendArrivedEmail && e?.email) {
-                //     usersContext?.sendEmail({
-                //         recipient_email: e?.email,
-                //         subject: "تم تسليم شحنتك",
-                //         content_type: "html",
-                //     }, "delivered")
-                // }
             }
         })
     }

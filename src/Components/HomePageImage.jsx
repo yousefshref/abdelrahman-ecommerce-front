@@ -3,7 +3,7 @@ import { BiPlus, BiTrash } from 'react-icons/bi'
 import { CategoryContextProvider } from '../Contexts/CategoryContext'
 import { ProductsContextProvider } from '../Contexts/ProductsContext'
 
-import ImageHomeScreen from '../Components/ImageHomeScreen/ImageHomeScreen'
+import ImageHomeScreen from './ImageHomeScreen/ImageHomeScreen'
 
 import { api } from '../Variables/server'
 import CropImage from './CropImage'

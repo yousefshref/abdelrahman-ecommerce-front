@@ -1,18 +1,4 @@
-- compelete user profile ✅
-- navbar for all users types ✅
-- sales pending page
-
-
-
-
-
-
-
-
--------------------------------
-if client (not logged in) -> appear login
-if logged in:
-    if client:
-        appear profile
-    if sales:
-        appear dashboard
+- remove pagination in orders
+- add dates from and to
+- get is_fast and is_sales
+- get their commission
