@@ -22,7 +22,7 @@ const OrderContext = ({ children }) => {
     const [totalOrdersPrices, setTotalOrdersPrices] = React.useState(0)
 
     const today = new Date()
-    const last7Days = new Date(today.setDate(today.getDate() - 7))
+    const last7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 
     const [sales_id, setSalesId] = React.useState("")
     const [search, setSearch] = React.useState("")
