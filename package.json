@@ -32,7 +32,8 @@
     "react-router-dom": "^6.27.0",
     "react-select": "^5.8.3",
     "swiper": "^11.1.15",
-    "tw-elements-react": "^1.0.0-alpha-end"
+    "tw-elements-react": "^1.0.0-alpha-end",
+    "esbuild": "^latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
