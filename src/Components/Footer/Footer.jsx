@@ -83,13 +83,13 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex justify-between pt-5 pb-10 border-t lg:flex-row">
-        <Link to="/aboutUs" className="text-blue-500 underline">
+        <Link to="/aboutUs" className="text-blue-500 underline" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           معلومات عنا
         </Link>
-        <Link to="/privacy_policy" className="text-blue-500 underline">
+        <Link to="/privacy_policy" className="text-blue-500 underline" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           سياسة الخصوصية
         </Link>
-        <Link to="/refund_policy" className="text-blue-500 underline">
+        <Link to="/refund_policy" className="text-blue-500 underline" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           سياسة الاسترجاع والاستبدال
         </Link>
       </div>
