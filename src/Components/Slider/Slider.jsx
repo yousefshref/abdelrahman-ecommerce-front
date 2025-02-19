@@ -29,9 +29,9 @@ const Slider = () => {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 1000,
+          delay: 2000,
         }}
-        speed={3000}
+        speed={2000}
         loop={true}
         modules={[Autoplay, Pagination, Navigation]}
         pagination={{
