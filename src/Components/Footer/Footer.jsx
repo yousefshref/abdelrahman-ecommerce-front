@@ -29,10 +29,11 @@ const Footer = () => {
           <p class="text-base font-bold tracking-wide text-gray-900">
             طرق التواصل
           </p>
-          <div dir="ltr" class="flex">
+          <div class="flex">
             <p class="mr-1 text-gray-800">الهاتف:</p>
             <a
-              href="tel:850-123-5021"
+              dir="ltr"
+              href="tel:+20 109 395 2937"
               aria-label="Our phone"
               title="Our phone"
               class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
