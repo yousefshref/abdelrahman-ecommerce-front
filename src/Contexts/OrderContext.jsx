@@ -287,6 +287,13 @@ const OrderContext = ({ children }) => {
             navigate(trackOrders())
         } catch (err) {
             console.log(err)
+            alert("حدث خطأ ما")
+            if (err.response.data.message) {
+                alert(err.response.data.message)
+            }
+            if (err.response.data.error) {
+                alert(err.response.data.error)
+            }
             if (err.response.status === 400) {
                 toast({
                     title: "Something went wrong",
