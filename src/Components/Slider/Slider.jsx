@@ -31,7 +31,7 @@ const Slider = () => {
         autoplay={{
           delay: 1000,
         }}
-        speed={1000}
+        speed={3000}
         loop={true}
         modules={[Autoplay, Pagination, Navigation]}
         pagination={{
