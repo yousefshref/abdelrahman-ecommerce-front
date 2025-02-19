@@ -29,7 +29,7 @@ const Footer = () => {
           <p class="text-base font-bold tracking-wide text-gray-900">
             طرق التواصل
           </p>
-          <div class="flex">
+          <div dir="ltr" class="flex">
             <p class="mr-1 text-gray-800">الهاتف:</p>
             <a
               href="tel:850-123-5021"
