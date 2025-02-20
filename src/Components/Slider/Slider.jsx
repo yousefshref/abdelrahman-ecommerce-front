@@ -48,7 +48,7 @@ const Slider = () => {
           }} key={index} className="w-full flex justify-center">
             <div className="relative">
               <img
-                loading="lazy"
+                // loading="lazy"
                 src={api + image?.image}
                 alt={`Slide ${index + 1}`}
                 className="w-full h-auto"
