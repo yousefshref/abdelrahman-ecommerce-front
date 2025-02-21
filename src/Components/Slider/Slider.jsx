@@ -39,6 +39,7 @@ const Slider = () => {
           type: "bullets",
         }}
         className="relative"
+        dir="ltr"
       >
         {images?.map((image, index) => (
           <SwiperSlide onClick={() => {
