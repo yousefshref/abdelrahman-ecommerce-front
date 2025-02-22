@@ -32,7 +32,7 @@ const CustomReviews = () => {
   return (
     <div className="mt-20 flex flex-col md:flex-row items-center justify-between bg-gray-50 p-5">
       {/* Left Section */}
-      <div className="flex flex-col items-start md:items-start text-center">
+      <div className="flex flex-col items-center md:items-start text-center">
         <h1 className="text-3xl md:text-5xl font-bold">
           ماذا يقول عملائنا عنا؟
         </h1>
