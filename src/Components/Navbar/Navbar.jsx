@@ -66,9 +66,9 @@ const Navbar = ({ classes, profile }) => {
               // src="/logo.png"
               src="/ramadan_logo.PNG"
               alt="logo"
-              width="60"
-              height="60"
-              className="min-w-[60px]"
+              width="90"
+              height="90"
+              className="min-w-[90px]"
             />
           </Link>
         </Box>
