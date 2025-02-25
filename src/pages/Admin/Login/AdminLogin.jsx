@@ -24,8 +24,7 @@ const AdminLogin = () => {
         authContext?.googleLogin()
     }
     return (
-        // <div className="min-h-screen relative bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/Safe Zone.png')" }}>
-        <div className="min-h-screen relative bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/ramadan_logo.PNG')" }}>
+        <div className="min-h-screen relative bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/Safe Zone.png')" }}>
             <div className='absolute top-0 left-0 w-full h-full bg-black opacity-50' />
             <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg p-8 w-full max-w-sm">
                 {/* <h1 className="text-4xl text-white font-semibold text-center mb-4">Safe Zone</h1> */}
