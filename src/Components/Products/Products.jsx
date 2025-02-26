@@ -18,14 +18,24 @@ const Products = () => {
   const search = productsContext?.search;
   const setSearch = productsContext?.setSearch;
 
+  const [delayedSearch, setDelayedSearch] = useState("");
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearch(delayedSearch);
+    }, 2000);
+
+    return () => clearTimeout(handler); // Cleanup to prevent setting state if user types again before 2 sec
+  }, [delayedSearch]);
+
   return (
     <div className="md:my-20 my-10 bg-gray-50 md:p-5 p-1">
       <input
         type="text"
         className="w-full px-4 py-2 border-none lg:text-5xl md:text-3xl text-xl outline-none focus:ring-0 focus:outline-none bg-gray-50 text-gray-500"
         placeholder="ابحث عن منتجك"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={delayedSearch}
+        onChange={(e) => setDelayedSearch(e.target.value)}
       />
       <hr />
       <div className="mt-5 grid gap-3 lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
