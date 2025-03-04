@@ -157,6 +157,8 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                 data.sales_who_added = user?.id
             }
 
+            console.log(data);
+            
             await ordersContext?.updateOrder(order?.id, data).then(e => {
                 if (e) {
                     onClose()
@@ -170,8 +172,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                     setSalesWhoAdded(e?.sales_who_added)
                     setPaymentMethod(e?.payment_method)
                     setIsFastShipping(e?.is_fast_shipping)
-
-                    setOrder(e)
                 }
             })
         } catch (err) {
