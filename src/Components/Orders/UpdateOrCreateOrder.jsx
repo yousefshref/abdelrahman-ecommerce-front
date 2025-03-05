@@ -24,7 +24,7 @@ import { AuthContextProvider } from '../../Contexts/AuthContext'
 import SelectWithImage from '../SelectWithImage/SelectWithImage'
 
 
-const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
+const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps, newOrder }) => {
 
     const orderIdFromProps = orderFromProps?.id
     const ordersContext = useContext(OrderContextProvider)
@@ -68,8 +68,13 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
 
     const products = productsContext?.products
     const states = statesContext?.states
+    const getStates = statesContext?.getStates
     const user = authContext?.user
     const loading = ordersContext?.loading
+
+    useEffect(() => {
+        getStates()
+    }, [])
 
     const [isClient, setIsClient] = useState(true)
 
@@ -78,6 +83,23 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
     }, [user])
 
 
+
+
+    useEffect(() => {
+        if (newOrder) {
+            setName('')
+            setPhone('')
+            setEmail('')
+            setState('')
+            setAddress('')
+            set_tracking_code("")
+            setStatus("pending")
+            setSalesWhoAdded("")
+            setPaymentMethod("")
+            setIsFastShipping(false)
+            setOrderItems([])
+        }
+    }, [newOrder, isOpen])
 
 
     const handleCreateOrder = async () => {
@@ -157,8 +179,6 @@ const UpdateOrCreateOrder = ({ isOpen, onClose, orderFromProps }) => {
                 data.sales_who_added = user?.id
             }
 
-            console.log(data);
-            
             await ordersContext?.updateOrder(order?.id, data).then(e => {
                 if (e) {
                     onClose()

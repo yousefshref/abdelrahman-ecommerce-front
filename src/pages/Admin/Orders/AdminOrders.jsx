@@ -56,6 +56,8 @@ const AdminOrders = () => {
 
 
 
+    const [newOrder, setNewOrder] = useState(false)
+
     return (
         <AdminLayout>
             {loading ? (
@@ -161,7 +163,10 @@ const AdminOrders = () => {
                         <Button
                             colorScheme="green"
                             size={"sm"}
-                            onClick={onOpen}
+                            onClick={() => {
+                                setNewOrder(true)
+                                onOpen()
+                            }}
                         >
                             انشاء طلب جديد
                         </Button>
@@ -213,7 +218,7 @@ const AdminOrders = () => {
                 )}
             </div>
 
-            <UpdateOrCreateOrder isOpen={isOpen} onClose={onClose} />
+            <UpdateOrCreateOrder newOrder={newOrder} isOpen={isOpen} onClose={onClose} />
         </AdminLayout>
     )
 }

@@ -1,0 +1,13 @@
+features
+    - feature/customer_profile
+
+
+workflow
+- login function
+- login page
+- customer profile
+
+
+- click
+- open
+- see - update - create

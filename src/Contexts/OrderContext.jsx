@@ -163,6 +163,7 @@ const OrderContext = ({ children }) => {
             return res.data
         }
         catch (err) {
+            console.log(err);
             // 400
             if (err.response.status === 400) {
                 // alert("تأكد من صحة البيانات")
