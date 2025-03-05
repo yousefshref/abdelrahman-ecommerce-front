@@ -21,7 +21,7 @@ const OrderContext = ({ children }) => {
     const [totalCommission, setTotalCommission] = React.useState(0)
     const [totalOrdersPrices, setTotalOrdersPrices] = React.useState(0)
 
-    const today = new Date()
+    const today = new Date(Date.now() + 24 * 60 * 60 * 1000)
     const last7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 
     const [sales_id, setSalesId] = React.useState("")
@@ -46,6 +46,8 @@ const OrderContext = ({ children }) => {
                     status: status
                 }
             })
+
+            console.log(from, to);
 
             setOrders(res?.data?.orders)
 
